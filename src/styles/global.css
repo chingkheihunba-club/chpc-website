@@ -1,0 +1,131 @@
+/* CHPC website — colours taken from the club's jerseys and crest (25-09-2026).
+   Red leads (the club's must-have colour); royal blue from the home kit is a
+   secondary accent; navy from the crest carries text and the footer.
+   Partner colours (Eartheners teal, Unibrow pink/aqua) appear only inside their
+   own logos, always on white, so they never mix with the club palette. */
+:root {
+  --red: #b3121b;          /* away jersey */
+  --red-dark: #8c0d15;
+  --blue: #0a2e91;         /* home jersey */
+  --blue-bright: #1740b8;
+  --navy: #0f1f34;         /* crest line work, collar trim */
+  --ink: #0f1f34;
+  --ink-soft: #4b5567;
+  --paper: #faf8f4;        /* warm white */
+  --card: #ffffff;
+  --line: #e3ded4;
+  --todo-bg: #fff4d6;
+  --todo-line: #e0b54a;
+  --radius: 6px;
+  --max: 1120px;
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-head: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+  /* collar-trim stripe: white / navy / white on red */
+  --trim: linear-gradient(to bottom,
+    var(--red) 0 3px, #fff 3px 6px, var(--navy) 6px 9px, #fff 9px 12px, var(--red) 12px 15px);
+  /* the jersey's diamond texture, very faint */
+  --lattice:
+    repeating-linear-gradient(45deg, rgba(255,255,255,.045) 0 2px, transparent 2px 22px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,.045) 0 2px, transparent 2px 22px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--blue); text-underline-offset: 3px; }
+a:hover { color: var(--red); }
+h1, h2, h3 { font-family: var(--font-head); font-weight: 700; line-height: 1.2; color: var(--navy); }
+h1 { font-size: clamp(2rem, 5vw, 3.1rem); margin: 0 0 .5rem; letter-spacing: -.01em; }
+h2 { font-size: clamp(1.35rem, 3vw, 1.8rem); margin: 2.75rem 0 .9rem; }
+h2::after { content: ''; display: block; width: 48px; height: 3px; background: var(--red); margin-top: .5rem; }
+h3 { font-size: 1.15rem; margin: 1.5rem 0 .5rem; }
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 16px; }
+main { padding: 2.5rem 0 4rem; }
+.lede { font-size: 1.2rem; color: var(--ink-soft); max-width: 60ch; }
+.muted { color: var(--ink-soft); font-size: .95rem; }
+.trim { height: 15px; background: var(--trim); }
+
+/* Header */
+.site-header { background: var(--red); color: #fff; }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: .75rem 1.5rem; padding-top: .7rem; padding-bottom: .7rem; flex-wrap: wrap; }
+.brand { color: #fff; text-decoration: none; display: flex; align-items: center; gap: .75rem; }
+.brand:hover { color: #fff; }
+.brand img { height: 46px; width: auto; }
+.brand .name { font-family: var(--font-head); font-size: 1.05rem; font-weight: 700; line-height: 1.15; }
+.brand .name small { display: block; font-family: var(--font-body); font-weight: 500; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
+.site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .2rem 1.05rem; }
+.site-nav a { color: #fff; text-decoration: none; font-size: .93rem; font-weight: 500; opacity: .9; padding: .15rem 0; border-bottom: 2px solid transparent; }
+.site-nav a:hover { color: #fff; opacity: 1; border-bottom-color: rgba(255,255,255,.6); }
+.site-nav a[aria-current="page"] { opacity: 1; border-bottom-color: #fff; }
+
+/* Hero */
+.hero { background: var(--lattice), var(--red); color: #fff; padding: 3.25rem 0 3.5rem; }
+.hero .wrap { display: grid; gap: 2rem; align-items: center; grid-template-columns: 1.1fr 1fr; }
+.hero h1 { color: #fff; }
+.hero p { font-size: 1.2rem; max-width: 46ch; opacity: .93; margin: 0 0 1.5rem; }
+.hero .crest { width: 100%; max-width: 520px; justify-self: end; }
+.hero .photo-note { font-size: .85rem; opacity: .75; margin: 0; }
+@media (max-width: 760px) {
+  .hero .wrap { grid-template-columns: 1fr; }
+  .hero .crest { justify-self: start; max-width: 340px; }
+}
+.btn { display: inline-block; background: #fff; color: var(--red); font-weight: 600; text-decoration: none; padding: .6rem 1.1rem; border-radius: var(--radius); }
+.btn:hover { background: var(--navy); color: #fff; }
+
+/* Cards and grids */
+.grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.card { background: var(--card); border: 1px solid var(--line); border-top: 3px solid var(--red); border-radius: var(--radius); padding: 1.25rem; }
+.card h3 { margin-top: 0; }
+.card a.more { font-weight: 600; text-decoration: none; }
+.placeholder-img { aspect-ratio: 4/3; background: #ece7de; border-radius: 4px; display: grid; place-items: center; color: var(--ink-soft); font-size: .85rem; margin-bottom: .75rem; }
+
+/* Headline result — home-kit blue, so the two kit colours both appear */
+.highlight { background: var(--lattice), var(--blue); color: #fff; padding: 1.25rem 1.5rem; border-radius: var(--radius); }
+.highlight a { color: #fff; font-weight: 600; }
+.highlight .kicker { display: block; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; opacity: .8; margin-bottom: .25rem; }
+
+/* Tables */
+.table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--line); }
+table { width: 100%; border-collapse: collapse; background: var(--card); font-size: .95rem; }
+th, td { text-align: left; padding: .65rem .8rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { background: var(--navy); color: #fff; font-weight: 600; font-size: .85rem; letter-spacing: .03em; }
+tr:last-child td { border-bottom: 0; }
+td.result { font-weight: 700; color: var(--red); white-space: nowrap; }
+
+/* To-confirm markers — visible on the preview so the club can see the gaps */
+.todo { background: var(--todo-bg); border: 1px dashed var(--todo-line); border-radius: var(--radius); padding: .75rem 1rem; margin: 1rem 0; font-size: .95rem; }
+.todo strong { display: block; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: #8a6412; margin-bottom: .25rem; }
+
+/* Partner logos — always on white so partner colours stay true */
+.logo-tile { background: #fff; border-radius: var(--radius); display: grid; place-items: center; }
+.logo-tile img { width: auto; }
+
+/* Footer */
+.site-footer { background: var(--navy); color: #dfe4ec; font-size: .95rem; }
+.site-footer .inner { padding-top: 2.75rem; padding-bottom: 2rem; }
+.site-footer a { color: #fff; }
+.site-footer .cols { display: grid; gap: 2rem; grid-template-columns: 1.2fr 1fr 1.4fr; }
+@media (max-width: 760px) { .site-footer .cols { grid-template-columns: 1fr; } }
+.site-footer h2 { color: #fff; font-family: var(--font-body); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 .75rem; }
+.site-footer h2::after { display: none; }
+.site-footer .crest { width: 150px; margin-bottom: .75rem; }
+.partner-logos { display: flex; flex-wrap: wrap; gap: .75rem; }
+.partner-logos .logo-tile { width: 140px; height: 84px; padding: .6rem; }
+.partner-logos .logo-tile img { max-height: 64px; max-width: 120px; }
+.site-footer .legal { margin-top: 2.25rem; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,.12); opacity: .7; font-size: .85rem; }
+
+/* Partners page */
+.partner-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
+.partner-card .logo-tile { height: 170px; margin-bottom: 1rem; border: 1px solid var(--line); }
+.partner-card .logo-tile img { max-height: 130px; max-width: 80%; }
+.partner-card h3 { margin-top: 0; }
+.club-src { color: var(--ink-soft); font-style: italic; }

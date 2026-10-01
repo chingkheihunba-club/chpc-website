@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Todo from '../components/Todo.astro';
+const slots = Array.from({ length: 6 }, (_, i) => i + 1);
+---
+<Base title="Team" description="The Chingkhei Hunba Polo Club team for the 2026–27 season.">
+  <PageHeader title="Team" lede="The players representing the club in the 2026–27 season." />
+
+  <Todo>The six players selected by the club. A player’s profile and photo go up only after that player has agreed to it.</Todo>
+
+  <div class="grid">
+    {slots.map((n) => (
+      <div class="card">
+        <div class="placeholder-img">Player photo</div>
+        <h3>Player {n}</h3>
+        <p class="muted">Position · Years with the club · Pony</p>
+      </div>
+    ))}
+  </div>
+
+  <h2>Coaches and support</h2>
+  <Todo>Coach(es), team manager and who runs practice, if the club wants them listed.</Todo>
+</Base>

@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('news', ({ data }) => data.approved))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const fmt = (d: Date) => d.toLocaleDateString('en-GB').replaceAll('/', '-');
+---
+<Base title="News" description="Match reports and stories from Chingkhei Hunba Polo Club.">
+  <PageHeader title="News and stories" lede="Match reports, player stories and news from the club." />
+  {posts.length === 0 ? <p class="muted">Nothing published yet.</p> : (
+    <div class="grid">
+      {posts.map((p) => (
+        <div class="card">
+          <p class="muted">{fmt(p.data.date)}</p>
+          <h3><a href={`/news/${p.id}/`}>{p.data.title}</a></h3>
+          <p>{p.data.summary}</p>
+        </div>
+      ))}
+    </div>
+  )}
+</Base>

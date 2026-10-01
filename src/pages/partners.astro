@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Todo from '../components/Todo.astro';
+import { Image } from 'astro:assets';
+import eartheners from '../assets/logos/eartheners-logo.png';
+import unibrow from '../assets/logos/unibrow-logo.png';
+import { site } from '../config';
+---
+<Base title="Partners" description="The partners of Chingkhei Hunba Polo Club.">
+  <PageHeader title="Partners" lede="The businesses that stand with the club this season." />
+
+  <div class="grid">
+    <div class="partner-card">
+      <a class="logo-tile" href="https://earthene.rs"><Image src={eartheners} alt="Eartheners — Beyond Sustainability" height={260} /></a>
+      <h3>Eartheners</h3>
+      <p>Rooftop and off-grid solar from Imphal. Season partner for 2026–27, supporting the team’s tournaments, practice and kit.</p>
+      <p><a href="https://earthene.rs">earthene.rs</a></p>
+    </div>
+    <div class="partner-card">
+      <div class="logo-tile"><Image src={unibrow} alt="Unibrow Studio" height={260} /></div>
+      <h3>Unibrow Studio</h3>
+      <p>Content studio from Imphal. Season partner for 2026–27, looking after the club’s website, pages and match photography.</p>
+    </div>
+  </div>
+
+  <h2>Partner with the club</h2>
+  <p>
+    The club welcomes other businesses and organisations that want to support polo and the Manipuri pony.
+    Partners are featured on this website and in the club’s stories and pages.
+  </p>
+  {site.email ? <p>Write to the club at <a href={`mailto:${site.email}`}>{site.email}</a>.</p> : <Todo>Club contact email for partnership enquiries.</Todo>}
+  <Todo label="Before publishing">This page goes live only with the joint announcement, after the MoU is signed. Wording to be approved by the club. Unibrow Studio’s web link, if it has one.</Todo>
+</Base>

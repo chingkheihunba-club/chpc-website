@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import Todo from '../components/Todo.astro';
+import { site } from '../config';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import crestWhite from '../assets/logos/chpc-crest-white.png';
+
+const posts = (await getCollection('news', ({ data }) => data.approved))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+const fmt = (d: Date) => d.toLocaleDateString('en-GB').replaceAll('/', '-');
+---
+<Base>
+  <section class="hero" slot="hero">
+    <div class="wrap">
+      <div>
+        <h1>{site.name}</h1>
+        <p>{site.tagline}.</p>
+        <a class="btn" href="/about/">About the club</a>
+      </div>
+      <Image class="crest" src={crestWhite} alt="The club crest: a rider clearing a fence" width={1040} loading="eager" />
+    </div>
+  </section>
+
+  <div class="highlight">
+    <span class="kicker">Governor’s Cup 2026</span>
+    <strong>Men’s and women’s champions.</strong>{' '}
+    On 28-02-2026 at Mapal Kangjeibung, the club won both finals: the men beat X-Polo Club 7–6 and the women beat
+    the Assam Rifles Women’s Polo Team 6–2. <a href="/honours/">See the club’s honours →</a>
+  </div>
+
+  <h2>The club</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Who we are</h3>
+      <p>A polo and equestrian club from Kongpal, Imphal East, playing in Manipur’s state tournaments since 1995.</p>
+      <a class="more" href="/about/">About the club →</a>
+    </div>
+    <div class="card">
+      <h3>The team</h3>
+      <p>The players who carry the club’s name through the 2026–27 season.</p>
+      <a class="more" href="/team/">Meet the team →</a>
+    </div>
+    <div class="card">
+      <h3>The ponies</h3>
+      <p>From one pony, Nongshaba, in 1996 to 80 horses by 2018.</p>
+      <a class="more" href="/ponies/">The ponies →</a>
+    </div>
+  </div>
+
+  <h2>This season</h2>
+  <p>The club’s 2026–27 tournaments, with dates as the associations announce them.</p>
+  <p><a class="more" href="/season/">Season calendar →</a></p>
+
+  <h2>Latest from the club</h2>
+  {posts.length === 0 ? (
+    <p class="muted">News and stories will appear here.</p>
+  ) : (
+    <div class="grid">
+      {posts.map((p) => (
+        <div class="card">
+          <p class="muted">{fmt(p.data.date)}</p>
+          <h3><a href={`/news/${p.id}/`}>{p.data.title}</a></h3>
+          <p>{p.data.summary}</p>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <Todo>A team photo for the home page, and a clean (vector) file of the crest. The crest here is traced from the old logo.</Todo>
+</Base>

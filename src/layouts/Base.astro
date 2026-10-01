@@ -1,0 +1,84 @@
+---
+import '@fontsource/libre-baskerville/700.css';
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+import { Image } from 'astro:assets';
+import crestWhite from '../assets/logos/chpc-crest-white.png';
+import PartnerLogos from '../components/PartnerLogos.astro';
+import { site, nav } from '../config';
+
+interface Props { title?: string; description?: string }
+const { title, description = `${site.name}, ${site.tagline.toLowerCase()}.` } = Astro.props;
+const pageTitle = title ? `${title} · ${site.name}` : site.name;
+const path = Astro.url.pathname;
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#b3121b" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {!site.launched && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">
+          <Image src={crestWhite} alt="" height={92} loading="eager" />
+          <span class="name">{site.name}<small>{site.place}</small></span>
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          <ul>
+            {nav.map((item) => (
+              <li><a href={item.href} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div class="trim" aria-hidden="true"></div>
+
+    <slot name="hero" />
+
+    <main>
+      <div class="wrap">
+        <slot />
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="trim" aria-hidden="true"></div>
+      <div class="wrap inner">
+        <div class="cols">
+          <div>
+            <Image class="crest" src={crestWhite} alt={site.name} width={300} />
+            <p>{site.address}</p>
+            {site.email && <p><a href={`mailto:${site.email}`}>{site.email}</a></p>}
+            {site.phone && <p>{site.phone}</p>}
+          </div>
+          <div>
+            <h2>Follow the club</h2>
+            <p>
+              {site.social.instagram && <><a href={site.social.instagram}>Instagram</a><br /></>}
+              {site.social.facebook && <><a href={site.social.facebook}>Facebook</a><br /></>}
+              {site.social.youtube && <a href={site.social.youtube}>YouTube</a>}
+              {!site.social.instagram && !site.social.facebook && !site.social.youtube && <span>Links coming soon.</span>}
+            </p>
+          </div>
+          <div>
+            <h2>Club partners</h2>
+            <PartnerLogos />
+          </div>
+        </div>
+        <p class="legal">© {year} {site.name}. Website managed by Unibrow Studio for the club.</p>
+      </div>
+    </footer>
+  </body>
+</html>

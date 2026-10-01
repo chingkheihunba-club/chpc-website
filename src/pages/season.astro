@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { season } from '../data/season';
+---
+<Base title="Season" description={`Chingkhei Hunba Polo Club ${season.label} season calendar.`}>
+  <PageHeader title={`Season ${season.label}`} lede="The tournaments the club plans to play this season. Dates are added as the associations announce them." />
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Tournament</th><th>Dates</th><th>Venue</th><th>Result</th></tr></thead>
+      <tbody>
+        {season.fixtures.map((f) => (
+          <tr>
+            <td>{f.tournament}</td>
+            <td>{f.dates || 'To be announced'}</td>
+            <td>{f.venue || '—'}</td>
+            <td>{f.result || '—'}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</Base>
