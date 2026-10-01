@@ -129,3 +129,23 @@ td.result { font-weight: 700; color: var(--red); white-space: nowrap; }
 .partner-card .logo-tile img { max-height: 130px; max-width: 80%; }
 .partner-card h3 { margin-top: 0; }
 .club-src { color: var(--ink-soft); font-style: italic; }
+
+/* Team page — player profiles */
+.squad { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); margin-top: 1.5rem; }
+.player { background: var(--card); border: 1px solid var(--line); border-top: 3px solid var(--red); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
+.player-photo { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+.player-photo.initials { aspect-ratio: 5/2; display: grid; place-items: center; background: var(--lattice), var(--blue); color: #fff; font-family: var(--font-head); font-size: 2.6rem; letter-spacing: .04em; }
+.player-body { padding: 1.1rem 1.25rem 1.25rem; }
+.player h3 { margin: 0 0 .15rem; font-size: 1.2rem; }
+.press-name { margin: 0 0 .8rem; color: var(--ink-soft); font-size: .9rem; }
+.facts { display: grid; grid-template-columns: auto 1fr; gap: .3rem .9rem; margin: 0 0 .9rem; font-size: .95rem; }
+.facts dt { color: var(--ink-soft); font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; padding-top: .15rem; }
+.facts dd { margin: 0; }
+.player blockquote { margin: 0 0 .9rem; padding-left: .8rem; border-left: 3px solid var(--red); font-style: italic; }
+.player h4 { margin: .4rem 0 .4rem; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--navy); }
+.highlights { margin: 0; padding-left: 1.1rem; font-size: .95rem; }
+.highlights li { margin-bottom: .45rem; }
+.highlights .src { font-size: .8rem; white-space: nowrap; }
+.highlights span.src { color: var(--ink-soft); font-style: italic; white-space: normal; }
+.player-social { display: flex; gap: .9rem; margin: .8rem 0 0; font-weight: 600; font-size: .92rem; }
+.player .todo { margin-bottom: 0; }

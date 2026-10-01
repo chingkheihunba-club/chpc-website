@@ -22,6 +22,7 @@ npm run preview    # serve the built site locally
 | Colours (from the club's jerseys and crest) and fonts | `src/styles/global.css` (top of file) |
 | Club crest and partner logos | `src/assets/logos/` |
 | Header and footer (partner logos) | `src/layouts/Base.astro` |
+| Player profiles (Team page) | `src/data/players.ts`; photos in `src/assets/players/<id>.jpg` |
 | Honours table | `src/data/honours.ts` |
 | Season calendar | `src/data/season.ts` |
 | News and stories (one Markdown file per post) | `src/content/news/` |
