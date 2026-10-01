@@ -49,3 +49,7 @@ npm run preview    # serve the built site locally
 ## Accounts
 
 The GitHub repo, Netlify site and domain belong to the club, registered under the club's own email. Unibrow Studio manages them and hands over all credentials if the association ends. Keep the account inventory in `07_Digital_Setup/`.
+
+## Committing
+
+The repo is private on Netlify's free plan, which builds only commits authored by the club's own GitHub account. In GitHub Desktop: Repository → Repository settings → Git config → Use a local Git config → name `Chingkhei Hunba Polo Club`, email `chingkheihunbapoloclub@gmail.com`. Push with the Eartheners login as collaborator as usual. Work on `preview` (free branch deploys); `main` is production.
