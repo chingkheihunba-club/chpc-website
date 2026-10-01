@@ -52,4 +52,4 @@ The GitHub repo, Netlify site and domain belong to the club, registered under th
 
 ## Committing
 
-The repo is private on Netlify's free plan, which builds only commits authored by the club's own GitHub account. In GitHub Desktop: Repository → Repository settings → Git config → Use a local Git config → name `Chingkhei Hunba Polo Club`, email `chingkheihunbapoloclub@gmail.com`. Push with the Eartheners login as collaborator as usual. Work on `preview` (free branch deploys); `main` is production.
+The repo is **public** (made public 01-10-2026). Netlify's free plan builds a private repo only from pushes by the account that owns the Netlify project, and DK pushes from the Eartheners login as a collaborator. Keep secrets, bank details and personal contact details out of this repo. Commits are authored as the club (local Git config: `Chingkhei Hunba Polo Club`, `chingkheihunbapoloclub@gmail.com`). Work on `preview` (free branch deploys); `main` is production.
