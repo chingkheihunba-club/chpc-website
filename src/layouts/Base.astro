@@ -1,24 +1,35 @@
 ---
-import '@fontsource/libre-baskerville/700.css';
-import '@fontsource-variable/inter';
-import '../styles/global.css';
+import '@fontsource-variable/big-shoulders-display';
+import '@fontsource-variable/instrument-sans';
+import '../styles/site.css';
 import { Image } from 'astro:assets';
 import crestWhite from '../assets/logos/chpc-crest-white.png';
-import PartnerLogos from '../components/PartnerLogos.astro';
-import { site, nav } from '../config';
+import eartheners from '../assets/logos/eartheners-logo-notag.png';
+import unibrow from '../assets/logos/unibrow-logo.png';
+import { site } from '../config';
 
 interface Props { title?: string; description?: string }
-const { title, description = `${site.name}, ${site.tagline.toLowerCase()}.` } = Astro.props;
-const pageTitle = title ? `${title} · ${site.name}` : site.name;
+const { title, description = `${site.name}: polo and horsemanship from Kongpal, Imphal East, since 1995.` } = Astro.props;
+const pageTitle = title ? `${title} | ${site.name}` : site.name;
 const path = Astro.url.pathname;
 const year = new Date().getFullYear();
+const nav = [
+  { href: '/team/', label: 'Team' },
+  { href: '/club/', label: 'The Club' },
+  { href: '/season/', label: 'Season' },
+  { href: '/news/', label: 'News' },
+  { href: '/gallery/', label: 'Gallery' },
+  { href: '/partners/', label: 'Partners' },
+  { href: '/contact/', label: 'Contact' },
+];
+const current = (href: string) => (path === href || path.startsWith(href) ? 'page' : undefined);
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#b3121b" />
+    <meta name="theme-color" content="#c4161c" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     {!site.launched && <meta name="robots" content="noindex, nofollow" />}
@@ -26,58 +37,66 @@ const year = new Date().getFullYear();
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content={new URL('/og-default.jpg', Astro.site ?? Astro.url).href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
+    <a class="skip" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="wrap">
-        <a class="brand" href="/">
-          <Image src={crestWhite} alt="" height={92} loading="eager" />
-          <span class="name">{site.name}<small>{site.place}</small></span>
+        <a class="brand" href="/" aria-label={`${site.name}, home`}>
+          <Image src={crestWhite} alt="" height={76} loading="eager" />
+          <span>Chingkhei Hunba</span>
         </a>
-        <nav class="site-nav" aria-label="Main">
-          <ul>
-            {nav.map((item) => (
-              <li><a href={item.href} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a></li>
-            ))}
-          </ul>
+        <nav class="nav" aria-label="Main">
+          {nav.map((n) => <a href={n.href} aria-current={current(n.href)}>{n.label}</a>)}
         </nav>
+        <details class="menu">
+          <summary>Menu</summary>
+          <nav aria-label="Main (mobile)">
+            <a href="/" aria-current={path === '/' ? 'page' : undefined}>Home</a>
+            {nav.map((n) => <a href={n.href} aria-current={current(n.href)}>{n.label}</a>)}
+          </nav>
+        </details>
       </div>
     </header>
-    <div class="trim" aria-hidden="true"></div>
 
-    <slot name="hero" />
-
-    <main>
-      <div class="wrap">
-        <slot />
-      </div>
+    <main id="main">
+      <slot />
     </main>
 
     <footer class="site-footer">
-      <div class="trim" aria-hidden="true"></div>
-      <div class="wrap inner">
-        <div class="cols">
+      <div class="wrap">
+        <div class="foot-grid">
           <div>
-            <Image class="crest" src={crestWhite} alt={site.name} width={300} />
+            <Image class="foot-crest" src={crestWhite} alt="Chingkhei Hunba Polo Club crest" height={128} />
+            <p><strong>{site.name}</strong></p>
             <p>{site.address}</p>
-            {site.email && <p><a href={`mailto:${site.email}`}>{site.email}</a></p>}
-            {site.phone && <p>{site.phone}</p>}
           </div>
           <div>
-            <h2>Follow the club</h2>
+            <h2>Get in touch</h2>
+            {site.email && <p><a href={`mailto:${site.email}`}>{site.email}</a></p>}
+            {site.phone && <p><a href={`tel:${site.phone.replaceAll(' ', '')}`}>{site.phone}</a></p>}
             <p>
-              {site.social.instagram && <><a href={site.social.instagram}>Instagram</a><br /></>}
-              {site.social.facebook && <><a href={site.social.facebook}>Facebook</a><br /></>}
-              {site.social.youtube && <a href={site.social.youtube}>YouTube</a>}
-              {!site.social.instagram && !site.social.facebook && !site.social.youtube && <span>Links coming soon.</span>}
+              {site.social.instagram && <a href={site.social.instagram}>Instagram</a>}
+              {site.social.instagram && site.social.facebook && ', '}
+              {site.social.facebook && <a href={site.social.facebook}>Facebook</a>}
             </p>
           </div>
           <div>
-            <h2>Club partners</h2>
-            <PartnerLogos />
+            <h2>Season partners</h2>
+            <div class="partner-logos">
+              <a href="https://earthene.rs" aria-label="Eartheners"><Image src={eartheners} alt="Eartheners" height={128} /></a>
+              <a href="https://unibrow.studio" aria-label="Unibrow Studio"><Image src={unibrow} alt="Unibrow Studio" height={128} /></a>
+            </div>
           </div>
         </div>
-        <p class="legal">© {year} {site.name}. Website managed by Unibrow Studio for the club.</p>
+        <div class="legal">
+          <p>© {year} {site.name}. Registered society, Regn. No. 411/SR(IE)/2013.</p>
+          <p>Website managed by <a href="https://unibrow.studio">Unibrow Studio</a> for the club.</p>
+        </div>
       </div>
     </footer>
   </body>

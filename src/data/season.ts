@@ -16,7 +16,7 @@ export const season = {
     { tournament: 'Dr Ksh Chourjit Singh Inter-District Polo Tournament', dates: '', venue: '', result: '' },
     { tournament: 'Governor’s Cup Invitation Polo Tournament', dates: '', venue: '', result: '' },
     { tournament: 'District Level Polo Tournament', dates: '', venue: '', result: '' },
-    { tournament: 'N. Hazari & Dr N. Tombi State Polo Tournament', dates: '', venue: '', result: '' },
-    { tournament: 'Yaingpokpi Polo Tournament', dates: '', venue: '', result: '' },
+    { tournament: 'N. Hazari & Dr N. Tombi State Polo Tournament', dates: 'Postponed; new dates to be announced', venue: '', result: '' },
+    { tournament: 'Yaingangpokpi Polo Tournament', dates: '', venue: '', result: '' },
   ] as Fixture[],
 };

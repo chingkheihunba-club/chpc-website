@@ -1,11 +1,11 @@
 ---
 title: "A season partnership with Eartheners and Unibrow Studio"
-date: 2026-10-04
+date: 2026-10-03
 summary: "The club has signed a Memorandum of Understanding with two Imphal businesses for the 2026–27 season, and the team has its new jerseys."
 approved: false   # set to true only after the club approves this post (launch day)
 ---
 
-On 4 October 2026 the club signed a Memorandum of Understanding with Eartheners and Unibrow Studio for the
+On 3 October 2026 the club signed a Memorandum of Understanding with Eartheners and Unibrow Studio for the
 2026–27 polo season, which runs from October 2026 to April 2027. The team received its new jerseys on the
 same afternoon, and this website went live.
 

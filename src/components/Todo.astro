@@ -1,8 +1,0 @@
----
-// Marks something still to be confirmed or supplied by the club.
-// Visible on purpose: the club reviews the preview and sees exactly what is missing.
-// Before launch, search the project for "<Todo" and resolve every one.
-interface Props { label?: string }
-const { label = 'To confirm with the club' } = Astro.props;
----
-<div class="todo"><strong>{label}</strong><slot /></div>

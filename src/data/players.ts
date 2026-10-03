@@ -21,13 +21,15 @@ export type Player = {
   name: string;            // as the player wants it on the site
   short: string;           // the name he goes by, used in short labels
   pressName: string;       // as it appears in match reports, e.g. "Th. Kaoba"
-  position: string;        // e.g. "No. 2", "Back"
+  position: string;        // jersey number for 2026–27, e.g. "1"
   withClubSince: string;   // year, or short phrase
   pony: string;            // the pony they ride most, if they want it named
   alsoRides: string;       // other disciplines, e.g. "Tent pegging, show jumping"
   inTheirWords: string;    // one line, in the player's own words
   highlights: Highlight[];
   social: { instagram?: string; facebook?: string; youtube?: string };
+  photoFocus?: string;     // where the jersey card zooms in on his photo, e.g. '50% 20%' (x y)
+  photoZoom?: number;      // how far the jersey card zooms in (default 1.45)
   show: boolean;
 };
 
@@ -68,10 +70,11 @@ const SANGAI_IE_DISTRICT_2022: Source = {
 export const players: Player[] = [
   {
     id: 'kaoba',
+    photoFocus: '38% 14%',
     short: 'Kaoba',
     name: 'Thoudam Kaoba Singh',
     pressName: 'Th. Kaoba',
-    position: '',
+    position: '1',
     withClubSince: '1996, when he rode the club’s first pony, Nongshaba',
     pony: 'Poirou',
     alsoRides: 'Tent pegging, show jumping, arambai; teaches riding and polo to young riders',
@@ -90,7 +93,7 @@ export const players: Player[] = [
     short: 'Rozer',
     name: 'Okram Rozer Singh',
     pressName: 'O. Rozer',
-    position: '',
+    position: '2',
     withClubSince: '',
     pony: '',
     alsoRides: '',
@@ -104,10 +107,12 @@ export const players: Player[] = [
   },
   {
     id: 'leishemba',
+    photoFocus: '47% 50%',
+    photoZoom: 2.1,
     short: 'Leishemba',
     name: 'Leishemba Takhellambam',
     pressName: 'Leishemba',
-    position: '',
+    position: '3',
     withClubSince: '2017',
     pony: '',
     alsoRides: 'Tent pegging',
@@ -123,10 +128,11 @@ export const players: Player[] = [
   },
   {
     id: 'kokeshwor',
+    photoFocus: '52% 18%',
     short: 'Kokeshwor',
     name: 'Laiphrakpam Kokeshwor Singh',
     pressName: '',
-    position: '',
+    position: '4',
     withClubSince: '2026 (new to the club this season)',
     pony: '',
     alsoRides: 'Show jumping',
@@ -140,7 +146,7 @@ export const players: Player[] = [
     short: 'Manisana',
     name: 'Thoudam Manisana Singh',
     pressName: 'Th. Manisana',
-    position: '',
+    position: '5',
     withClubSince: '',
     pony: '',
     alsoRides: '',
@@ -158,7 +164,7 @@ export const players: Player[] = [
     short: 'Bhupendrajit',
     name: 'Mutum Bhupendrajit Singh',
     pressName: 'M. Bhupendrajit',
-    position: '',
+    position: '6',
     withClubSince: '',
     pony: '',
     alsoRides: '',
@@ -174,7 +180,7 @@ export const players: Player[] = [
 
 // Fields every profile should eventually have. Used to list what is still missing.
 export const expected: { key: keyof Player; label: string }[] = [
-  { key: 'position', label: 'position' },
+  { key: 'position', label: 'jersey number' },
   { key: 'withClubSince', label: 'year joined the club' },
   { key: 'pony', label: 'pony' },
   { key: 'inTheirWords', label: 'a line in his own words' },

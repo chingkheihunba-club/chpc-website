@@ -1,22 +1,55 @@
 ---
 import Base from '../../layouts/Base.astro';
-import PageHeader from '../../components/PageHeader.astro';
 import { getCollection } from 'astro:content';
+import { media } from '../../data/media';
+import { Image } from 'astro:assets';
 const posts = (await getCollection('news', ({ data }) => data.approved))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const press = [...media].sort((a, b) => b.date.localeCompare(a.date));
 const fmt = (d: Date) => d.toLocaleDateString('en-GB').replaceAll('/', '-');
 ---
-<Base title="News" description="Match reports and stories from Chingkhei Hunba Polo Club.">
-  <PageHeader title="News and stories" lede="Match reports, player stories and news from the club." />
-  {posts.length === 0 ? <p class="muted">Nothing published yet.</p> : (
-    <div class="grid">
-      {posts.map((p) => (
-        <div class="card">
-          <p class="muted">{fmt(p.data.date)}</p>
-          <h3><a href={`/news/${p.id}/`}>{p.data.title}</a></h3>
-          <p>{p.data.summary}</p>
-        </div>
-      ))}
+<Base title="News" description="Updates and stories from Chingkhei Hunba Polo Club, and press coverage of the club.">
+  <section class="page-head">
+    <div class="wrap">
+      <h1>News</h1>
+      <p>Updates and stories from the club, and what the papers have written about it.</p>
     </div>
+  </section>
+
+  {posts.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><h2>From the club</h2></div>
+        <ul class="press">
+          {posts.map((p) => (
+            <li class="club-post">
+              {p.data.photos[0] ? <a class="thumb" href={`/news/${p.id}/`}><Image src={p.data.photos[0]} alt="" widths={[360, 600]} sizes="(max-width: 640px) 100vw, 220px" /></a> : <div class="src">Club news</div>}
+              <div>
+                <time class="post-date">{fmt(p.data.date)}</time>
+                <h3><a href={`/news/${p.id}/`}>{p.data.title}</a></h3>
+                <p>{p.data.summary}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   )}
+
+  <section class:list={['section', { 'section--sky': posts.length > 0 }]}>
+    <div class="wrap">
+      <div class="section-head"><h2>In the media</h2><p>Reports that name the club, newest first. Links open the newspaper’s site.</p></div>
+      <ul class="press">
+        {press.map((m) => (
+          <li>
+            <div class="src">{m.outlet}<time>{m.when}</time></div>
+            <div>
+              <h3><a href={m.url} rel="noopener" target="_blank">{m.title}</a></h3>
+              <p>{m.brief}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
 </Base>

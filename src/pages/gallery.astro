@@ -1,14 +1,32 @@
 ---
 import Base from '../layouts/Base.astro';
-import PageHeader from '../components/PageHeader.astro';
-import Todo from '../components/Todo.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { Image, getImage } from 'astro:assets';
+import { photos } from '../data/gallery';
+const items = await Promise.all(
+  photos.map(async (p) => ({ ...p, full: await getImage({ src: p.src, width: Math.min(p.src.width, 1600), format: 'webp' }) })),
+);
 ---
-<Base title="Gallery" description="Photos and video from Chingkhei Hunba Polo Club.">
-  <PageHeader title="Gallery" lede="Matches, practice and the ponies, in photos and video." />
-  <Todo>Photos from the club’s archive and from match shoots. Only photos the club has approved, and with the consent of the players shown.</Todo>
-  <div class="grid">
-    {Array.from({ length: 6 }).map(() => <div class="placeholder-img">Photo</div>)}
-  </div>
-  <h2>Video</h2>
-  <Todo>YouTube embeds once the club’s channel is set up.</Todo>
+<Base title="Gallery" description="Photos of Chingkhei Hunba Polo Club at Mapal Kangjeibung and around Manipur.">
+  <section class="page-head">
+    <div class="wrap">
+      <h1>Gallery</h1>
+      <p>Match days, prize days and the people of the club. More from this season’s matches as they are played.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      <div class="photo-list" data-lightbox>
+        {items.map((p, i) => (
+          <figure>
+            <a href={p.full.src} data-caption={p.caption} data-when={p.when} aria-label={`Open a larger version: ${p.caption}`}>
+              <Image src={p.src} alt={p.alt} widths={[480, 900]} sizes="(max-width: 700px) 100vw, 400px" loading={i < 3 ? 'eager' : 'lazy'} />
+            </a>
+            <figcaption>{p.when && <time>{p.when}</time>}{p.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+  <Lightbox />
 </Base>

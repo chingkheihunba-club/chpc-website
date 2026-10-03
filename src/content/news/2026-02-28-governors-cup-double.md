@@ -1,8 +1,21 @@
 ---
-title: "A double at the Governor’s Cup"
+title: "Two finals, one afternoon"
 date: 2026-02-28
-summary: "The club won both the men’s and women’s Governor’s Cup finals at Mapal Kangjeibung on the same afternoon."
-approved: false   # set to true only after the club approves this post
+summary: "On 28 February 2026 at Mapal Kangjeibung, the club played both Governor’s Cup finals, men’s and women’s, and won them both."
+# Added for the preview by DK, 03-10-2026. Record the club's approval before launch.
+approved: true
+cover: 1
+photoCaption: "Governor’s Cup finals, Mapal Kangjeibung, 28-02-2026."
+photoCaptions:
+  - "Both sides with both trophies after the finals, with the scoreboard behind them."
+  - "Thoudam Tanna, captain of the women’s side, with the club flag at Mapal Kangjeibung."
+  - "Both sides on the stage with the organisers and guests."
+  - "The men’s side with the 32nd Governor’s Cup Invitation trophy."
+photos:
+  - ../../assets/news/2026-02-28-gc-double-1-both-sides-field.jpg
+  - ../../assets/news/2026-02-28-gc-double-2-tanna-flag.jpg
+  - ../../assets/news/2026-02-28-gc-double-3-stage-both-sides.jpg
+  - ../../assets/news/2026-02-28-gc-double-4-stage-men.jpg
 sources:
   - label: "The Sangai Express, 28-02-2026"
     url: "https://www.thesangaiexpress.com/Encyc/2026/3/1/by-our-staff-reporter-imphal-feb-28-chingkheihunba-polo-club-emerged-as-the-champions-of-both-the-32nd-governo.html"
@@ -10,15 +23,21 @@ sources:
     url: "https://www.uniindia.com/~/chingkheihunba-polo-club-lifts-men-women-governor-s-polo-trophies/Sports/news/3758005.html"
 ---
 
-On 28 February 2026 the club played two finals at Mapal Kangjeibung and won both.
+On 28 February 2026, at Mapal Kangjeibung, the club played two Governor’s Cup finals on the same afternoon,
+and won them both.
 
-The women’s final came first. Against the Assam Rifles Women’s Polo Team, the score stood level at 2–2 after
-three chukkers. The fourth belonged to the club: three goals without reply, and a 6–2 win for the 21st
-Governor’s Cup Women’s title.
+The women played first. Captained by Thoudam Tanna, they met the Assam Rifles Women’s Polo Team, and the
+score stood level at 2–2 after three chukkers. The fourth belonged to the club: three goals without reply,
+and a 6–2 win for the 21st Governor’s Cup Women’s Polo Tournament.
 
-The men’s final that followed was a rematch with X-Polo Club, Wangkhei, who had beaten the club in the Dr Ksh
-Chourjit Singh Inter-District final a fortnight earlier. This time the club took an early lead, X-Polo came
-back in the third chukker, and the club settled it in the fourth to win the 32nd Governor’s Cup Invitation
-title 7–6.
+Then came the men, in a rematch. A fortnight earlier, X-Polo Club, Wangkhei, had beaten them in the final of
+the Dr Ksh Chourjit Singh Inter-District tournament. This time the club took an early lead, X-Polo came back
+in the third chukker, and it came down to the fourth. Leishemba’s goal made it 7–6 and won the 32nd
+Governor’s Cup Invitation title. He scored three in the final, Kaoba two and Rozer one.
+[See the winning goal, frame by frame.](/news/2026-02-28-the-winning-goal/)
 
-*Draft: scorers and player names to be added once the club confirms them and the players agree.*
+As the light went, both sides gathered on the ground with both trophies, the scoreboard still showing the
+last result of the day behind them, and then on the stage with the organisers and guests.
+
+Our thanks to the Manipur Horse Riding & Polo Association for the tournament, to both our opponents for two
+hard-fought finals, and to everyone who came to Mapal Kangjeibung to watch.

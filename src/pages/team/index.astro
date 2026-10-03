@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import Jersey from '../../components/Jersey.astro';
+import { players } from '../../data/players';
+const squad = players.filter((p) => p.show).sort((a, b) => Number(a.position) - Number(b.position));
+---
+<Base title="Team" description="The six players of Chingkhei Hunba Polo Club for the 2026–27 season.">
+  <section class="page-head">
+    <div class="wrap">
+      <h1>The team</h1>
+      <p>Six players for the 2026–27 season, October to April. Choose a jersey to read his profile.</p>
+    </div>
+  </section>
+  <section class="section section--sky">
+    <div class="wrap">
+      <div class="squad">
+        {squad.map((p) => <Jersey player={p} />)}
+      </div>
+    </div>
+  </section>
+</Base>

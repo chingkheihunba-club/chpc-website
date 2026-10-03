@@ -18,23 +18,27 @@ npm run preview    # serve the built site locally
 | What | File |
 |---|---|
 | Club name, address, contact, social links, **launch switch** | `src/config.ts` |
-| Menu | `src/config.ts` (`nav`) |
-| Colours (from the club's jerseys and crest) and fonts | `src/styles/global.css` (top of file) |
+| Menu, header, footer (partner logos and links) | `src/layouts/Base.astro` |
+| Colours (kit red, royal blue, crest navy) and fonts | `src/styles/site.css` (top of file) |
 | Club crest and partner logos | `src/assets/logos/` |
-| Header and footer (partner logos) | `src/layouts/Base.astro` |
-| Player profiles (Team page) | `src/data/players.ts`; photos in `src/assets/players/<id>.jpg` |
-| Honours table | `src/data/honours.ts` |
+| Players (jerseys on Home and Team, one page each) | `src/data/players.ts`; photos in `src/assets/players/<id>.jpg` (appear automatically) |
+| Honours (on The Club page) | `src/data/honours.ts` |
+| Press coverage (News page and Home) | `src/data/media.ts` |
 | Season calendar | `src/data/season.ts` |
-| News and stories (one Markdown file per post) | `src/content/news/` |
+| Gallery photos | `src/data/gallery.ts`; files in `src/assets/photos/` |
+| Club news and stories (one Markdown file per post) | `src/content/news/` |
 | Pages | `src/pages/` |
-| Images, logos, favicon | `public/` |
+| Old page addresses redirected to new ones | `public/_redirects` |
+
+The current design replaced the first one on 03-10-2026. The first design's source is in
+`07_Digital_Setup/_Archive/2026-10-03_chpc-website-classic/`.
 
 ## House rules for content
 
 - **Nothing about the club goes live without the club's approval.** A news post is built only when its front matter says `approved: true`.
 - **Players appear only with their own consent** — name, photo, profile, story.
-- **Every fact has a basis.** Honours rows carry a published source or are marked as club-stated. Things the club hasn't confirmed (founding year, name meaning, office bearers) stay out.
-- **`<Todo>` boxes** mark what the club still has to supply. They are visible on the preview on purpose. Before launch, search for `<Todo` and resolve every one.
+- **Every fact has a basis.** Honours rows carry a published source or are marked as club-stated. Founding year, founders, name meaning and office bearers are as the club gave them on its information form (03-10-2026).
+- Missing player details are simply not shown; nothing on the site is a placeholder.
 - Dates on the site are dd-mm-yyyy. The club name is always "Chingkhei Hunba Polo Club", or "CHPC".
 - The site carries the club's own identity; Eartheners and Unibrow Studio appear as partners in the footer and on the Partners page only.
 

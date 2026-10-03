@@ -1,25 +1,44 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
-
+import { Image, getImage } from 'astro:assets';
+import Lightbox from '../../components/Lightbox.astro';
 export async function getStaticPaths() {
   const posts = await getCollection('news', ({ data }) => data.approved);
   return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
 }
 const { post } = Astro.props;
 const { Content } = await render(post);
+const shots = await Promise.all(post.data.photos.map(async (src) => ({ src, wide: src.width > src.height, full: (await getImage({ src, width: Math.min(src.width, 1600), format: 'webp' })).src })));
 const fmt = (d: Date) => d.toLocaleDateString('en-GB').replaceAll('/', '-');
 ---
 <Base title={post.data.title} description={post.data.summary}>
-  <article>
-    <p class="muted">{fmt(post.data.date)}</p>
-    <h1>{post.data.title}</h1>
-    <Content />
-    {post.data.sources.length > 0 && (
-      <>
-        <h2>Sources</h2>
-        <ul>{post.data.sources.map((s) => <li><a href={s.url} rel="noopener">{s.label}</a></li>)}</ul>
-      </>
-    )}
-  </article>
+  <section class="page-head">
+    <div class="wrap">
+      <h1 style="font-size: clamp(2.6rem, 6vw, 4.8rem)">{post.data.title}</h1>
+      <p>{fmt(post.data.date)}</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap article">
+      <Content />
+      {shots.length > 0 && (
+        <div class="post-photos" data-lightbox>
+          {shots.map((x, i) => (
+            <a href={x.full} class:list={[{ wide: x.wide }]} data-caption={post.data.photoCaptions[i] || post.data.photoCaption}>
+              <Image src={x.src} alt={post.data.photoCaptions[i] || `${post.data.photoCaption} Photo ${i + 1} of ${shots.length}.`} widths={[480, 900]} sizes="(max-width: 700px) 100vw, 50vw" />
+            </a>
+          ))}
+        </div>
+      )}
+      {post.data.sources.length > 0 && (
+        <>
+          <h2 style="font-size:2rem;margin-top:2.5rem">Sources</h2>
+          <ul>{post.data.sources.map((s) => <li><a href={s.url} rel="noopener">{s.label}</a></li>)}</ul>
+        </>
+      )}
+      <p style="margin-top:2rem"><a href="/news/">All news</a></p>
+    </div>
+  </section>
+  {shots.length > 0 && <Lightbox />}
 </Base>

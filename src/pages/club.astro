@@ -1,0 +1,94 @@
+---
+import Base from '../layouts/Base.astro';
+import { honours, type Honour } from '../data/honours';
+const sorted = (sport: Honour['sport']) =>
+  honours.filter((h) => h.sport === sport).sort((a, b) => b.sortKey.localeCompare(a.sortKey));
+const sections = [
+  { title: 'Polo', rows: sorted('polo') },
+  { title: 'Equestrian', rows: sorted('equestrian') },
+];
+const bearers = [
+  ['Th. Thoinu Devi', 'President'],
+  ['Thongam Jotin Singh', 'Secretary'],
+  ['M. Bidyananda Singh', 'Treasurer'],
+  ['Ksh. Dolen Singh', 'Executive member'],
+  ['Th. Kaoba Singh', 'Executive member'],
+  ['Th. Shamu Singh', 'Executive member'],
+  ['Th. Manisana Singh', 'Executive member'],
+];
+---
+<Base title="The Club" description="The story, ponies, people and honours of Chingkhei Hunba Polo Club, Kongpal, Imphal East.">
+  <section class="page-head">
+    <div class="wrap">
+      <h1>The club</h1>
+      <p>A polo and equestrian club from Kongpal, Imphal East, in Manipur’s state tournaments since 1995.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split prose">
+      <div>
+        <h2>How it began</h2>
+        <p>The club was started in 1995 by Th. Thoinu, Thongam Jotin, Th. Kaoba and M. Bidyananda, out of a love for ponies, and to promote horse riding and the traditional pony sports of Manipur. Its name, Chingkhei Hunba, means “Rising Sun”.</p>
+        <p>It became an affiliated club of the Manipur Horse Riding &amp; Polo Association on 15 August 1995, and plays in the calendars of the MHRPA and the All Manipur Polo Association. It is a registered society, based at Kongpal Kshetri Leikai.</p>
+      </div>
+      <div>
+        <h2>The ponies</h2>
+        <p>The club’s first pony, Nongshaba, was bought in 1996 with money its members put together, and was ridden by Th. Kaoba. He is remembered as gentle and patient with children, and easy to handle because of his calm.</p>
+        <p>By 2018 the club had 80 horses. Today it keeps about 100 Manipuri ponies, grazing at Yaralpat and around the Porompat area. The ponies the club is proudest of are Nongshaba, its first, and Meishaba.</p>
+      </div>
+      <div>
+        <h2>Riders of the future</h2>
+        <p>The club brings young people to the horse. It has given riding classes to students of Mega Manipur School, Assam Rifles Public School and Sishu Nistha Niketan, and in 2024 ran a seven-day riding course with the Ethno Heritage Council. Under Th. Kaoba, young members also learn to make saddles, whips and tack, and are coached in riding, arambai and pana kangjei.</p>
+      </div>
+      <div>
+        <h2>On the ground and beyond it</h2>
+        <p>The club’s riders and horses are invited to cultural and religious occasions across Manipur, among them Kwak Tanba, Mera Houchongba, Lai Haraoba, pana kangjei and arambai. It also takes polo to rural Manipur, with exhibition games using its own players, ponies and equipment.</p>
+        <p>Polo is played here as Sagol Kangjei, on the Manipuri pony. State finals are played at Mapal Kangjeibung in Imphal, widely described as the oldest polo ground still in use.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sky">
+    <div class="wrap">
+      <div class="section-head"><h2>Office bearers</h2></div>
+      <ul class="people">
+        {bearers.map(([name, role]) => <li>{name}<span>{role}</span></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="honours">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Honours</h2>
+        <p>Each result shows where it comes from: a newspaper report (linked), or the club’s own record.</p>
+      </div>
+      {sections.map((sec) => (
+        <>
+          <h3 style="margin: 2rem 0 1rem">{sec.title}</h3>
+          <div class="table-scroll">
+            <table class="honours">
+              <thead><tr><th>When</th><th>Result</th><th>Competition</th></tr></thead>
+              <tbody>
+                {sec.rows.map((r) => (
+                  <tr>
+                    <td class="when">{r.when}</td>
+                    <td class="res">{r.result}</td>
+                    <td class="event">
+                      {r.event}
+                      <small>
+                        {r.detail}{' '}
+                        {r.source?.url ? <a href={r.source.url} rel="noopener" target="_blank">{r.source.label}</a> : <span>{r.source?.label ?? 'Club record'}</span>}
+                      </small>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      ))}
+    </div>
+  </section>
+</Base>

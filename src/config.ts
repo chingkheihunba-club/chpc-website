@@ -12,9 +12,10 @@ export const site = {
   // so the Netlify preview can be shared with the club without appearing in search.
   launched: false,
 
-  // Club's official contact details. Phone still to be provided by the club.
-  email: 'chingkheihunbapoloclub@gmail.com',
-  phone: '',
+  // Club's public contact details, as given on the club's information form (03-10-2026).
+  // The club Gmail used for account registration stays private.
+  email: 'thoudamthoinu8@gmail.com',
+  phone: '+91 96122 70197',
   social: {
     instagram: 'https://www.instagram.com/chingkheihunba.club/',
     facebook: 'https://www.facebook.com/chingkheihunba.club',
