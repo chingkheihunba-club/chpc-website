@@ -90,6 +90,8 @@ export const players: Player[] = [
   },
   {
     id: 'rozer',
+    photoFocus: '66% 0%',
+    photoZoom: 1.2,
     short: 'Rozer',
     name: 'Okram Rozer Singh',
     pressName: 'O. Rozer',
