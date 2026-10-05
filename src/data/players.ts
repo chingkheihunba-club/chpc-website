@@ -161,8 +161,9 @@ export const players: Player[] = [
   },
   {
     id: 'bhupendrajit',
+    photoFocus: '53% 22%',
     short: 'Bhupendrajit',
-    name: 'Mutum Bhupendrajit Singh',
+    name: 'Mutum Bhupendrajit Meitei',
     pressName: 'M. Bhupendrajit',
     position: '6',
     withClubSince: '',

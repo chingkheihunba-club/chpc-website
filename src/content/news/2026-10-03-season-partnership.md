@@ -17,7 +17,7 @@ Unibrow Studio, a content studio from Imphal, will look after this website and t
 and YouTube pages, and photograph and film selected matches. The pages and the website belong to the club.
 
 The team for the season is Thoudam Kaoba Singh, Okram Rozer Singh, Leishemba Takhellambam, Laiphrakpam
-Kokeshwor Singh, Thoudam Manisana Singh and Mutum Bhupendrajit Singh. You can [meet them here](/team/).
+Kokeshwor Singh, Thoudam Manisana Singh and Mutum Bhupendrajit Meitei. You can [meet them here](/team/).
 
 The club welcomes other businesses and organisations that want to support polo and the Manipuri pony.
 See [Partners](/partners/).
