@@ -30,6 +30,7 @@ export type Player = {
   social: { instagram?: string; facebook?: string; youtube?: string };
   photoFocus?: string;     // where the jersey card zooms in on his photo, e.g. '50% 20%' (x y)
   photoZoom?: number;      // how far the jersey card zooms in (default 1.45)
+  photoCaptions?: Record<string, string>; // captions for the extra photos on his page, by file number, e.g. { '2': 'As a boy' }
   show: boolean;
 };
 
@@ -109,8 +110,8 @@ export const players: Player[] = [
   },
   {
     id: 'leishemba',
-    photoFocus: '47% 50%',
-    photoZoom: 2.1,
+    photoFocus: '52% 40%',
+    photoZoom: 1.15,
     short: 'Leishemba',
     name: 'Leishemba Takhellambam',
     pressName: 'Leishemba',
@@ -145,6 +146,11 @@ export const players: Player[] = [
   },
   {
     id: 'manisana',
+    photoFocus: '42% 9%',
+    photoCaptions: {
+      '2': 'Leading the field (number 7, in a tournament bib)',
+      '3': 'As a boy, leading his pony',
+    },
     short: 'Manisana',
     name: 'Thoudam Manisana Singh',
     pressName: 'Th. Manisana',
@@ -164,6 +170,10 @@ export const players: Player[] = [
   {
     id: 'bhupendrajit',
     photoFocus: '53% 22%',
+    photoCaptions: {
+      '2': 'Getting ready at the ground',
+      '3': 'On his pony',
+    },
     short: 'Bhupendrajit',
     name: 'Mutum Bhupendrajit Meitei',
     pressName: 'M. Bhupendrajit',
