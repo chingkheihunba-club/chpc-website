@@ -10,7 +10,7 @@ export const site = {
   // Keep false until the club has approved the content and DK gives the go-ahead.
   // While false, every page carries "noindex" and robots.txt blocks crawlers,
   // so the Netlify preview can be shared with the club without appearing in search.
-  launched: false,
+  launched: true,
 
   // Club's public contact details, as given on the club's information form (03-10-2026).
   // The club Gmail used for account registration stays private.
