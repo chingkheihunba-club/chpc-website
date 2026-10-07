@@ -132,6 +132,11 @@ export const players: Player[] = [
   {
     id: 'kokeshwor',
     photoFocus: '52% 18%',
+    photoCaptions: {
+      '3': 'On his pony, with his name across his shirt',
+      '4': 'Mallet up',
+      '5': 'In number 4, the number he wears for the club this season',
+    },
     short: 'Kokeshwor',
     name: 'Laiphrakpam Kokeshwor Singh',
     pressName: '',
