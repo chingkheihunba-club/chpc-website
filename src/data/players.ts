@@ -20,6 +20,7 @@ export type Player = {
   id: string;
   name: string;            // as the player wants it on the site
   short: string;           // the name he goes by, used in short labels
+  jerseyName?: string;     // name printed on his actual jersey, if different from short (e.g. a nickname)
   pressName: string;       // as it appears in match reports, e.g. "Th. Kaoba"
   position: string;        // jersey number for 2026–27, e.g. "1"
   withClubSince: string;   // year, or short phrase
@@ -113,6 +114,7 @@ export const players: Player[] = [
     photoFocus: '52% 40%',
     photoZoom: 1.15,
     short: 'Leishemba',
+    jerseyName: 'Koi Mangaang',
     name: 'Leishemba Takhellambam',
     pressName: 'Leishemba',
     position: '3',

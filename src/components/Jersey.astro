@@ -12,7 +12,7 @@ const photo = Object.entries(photos).find(([p]) => p.split('/').pop()!.split('.'
 ---
 <a class:list={['jersey', { 'has-photo': photo }]} href={`/team/${player.id}/`} aria-label={`${player.name}, number ${player.position}`}>
   {photo && <div class="photo"><Image src={photo} alt="" widths={[400, 700]} sizes="(max-width: 760px) 68vw, 380px" style={`transform-origin: ${player.photoFocus ?? '50% 25%'}; transform: scale(${player.photoZoom ?? 1.45})`} /></div>}
-  <span class="jersey-name">{player.short}</span>
+  <span class="jersey-name">{player.jerseyName ?? player.short}</span>
   <span class="jersey-num" aria-hidden="true">{player.position}</span>
   <span class="jersey-full">{player.name}</span>
 </a>
