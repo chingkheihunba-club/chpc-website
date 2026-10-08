@@ -3,12 +3,12 @@ import Base from '../../layouts/Base.astro';
 import { Image, getImage } from 'astro:assets';
 import Lightbox from '../../components/Lightbox.astro';
 import type { ImageMetadata } from 'astro';
-import { players, type Player } from '../../data/players';
+import { players, playerSlug, type Player } from '../../data/players';
 
 export function getStaticPaths() {
   const squad = players.filter((p) => p.show).sort((a, b) => Number(a.position) - Number(b.position));
   return squad.map((player, i) => ({
-    params: { id: player.id },
+    params: { id: playerSlug(player) },
     props: { player, prev: squad[i - 1] ?? null, next: squad[i + 1] ?? null },
   }));
 }
@@ -86,8 +86,8 @@ const links = Object.entries(player.social).filter(([, url]) => url);
     </div>
     <div class="wrap">
       <nav class="pager" aria-label="Other players">
-        {prev && <a href={`/team/${prev.id}/`}><small>Previous</small>{prev.position}. {prev.short}</a>}
-        {next && <a class="next" href={`/team/${next.id}/`}><small>Next</small>{next.position}. {next.short}</a>}
+        {prev && <a href={`/team/${playerSlug(prev)}/`}><small>Previous</small>{prev.position}. {prev.short}</a>}
+        {next && <a class="next" href={`/team/${playerSlug(next)}/`}><small>Next</small>{next.position}. {next.short}</a>}
       </nav>
     </div>
   </section>

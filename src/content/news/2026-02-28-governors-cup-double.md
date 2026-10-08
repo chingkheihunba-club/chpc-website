@@ -1,5 +1,6 @@
 ---
 title: "Two finals, one afternoon"
+slug: governors-cup-2026-men-women-champions   # web address: /news/governors-cup-2026-men-women-champions/
 date: 2026-02-28
 summary: "On 28 February 2026 at Mapal Kangjeibung, the club played both Governor’s Cup finals, men’s and women’s, and won them both."
 # Added for the preview by DK, 03-10-2026. Record the club's approval before launch.
@@ -34,7 +35,7 @@ Then came the men, in a rematch. A fortnight earlier, X-Polo Club, Wangkhei, had
 the Dr Ksh Chourjit Singh Inter-District tournament. This time the club took an early lead, X-Polo came back
 in the third chukker, and it came down to the fourth. Leishemba’s goal made it 7–6 and won the 32nd
 Governor’s Cup Invitation title. He scored three in the final, Kaoba two and Rozer one.
-[See the winning goal, frame by frame.](/news/2026-02-28-the-winning-goal/)
+[See the winning goal, frame by frame.](/news/governors-cup-2026-winning-goal/)
 
 As the light went, both sides gathered on the ground with both trophies, the scoreboard still showing the
 last result of the day behind them, and then on the stage with the organisers and guests.

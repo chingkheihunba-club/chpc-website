@@ -1,5 +1,6 @@
 ---
 title: "The goal that won the Governor’s Cup"
+slug: governors-cup-2026-winning-goal   # web address: /news/governors-cup-2026-winning-goal/
 date: 2026-02-28
 summary: "Leishemba’s goal made it 7–6 in the 32nd Governor’s Cup final. Here is the move, frame by frame."
 # Added for the preview by DK, 03-10-2026. Record the club's approval before launch.
@@ -24,4 +25,4 @@ the club took an early lead, X-Polo came back in the third chukker, and it came 
 The last goal of the final came from Leishemba Takhellambam, in white. It made the score 7–6 and won the club the
 Governor’s Cup. He finished the final as the club’s top scorer, with three goals.
 
-The photos below follow the move, from the pack to the shot at goal. [Read about both finals here.](/news/2026-02-28-governors-cup-double/)
+The photos below follow the move, from the pack to the shot at goal. [Read about both finals here.](/news/governors-cup-2026-men-women-champions/)

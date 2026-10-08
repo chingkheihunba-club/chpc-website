@@ -5,3 +5,13 @@
 /ponies    /club/           301
 /honours/  /club/#honours   301
 /honours   /club/#honours   301
+
+# Shorter, descriptive addresses (08-10-2026): players by full name, posts without dates
+/team/kaoba/          /team/thoudam-kaoba-singh/          301
+/team/rozer/          /team/okram-rozer-singh/            301
+/team/leishemba/      /team/leishemba-takhellambam/       301
+/team/kokeshwor/      /team/laiphrakpam-kokeshwor-singh/  301
+/team/manisana/       /team/thoudam-manisana-singh/       301
+/team/bhupendrajit/   /team/mutum-bhupendrajit-meitei/    301
+/news/2026-02-28-governors-cup-double/   /news/governors-cup-2026-men-women-champions/   301
+/news/2026-02-28-the-winning-goal/       /news/governors-cup-2026-winning-goal/          301

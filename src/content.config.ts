@@ -3,6 +3,7 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 // News and stories. One Markdown file per post in src/content/news/.
+// `slug:` in a post's front matter sets its web address (/news/<slug>/); keep the date in the file name only.
 // A post is built only when `approved: true` — i.e. the club has approved it
 // (and every player who appears has consented). See README.
 const news = defineCollection({

@@ -205,3 +205,8 @@ export const expected: { key: keyof Player; label: string }[] = [
   { key: 'pony', label: 'pony' },
   { key: 'inTheirWords', label: 'a line in his own words' },
 ];
+
+// Web address of a player's page, from his full name: 'Thoudam Kaoba Singh' -> 'thoudam-kaoba-singh'.
+// Photos stay named by `id` (kaoba.jpg); old /team/<id>/ addresses redirect in public/_redirects.
+export const playerSlug = (p: Player) =>
+  p.name.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
