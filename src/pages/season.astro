@@ -15,7 +15,7 @@ import { season } from '../data/season';
         {season.fixtures.map((f) => (
           <li>
             <span class="t">{f.tournament}</span>
-            <span class:list={['d', { set: f.dates }]}>{f.dates || 'Dates to be announced'}{f.venue && `, ${f.venue}`}{f.result && `. ${f.result}`}</span>
+            <span class:list={['d', { set: f.dates }]}>{f.dates || 'Dates to be announced'}{f.venue && `, ${f.venue}`}{f.result && `. ${f.result}`}{f.note && `. ${f.note}`}</span>
           </li>
         ))}
       </ul>

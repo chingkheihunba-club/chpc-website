@@ -7,6 +7,7 @@ export type Fixture = {
   dates: string;   // e.g. "12-01-2027 to 20-01-2027", or "" if not announced
   venue: string;
   result: string;
+  note?: string;   // optional line, e.g. the club's first match
 };
 
 export const season = {
@@ -16,7 +17,7 @@ export const season = {
     { tournament: 'Dr Ksh Chourjit Singh Inter-District Polo Tournament', dates: '', venue: '', result: '' },
     { tournament: 'Governor’s Cup Invitation Polo Tournament', dates: '', venue: '', result: '' },
     { tournament: 'District Level Polo Tournament', dates: '', venue: '', result: '' },
-    { tournament: '39th N. Hazari & Dr N. Tombi State Polo Tournament', dates: '12-10-2026 to 28-10-2026; the club’s first match on 22-10-2026', venue: '', result: '' },
+    { tournament: '39th N. Hazari & Dr N. Tombi State Polo Tournament', dates: '12-10-2026 to 28-10-2026', venue: 'Imphal Polo Ground (Mapal Kangjeibung)', result: '', note: 'The club’s first match: 22-10-2026' },
     { tournament: 'Yairipok Polo Tournament', dates: '', venue: '', result: '' },
   ] as Fixture[],
 };
