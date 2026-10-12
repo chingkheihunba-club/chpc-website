@@ -241,12 +241,40 @@ p { margin: 0 0 1rem; max-width: 68ch; }
 }
 
 /* season */
-.fixtures { list-style: none; padding: 0; margin: 0; display: grid; gap: .75rem; }
-.fixtures li { display: grid; grid-template-columns: 1fr auto; gap: .3rem 2rem; align-items: center; background: #fff; border-radius: 14px; padding: 1.15rem 1.4rem; }
-.fixtures .t { font-family: var(--display); font-weight: 800; font-size: 1.6rem; line-height: 1.05; }
-.fixtures .d { font-weight: 600; color: var(--ink-soft); text-align: right; }
-.fixtures .d.set { color: var(--royal); }
-@media (max-width: 640px) { .fixtures li { grid-template-columns: 1fr; } .fixtures .d { text-align: left; } }
+/* ---------- Season fixtures ---------- */
+.fixtures { list-style: none; padding: 0; margin: 0; display: grid; gap: .9rem; }
+.fx { background: #fff; border-radius: 16px; }
+.fx p { margin: 0; max-width: none; }
+.fx-name { font-family: var(--display); font-weight: 800; line-height: 1; color: var(--navy); }
+
+/* Not yet announced: one quiet line */
+.fx--tba { display: flex; align-items: center; justify-content: space-between; gap: .6rem 2rem; flex-wrap: wrap; padding: 1.15rem 1.5rem; }
+.fx--tba .fx-name { font-size: 1.6rem; }
+.fx-pill { flex: none; font-size: .85rem; font-weight: 600; color: var(--ink-soft); background: var(--sky); border: 1px solid var(--rule); border-radius: 999px; padding: .3rem .85rem; white-space: nowrap; }
+
+/* Announced: a full card */
+.fx--set { overflow: hidden; padding-left: 8px; box-shadow: inset 8px 0 0 var(--red), 0 14px 36px rgba(15,31,61,.10); }
+.fx-head { padding: 1.6rem 1.75rem 0; }
+.fx-eyebrow { font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--red); margin-bottom: .45rem !important; }
+.fx--set .fx-name { font-size: clamp(2rem, 4.2vw, 2.9rem); }
+.fx-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 0; padding: 1.4rem 1.75rem 1.6rem; }
+.fx-cell { background: var(--sky); border-radius: 12px; padding: .9rem 1.1rem 1rem; }
+.fx-cell dt { display: flex; align-items: center; gap: .45rem; font-size: .75rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: .35rem; }
+.fx-cell dt svg { width: 18px; height: 18px; fill: none; stroke: var(--red); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fx-cell dd { margin: 0; font-family: var(--display); font-weight: 800; font-size: 1.65rem; line-height: 1.05; color: var(--royal); }
+.fx-dates { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 .5rem; }
+.fx-to { font-family: var(--text); font-size: .95rem; font-weight: 600; color: var(--ink-soft); }
+.fx-key { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .3rem 1.5rem; background: var(--red); color: #fff; padding: 1rem 1.75rem; }
+.fx-key-label { font-size: .85rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.fx-key-date { font-family: var(--display); font-weight: 800; font-size: 2.1rem; line-height: 1; }
+
+@media (max-width: 640px) {
+  .fx--tba { padding: 1rem 1.15rem; }
+  .fx--tba .fx-name { font-size: 1.4rem; }
+  .fx-head { padding: 1.25rem 1.15rem 0; }
+  .fx-meta { padding: 1.1rem 1.15rem 1.25rem; gap: .7rem; }
+  .fx-key { padding: .9rem 1.15rem; }
+}
 
 /* partners + footer */
 .site-footer { background: var(--navy); color: rgba(255,255,255,.85); padding: clamp(3rem, 6vw, 4.5rem) 0 2rem; }

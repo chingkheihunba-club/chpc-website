@@ -1,6 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import { season } from '../data/season';
+
+// "12-10-2026 to 28-10-2026" -> ["12-10-2026", "28-10-2026"]
+const range = (d: string) => d.split(/\s+to\s+/);
 ---
 <Base title="Season" description={`Chingkhei Hunba Polo Club, ${season.label} season.`}>
   <section class="page-head">
@@ -12,10 +15,54 @@ import { season } from '../data/season';
   <section class="section section--sky">
     <div class="wrap">
       <ul class="fixtures">
-        {season.fixtures.map((f) => (
-          <li>
-            <span class="t">{f.tournament}</span>
-            <span class:list={['d', { set: f.dates }]}>{f.dates || 'Dates to be announced'}{f.venue && `, ${f.venue}`}{f.result && `. ${f.result}`}{f.note && `. ${f.note}`}</span>
+        {season.fixtures.map((f) => f.dates ? (
+          <li class="fx fx--set">
+            <div class="fx-head">
+              <p class="fx-eyebrow">Dates announced</p>
+              <p class="fx-name">{f.tournament}</p>
+            </div>
+            <dl class="fx-meta">
+              <div class="fx-cell">
+                <dt>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+                  Dates
+                </dt>
+                <dd class="fx-dates">
+                  {range(f.dates).length === 2
+                    ? <Fragment><span>{range(f.dates)[0]}</span><span class="fx-to">to</span><span>{range(f.dates)[1]}</span></Fragment>
+                    : f.dates}
+                </dd>
+              </div>
+              {f.venue && (
+                <div class="fx-cell">
+                  <dt>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                    Venue
+                  </dt>
+                  <dd>{f.venue}</dd>
+                </div>
+              )}
+              {f.result && (
+                <div class="fx-cell">
+                  <dt>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4zM12 13v4M8 21h8M16 6h3a3 3 0 0 1-3 3M8 6H5a3 3 0 0 0 3 3"/></svg>
+                    Result
+                  </dt>
+                  <dd>{f.result}</dd>
+                </div>
+              )}
+            </dl>
+            {f.firstMatch && (
+              <p class="fx-key">
+                <span class="fx-key-label">The club’s first match</span>
+                <span class="fx-key-date">{f.firstMatch}</span>
+              </p>
+            )}
+          </li>
+        ) : (
+          <li class="fx fx--tba">
+            <p class="fx-name">{f.tournament}</p>
+            <span class="fx-pill">Dates to be announced</span>
           </li>
         ))}
       </ul>
