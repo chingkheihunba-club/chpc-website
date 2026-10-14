@@ -1,0 +1,193 @@
+---
+import Base from '../../layouts/Base.astro';
+import fixture from '../../data/tournaments/hazari-2026.json';
+import { render, todayIST, fmt, type Tournament } from '../../lib/tournament';
+import { site } from '../../config';
+
+// The fixture is baked in at build time. Scores entered through /hazari26/update/
+// are fetched from /api/results when the page opens, so results go live without a build.
+const t = fixture as Tournament;
+const html = render(t, { today: todayIST(), team: '' });
+const json = JSON.stringify(t).replace(/</g, '\\u003c');
+---
+<Base
+  title={`${t.short} fixtures and results`}
+  description={`Day-by-day fixtures and results of the ${t.name}, ${fmt(t.start)} to ${fmt(t.end)}, ${t.venue}.`}
+>
+  <section class="page-head tn-head">
+    <div class="wrap">
+      <p class="tn-eyebrow">{t.edition} · {t.organiser}</p>
+      <h1>{t.titleLines.map((l) => <span>{l} </span>)}<span class="tn-yr">{t.year}</span></h1>
+      <ul class="tn-facts">
+        <li><b>{fmt(t.start)}</b> to <b>{fmt(t.end)}</b></li>
+        <li>{t.venue}</li>
+        <li>{new Set(t.matches.flatMap((m) => [m.a.team, m.b.team]).filter(Boolean)).size} teams · {t.matches.length} matches</li>
+        <li>{t.report}</li>
+      </ul>
+      <div class="tn-about">
+        <div class="tn-about-text">
+          <p>This page follows the tournament day by day: who plays whom, on which ground, and the score once each match is over. It is an effort to track the tournament in near real time. Scores are added soon after each match, so there can be a short delay.</p>
+          <p class="tn-disclaimer"><b>Not the official record.</b> Chingkhei Hunba Polo Club keeps this page as a voluntary effort for players and polo lovers. The fixture and results announced by the {t.organiser} are final. If you spot a mistake, please <a href={site.social.instagram} target="_blank" rel="noopener">message the club on Instagram</a> or use the <a href="/contact/">contact page</a>, and it will be corrected.</p>
+        </div>
+        <details class="tn-howto" id="tn-howto">
+          <summary>How to use this page</summary>
+          <ul>
+            <li><b>Today</b> and <b>Latest results</b> are at the top.</li>
+            <li>Tap a day in the date bar to jump to its matches.</li>
+            <li>Type a team’s name under <b>Follow</b> to see only its matches, including the ones it plays if it keeps winning.</li>
+            <li>A match waiting on an earlier result shows “Winner of Match …”. The winner’s name appears once that match is played.</li>
+            <li><b>Copy as text</b> copies a day’s matches or results, ready to share on WhatsApp or Instagram.</li>
+            <li>The page checks for new scores every two minutes while it is open.</li>
+          </ul>
+        </details>
+      </div>
+    </div>
+  </section>
+  <div id="tn-root" data-slug={t.slug} set:html={html} />
+  <script type="application/json" id="tn-fixture" set:html={json} />
+</Base>
+
+<script>
+  import { render, merge, dayText, todayIST, findTeams, esc, type Tournament, type Live } from '../../lib/tournament';
+
+  const root = document.getElementById('tn-root')!;
+  const slug = root.dataset.slug!;
+  const fixture: Tournament = JSON.parse(document.getElementById('tn-fixture')!.textContent || '{}');
+  let live: Live | null = null;
+  let team = '';
+  try { team = localStorage.getItem(`tn-team-${slug}`) || ''; } catch {}
+
+  const current = () => merge(fixture, live);
+
+  function setHeaderOffset() {
+    const h = document.querySelector('.site-header') as HTMLElement | null;
+    document.documentElement.style.setProperty('--hdr-h', `${h ? h.offsetHeight : 81}px`);
+  }
+
+  let drawn = false;
+  function draw() {
+    const days = document.getElementById('tn-days');
+    const keep = drawn && days ? days.scrollLeft : null;
+    drawn = true;
+    root.innerHTML = render(current(), { today: todayIST(), team });
+    const nd = document.getElementById('tn-days');
+    if (nd) {
+      const tc = nd.querySelector('.today') as HTMLElement | null;
+      if (keep !== null) nd.scrollLeft = keep;
+      else if (tc) nd.scrollLeft = Math.max(0, tc.offsetLeft - nd.offsetLeft - 60);
+    }
+  }
+
+  async function refresh() {
+    try {
+      const r = await fetch(`/api/results?t=${encodeURIComponent(slug)}`, { headers: { accept: 'application/json' } });
+      if (!r.ok) return;
+      const data = await r.json();
+      if (data && data.matches) {
+        const changed = JSON.stringify(data) !== JSON.stringify(live);
+        live = data;
+        if (changed) draw();
+      }
+    } catch { /* offline or function not available: the built-in results stay */ }
+  }
+
+  function setTeam(v: string) {
+    team = v;
+    try { localStorage.setItem(`tn-team-${slug}`, team); } catch {}
+    draw();
+    document.querySelector('.tn-strip')?.scrollIntoView({ block: 'start' });
+  }
+
+  root.addEventListener('click', (e) => {
+    const el = (e.target as HTMLElement).closest('[data-jump],[data-follow],[data-copy]') as HTMLElement | null;
+    if (!el) return;
+    if (el.dataset.jump !== undefined) {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.getElementById(`d-${el.dataset.jump}`)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    } else if (el.dataset.follow !== undefined) {
+      setTeam(el.dataset.follow);
+    } else if (el.dataset.copy) {
+      const d = el.dataset.copy;
+      const text = dayText(current(), d, team);
+      const out = document.getElementById(`cp-${d}`);
+      const done = (ok: boolean) => { if (out) out.textContent = ok ? 'Copied' : 'Could not copy'; };
+      const fallback = () => {
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        let ok = false; try { ok = document.execCommand('copy'); } catch {}
+        ta.remove(); done(ok);
+      };
+      if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => done(true), fallback); else fallback();
+    }
+  });
+  // Follow: type to narrow the team list.
+  let active = -1;
+  let shown: string[] = [];
+  const q = () => document.getElementById('tn-team-q') as HTMLInputElement | null;
+  const listEl = () => document.getElementById('tn-team-list') as HTMLUListElement | null;
+  function openList() {
+    const input = q(), ul = listEl();
+    if (!input || !ul) return;
+    const typed = input.value === team ? '' : input.value;
+    shown = findTeams(fixture, typed);
+    active = typed && shown.length ? 0 : -1;
+    const s = typed.trim();
+    const mark = (name: string) => {
+      if (!s) return esc(name);
+      const n = name.toLowerCase(), k = s.toLowerCase();
+      let idx = n.startsWith(k) ? 0 : -1;
+      const re = /[\s–&-]+/g;
+      let m: RegExpExecArray | null;
+      while (idx < 0 && (m = re.exec(n))) { const at = m.index + m[0].length; if (n.startsWith(k, at)) idx = at; }
+      if (idx < 0) return esc(name);
+      return `${esc(name.slice(0, idx))}<b>${esc(name.slice(idx, idx + s.length))}</b>${esc(name.slice(idx + s.length))}`;
+    };
+    ul.innerHTML = shown.length
+      ? shown.map((name, i) => `<li role="option" id="tn-opt-${i}" data-team="${esc(name)}" aria-selected="${i === active}">${mark(name)}</li>`).join('')
+      : `<li class="none" role="presentation">No team starts with “${esc(s)}”</li>`;
+    ul.hidden = false;
+    input.setAttribute('aria-expanded', 'true');
+    input.setAttribute('aria-activedescendant', active >= 0 ? `tn-opt-${active}` : '');
+  }
+  function closeList(restore = true) {
+    const input = q(), ul = listEl();
+    if (ul) ul.hidden = true;
+    if (input) { input.setAttribute('aria-expanded', 'false'); input.removeAttribute('aria-activedescendant'); if (restore) input.value = team; }
+  }
+  function move(step: number) {
+    const ul = listEl();
+    if (!ul || !shown.length) return;
+    active = (active + step + shown.length) % shown.length;
+    ul.querySelectorAll('li[role=option]').forEach((li, i) => li.setAttribute('aria-selected', String(i === active)));
+    ul.querySelector(`#tn-opt-${active}`)?.scrollIntoView({ block: 'nearest' });
+    q()?.setAttribute('aria-activedescendant', `tn-opt-${active}`);
+  }
+  root.addEventListener('focusin', (e) => { if ((e.target as HTMLElement).id === 'tn-team-q') { (e.target as HTMLInputElement).select(); openList(); } });
+  root.addEventListener('input', (e) => { if ((e.target as HTMLElement).id === 'tn-team-q') openList(); });
+  root.addEventListener('keydown', (e) => {
+    if ((e.target as HTMLElement).id !== 'tn-team-q') return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); if (listEl()?.hidden) openList(); else move(1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+    else if (e.key === 'Enter') { e.preventDefault(); const pick = shown[active >= 0 ? active : 0]; if (pick) { closeList(false); setTeam(pick); } }
+    else if (e.key === 'Escape') { closeList(); (e.target as HTMLInputElement).blur(); }
+  });
+  root.addEventListener('mousedown', (e) => {
+    const li = (e.target as HTMLElement).closest('li[data-team]') as HTMLElement | null;
+    if (!li) return;
+    e.preventDefault();
+    closeList(false);
+    setTeam(li.dataset.team || '');
+  });
+  root.addEventListener('focusout', (e) => { if ((e.target as HTMLElement).id === 'tn-team-q') setTimeout(() => closeList(), 120); });
+
+  const howto = document.getElementById('tn-howto') as HTMLDetailsElement | null;
+  if (howto && window.matchMedia('(min-width: 900px)').matches) howto.open = true;
+  setHeaderOffset();
+  window.addEventListener('resize', setHeaderOffset);
+  draw();
+  refresh();
+  // Check for new scores every two minutes while the page is open and visible.
+  setInterval(() => { if (document.visibilityState === 'visible') refresh(); }, 120_000);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') refresh(); });
+</script>

@@ -41,7 +41,7 @@ export const nav = [
 // Set `active: false` when the tournament is over, or point it at the next one.
 export const tournament = {
   active: true,
-  href: '/tournament/',
+  href: '/hazari26/',
   navLabel: 'N. Hazari 2026',
   barText: 'N. Hazari & Dr. N. Tombi State Polo is on',
   barButton: 'Fixtures & results',

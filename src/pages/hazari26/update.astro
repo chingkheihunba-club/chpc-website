@@ -12,7 +12,7 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
   <section class="page-head">
     <div class="wrap">
       <h1>Update results</h1>
-      <p>{t.name}. Scores saved here show on the <a href="/tournament/" style="color:#fff">tournament page</a> within a few seconds. No site rebuild needed.</p>
+      <p>{t.name}. Scores saved here show on the <a href="/hazari26/" style="color:#fff">tournament page</a> within a few seconds. No site rebuild needed.</p>
     </div>
   </section>
   <section class="up">
@@ -24,8 +24,23 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
           <label for="up-key">Key<input id="up-key" type="password" autocomplete="current-password" spellcheck="false" style="width:min(320px,100%)" /></label>
           <label for="up-remember" style="display:flex;align-items:center;gap:6px;font-weight:600;color:var(--ink)"><input id="up-remember" type="checkbox" checked style="width:auto" /> Remember on this device</label>
           <button type="button" class="tn-btn line" id="up-today">Go to today</button>
+          <button type="button" class="tn-btn line" id="up-undo">Undo last save</button>
         </div>
       </div>
+      <details class="up-card up-help">
+        <summary><b>How to use this form</b></summary>
+        <ol>
+          <li><b>Enter a result:</b> type both scores. The status turns to Full time by itself. Tap <b>Save results</b> at the bottom.</li>
+          <li><b>Fix a wrong score:</b> change the number and save again. The page shows the new score within seconds.</li>
+          <li><b>Remove a result entered too early, or for the wrong match:</b> tap <b>Clear result</b> on that match, then save. It goes back to Upcoming.</li>
+          <li><b>Undo last save:</b> puts back everything as it was before your last save. Tap it again to go back one more save.</li>
+          <li><b>Walkover, postponed, new date or ground:</b> open “Walkover, date, ground, note” on the match. A postponed match keeps no score.</li>
+          <li><b>Winners move up by themselves</b> into their next match. If you clear a result, the next match goes back to “Winner of Match …”.</li>
+          <li><b>If it says someone else saved first:</b> reload this page, check the scores, and make your change again.</li>
+          <li><b>Who sees what, and when:</b> new visitors see a save within seconds. Anyone with the page already open sees it within two minutes. Phones and browsers do not keep an old copy of the scores.</li>
+          <li><b>The key</b> stays on this device only. Do not share this page’s address or the key. Change the key on Netlify if it gets out.</li>
+        </ol>
+      </details>
       <div id="up-list"><p>Loading the latest results…</p></div>
     </div>
   </section>
@@ -76,6 +91,7 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
       </div>
       <div class="up-f">
         <label for="${id}-status">Status${sel('status', Object.entries(STATUS_LABEL) as [string, string][], m.status)}</label>
+        <button type="button" class="tn-btn line" data-clear="${m.id}">Clear result</button>
       </div>
       <details class="up-more"${m.status === 'walkover' || m.status === 'postponed' ? ' open' : ''}>
         <summary>Walkover, date, ground, note</summary>
@@ -145,6 +161,43 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
     say(`${dirty.size} ${dirty.size === 1 ? 'match' : 'matches'} changed. Not saved yet.`);
   });
   list.addEventListener('change', () => refreshNames());
+
+  // Clear result: back to Upcoming, no scores.
+  list.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest('[data-clear]') as HTMLElement | null;
+    if (!b) return;
+    const id = Number(b.dataset.clear);
+    const m = state.matches.find((x) => x.id === id);
+    if (!m) return;
+    m.status = 'scheduled'; m.sa = null; m.sb = null; m.w = null;
+    const set = (f: string, v: string) => { const el = document.getElementById(`m${id}-${f}`) as HTMLInputElement | null; if (el) el.value = v; };
+    set('sa', ''); set('sb', ''); set('status', 'scheduled'); set('w', '');
+    dirty.add(id);
+    document.getElementById(`row-${id}`)?.classList.add('dirty');
+    refreshNames();
+    say(`Match ${id} cleared. Save to publish the change.`);
+  });
+
+  // Undo last save: the function restores the save before the current one.
+  document.getElementById('up-undo')!.addEventListener('click', async () => {
+    const key = keyIn.value.trim();
+    if (!key) { say('Enter the update key first.', 'err'); keyIn.focus(); return; }
+    if (!baseUpdated) { say('Nothing has been saved yet, so there is nothing to undo.', 'err'); return; }
+    if (dirty.size && !confirm('You have changes that are not saved. Undo will discard them. Go ahead?')) return;
+    if (!confirm(`Go back to how the results were before the save of ${stamp(baseUpdated)}?`)) return;
+    say('Undoing…');
+    try {
+      const r = await fetch('/api/results', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
+        body: JSON.stringify({ t: fixture.slug, baseUpdated, action: 'undo' }),
+      });
+      const res = await r.json().catch(() => ({}));
+      if (!r.ok) { say(res.error || 'Undo did not go through. Try again.', 'err'); return; }
+      await load();
+      say(res.restoredFrom ? `Undone. The results are back to the save of ${stamp(res.restoredFrom)}.` : 'Undone. The page is back to the results built into the site.', 'ok');
+    } catch { say('No connection. Try again when you are back online.', 'err'); }
+  });
 
   document.getElementById('up-today')!.addEventListener('click', () => {
     const t = todayIST();

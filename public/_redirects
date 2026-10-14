@@ -15,3 +15,7 @@
 /team/bhupendrajit/   /team/mutum-bhupendrajit-meitei/    301
 /news/2026-02-28-governors-cup-double/   /news/governors-cup-2026-men-women-champions/   301
 /news/2026-02-28-the-winning-goal/       /news/governors-cup-2026-winning-goal/          301
+
+# The current tournament's page (14-10-2026). Point these at the next tournament's page when it starts.
+/tournament/   /hazari26/   302
+/tournament    /hazari26/   302

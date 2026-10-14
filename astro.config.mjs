@@ -6,5 +6,5 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://chingkheihunba.club',
   // The score-update form stays out of the sitemap.
-  integrations: [sitemap({ filter: (page) => !page.includes('/tournament/update') })],
+  integrations: [sitemap({ filter: (page) => !page.includes('/hazari26/update') })],
 });

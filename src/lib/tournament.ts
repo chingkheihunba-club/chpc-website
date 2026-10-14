@@ -1,5 +1,5 @@
 // Tournament fixtures and results.
-// Shared by the public page (/tournament/), the update form (/tournament/update/)
+// Shared by the public page (/hazari26/), the update form (/hazari26/update/)
 // and the results function (netlify/functions/results.mts).
 //
 // The fixture (teams, draw, dates, grounds) lives in src/data/tournaments/<slug>.json.
@@ -298,11 +298,11 @@ export function render(t: Tournament, o: Opts) {
   }
 
   const panels = `<section class="tn-live"><div class="wrap"><div class="tn-panels">` +
-    `<div class="tn-panel"><div><h2>Today</h2><p class="tn-psub">${wdl(o.today)} ${fmt(o.today)}</p></div>${todayBody}` +
+    `<div class="tn-panel tn-today"><div><h2>Today</h2><p class="tn-psub">${wdl(o.today)} ${fmt(o.today)}</p></div>${todayBody}` +
     (tm.length ? `<div class="tn-pact"><button type="button" class="tn-btn ghost" data-jump="${o.today}">See today’s matches</button></div>` : '') + '</div>' +
-    `<div class="tn-panel"><div><h2>Latest results</h2><p class="tn-psub">${lastD ? `${wdl(lastD)} ${fmt(lastD)}` : '&nbsp;'}</p></div>${resBody}</div>` +
-    `<div class="tn-panel tn-club"><div><h2>${esc(club)}</h2><p class="tn-psub">${entry ? `Enters in ${esc(entry.round)}, Match ${entry.id}` : ''}</p></div>${clubBody}` +
-    `<div class="tn-pact"><button type="button" class="tn-btn red" data-follow="${esc(club)}">Follow the club’s path</button></div></div>` +
+    `<div class="tn-panel tn-latest"><div><h2>Latest results</h2><p class="tn-psub">${lastD ? `${wdl(lastD)} ${fmt(lastD)}` : '&nbsp;'}</p></div>${resBody}</div>` +
+    `<div class="tn-panel tn-club"><div><p class="tn-ceyebrow">${nextC ? (wonN ? 'The club’s next match' : 'The club’s first match') : 'The club'}</p><h2>${esc(club)}</h2><p class="tn-psub">${entry ? `Enters in ${esc(entry.round)}, Match ${entry.id}` : ''}</p></div>${clubBody}` +
+    `<div class="tn-pact"><button type="button" class="tn-btn white" data-follow="${esc(club)}">Follow the club’s path</button></div></div>` +
     `</div></div></section>`;
 
   // day strip
@@ -319,10 +319,12 @@ export function render(t: Tournament, o: Opts) {
     const dis = !n || (pathDates && !pathDates.has(d)) ? ' disabled' : '';
     return `<button type="button" class="${cls.join(' ')}" data-jump="${d}"${dis} aria-label="${wdl(d)} ${fmt(d)}, ${c}"><span class="w">${wd(d)}</span><span class="d">${dayNum(d)}</span><span class="c">${c}</span></button>`;
   }).join('');
-  const opts = `<option value="">All teams</option><option value="${esc(club)}"${o.team === club ? ' selected' : ''}>${esc(club)}</option>` +
-    D.teams().filter((x) => x !== club).map((x) => `<option value="${esc(x)}"${x === o.team ? ' selected' : ''}>${esc(x)}</option>`).join('');
+  // Follow a team: a text box that narrows the team list as people type (wired up in the page script).
   const strip = `<nav class="tn-strip" aria-label="Match days"><div class="wrap"><div class="tn-days" id="tn-days">${chips}</div>` +
-    `<div class="tn-follow"><label for="tn-team">Follow</label><select id="tn-team">${opts}</select></div></div></nav>`;
+    `<div class="tn-follow"><label for="tn-team-q">Follow</label><div class="tn-combo">` +
+    `<input id="tn-team-q" type="text" role="combobox" aria-expanded="false" aria-controls="tn-team-list" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="Type a team name" value="${esc(o.team)}" />` +
+    (o.team ? `<button type="button" class="tn-clear" data-follow="" aria-label="Show all teams">×</button>` : '') +
+    `<ul id="tn-team-list" class="tn-options" role="listbox" aria-label="Teams" hidden></ul></div></div></div></nav>`;
 
   // days
   let days = '';
@@ -358,6 +360,18 @@ export function dayText(t: Tournament, d: string, team = '') {
     else if (m.status === 'walkover' && w) lines.push(`${D.name(m[w])} won by walkover (${A} vs ${B})`);
     else lines.push(`${D.ground(m)}${D.time(m) ? ', ' + D.time(m) : ''}: ${A} vs ${B}${m.status === 'postponed' ? ' (postponed)' : ''}`);
   });
-  lines.push('', 'Full fixture: chingkheihunba.club/tournament/');
+  lines.push('', 'Full fixture: chingkheihunba.club/hazari26/');
   return lines.join('\n');
+}
+
+/** Teams whose name, or any word in it, starts with what was typed. The club comes first. */
+export function findTeams(t: Tournament, q: string) {
+  const D = new Draw(t);
+  const all = [t.club, ...D.teams().filter((x) => x !== t.club)];
+  const s = q.trim().toLowerCase();
+  if (!s) return all;
+  return all.filter((name) => {
+    const n = name === t.club ? `${name.toLowerCase()} chpc chingkheihunba` : name.toLowerCase();
+    return n.startsWith(s) || n.split(/[\s–&-]+/).some((w) => w && w.startsWith(s));
+  });
 }

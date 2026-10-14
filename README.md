@@ -25,7 +25,7 @@ npm run preview    # serve the built site locally
 | Honours (on The Club page) | `src/data/honours.ts` |
 | Press coverage (News page and Home) | `src/data/media.ts` |
 | Season calendar | `src/data/season.ts` |
-| Tournament fixtures and results (`/tournament/`) | `src/data/tournaments/<slug>.json`, `src/lib/tournament.ts`; header button in `src/config.ts` (`tournament`) |
+| Tournament fixtures and results (`/hazari26/`) | `src/data/tournaments/<slug>.json`, `src/lib/tournament.ts`; header button in `src/config.ts` (`tournament`) |
 | Gallery photos | `src/data/gallery.ts`; files in `src/assets/photos/` |
 | Club news and stories (one Markdown file per post) | `src/content/news/` |
 | Pages | `src/pages/` |
@@ -57,13 +57,13 @@ The GitHub repo, Netlify site and domain belong to the club, registered under th
 
 ## Tournament results (no rebuild needed)
 
-`/tournament/` shows the current tournament day by day: who plays whom, where, and the scores.
+`/hazari26/` shows the N. Hazari & Dr. N. Tombi State Polo Tournament 2026 day by day (`/tournament/` redirects there): who plays whom, where, and the scores.
 The fixture (teams, draw, dates, grounds) is in `src/data/tournaments/hazari-2026.json` and is built into the page.
-**Scores do not need a rebuild.** They are entered at `/tournament/update/` (not linked anywhere, kept out of
+**Scores do not need a rebuild.** They are entered at `/hazari26/update/` (not linked anywhere, kept out of
 search), saved by the function `netlify/functions/results.mts` into Netlify Blobs, and the page picks them up
 from `/api/results` when it opens and every two minutes while it is open.
 
-- **Entering scores:** open `chingkheihunba.club/tournament/update/` on a phone, enter the update key once,
+- **Entering scores:** open `chingkheihunba.club/hazari26/update/` on a phone, enter the update key once,
   type the two scores, Save. Winners move into their next match on their own. Date, ground, walkover,
   postponement and a short note can also be changed there.
 - **The update key** is the Netlify environment variable `RESULTS_ADMIN_KEY` (Project configuration →

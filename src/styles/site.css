@@ -355,7 +355,7 @@ p { margin: 0 0 1rem; max-width: 68ch; }
 .feature img { transition: transform .5s ease; }
 @media (max-width: 860px) { .feature { grid-template-columns: 1fr; } .feature img { min-height: 260px; max-height: 420px; } }
 
-/* ---------- Tournament: fixtures and results (/tournament/) ---------- */
+/* ---------- Tournament: fixtures and results (/hazari26/) ---------- */
 .tn-head h1 { font-size: clamp(3rem, 8.5vw, 6.4rem); }
 .tn-head h1 span { display: inline; }
 .tn-yr { color: var(--red); }
@@ -476,7 +476,7 @@ p { margin: 0 0 1rem; max-width: 68ch; }
   .cta-bar:hover em { background: var(--red-deep); }
 }
 
-/* Update form (/tournament/update/) */
+/* Update form (/hazari26/update/) */
 .up { background: var(--sky); padding: 24px 0 120px; }
 .up-card { background: #fff; border-radius: 14px; padding: 18px 16px; margin-bottom: 14px; }
 .up-card h2 { font-size: 1.9rem; margin-bottom: .4rem; }
@@ -503,3 +503,40 @@ p { margin: 0 0 1rem; max-width: 68ch; }
 .up-bar p { margin: 0; font-size: .9rem; color: rgba(255,255,255,.85); }
 .up-bar p.err { color: #ffb3b5; font-weight: 600; }
 .up-bar p.ok { color: #b9f2b0; font-weight: 600; }
+
+/* Tournament: about this page */
+.tn-about { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px 36px; margin-top: 1.6rem; padding-top: 1.4rem; border-top: 1px solid rgba(255,255,255,.2); align-items: start; }
+@media (max-width: 900px) { .tn-about { grid-template-columns: 1fr; } }
+.tn-about p { margin: 0 0 .7rem; font-size: 1rem !important; color: rgba(255,255,255,.85) !important; max-width: 68ch; }
+.tn-about a { color: #fff; }
+.tn-disclaimer b { color: #fff; }
+.tn-howto { background: var(--navy-2); border-radius: 14px; padding: .8rem 1rem; }
+.tn-howto summary { cursor: pointer; font-weight: 700; color: #fff; }
+.tn-howto ul { margin: .7rem 0 .2rem; padding-left: 1.1rem; display: grid; gap: .35rem; font-size: .92rem; color: rgba(255,255,255,.85); }
+.tn-howto b { color: #fff; }
+
+/* Tournament: the club's panel, in jersey red */
+.tn-club { background-color: var(--red); background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.06) 0 1px, transparent 1px 26px), repeating-linear-gradient(-45deg, rgba(255,255,255,.06) 0 1px, transparent 1px 26px); box-shadow: 0 18px 40px rgba(196,22,28,.28); }
+.tn-club .tn-psub { color: rgba(255,255,255,.85); }
+.tn-ceyebrow { margin: 0 0 .35rem !important; font-size: .75rem !important; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #fff !important; display: inline-block; background: rgba(15,31,61,.35); padding: .2rem .55rem; border-radius: 999px; }
+.tn-club .tn-big { font-size: clamp(3.8rem, 8vw, 5.6rem); }
+.tn-club .tn-big small { color: #fff; }
+.tn-club p { color: rgba(255,255,255,.92); }
+.tn-club b { color: #fff; }
+.tn-btn.white { background: #fff; color: var(--red); }
+.tn-btn.white:hover { background: var(--navy); color: #fff; }
+
+/* Tournament: Follow, type to search */
+.tn-combo { position: relative; flex: 1 1 auto; min-width: 0; }
+.tn-combo input { width: 250px; max-width: 100%; padding: .5rem 2.2rem .5rem .9rem; border-radius: 999px; border: 1.5px solid var(--rule); background: #fff; font: inherit; font-weight: 600; font-size: .9rem; color: var(--ink); }
+.tn-combo input:focus { border-color: var(--royal); outline: none; box-shadow: 0 0 0 3px rgba(27,63,166,.2); }
+.tn-clear { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border-radius: 999px; border: 0; background: var(--sky); color: var(--navy); font-size: 1.05rem; line-height: 1; cursor: pointer; }
+.tn-options { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; width: max(100%, 280px); max-height: 320px; overflow-y: auto; margin: 0; padding: 6px; list-style: none; background: #fff; border-radius: 14px; box-shadow: 0 18px 40px rgba(15,31,61,.25); }
+.tn-options li { padding: .55rem .7rem; border-radius: 10px; cursor: pointer; font-size: .95rem; }
+.tn-options li b { color: var(--red); }
+.tn-options li[aria-selected="true"], .tn-options li[role=option]:hover { background: var(--sky); }
+.tn-options li.none { color: var(--ink-soft); cursor: default; }
+@media (max-width: 760px) { .tn-combo input { width: 100%; } .tn-options { left: 0; right: auto; width: 100%; } }
+.up-help summary { cursor: pointer; }
+.up-help ol { margin: .8rem 0 0; padding-left: 1.2rem; display: grid; gap: .5rem; max-width: 72ch; }
+@media (max-width: 640px) { .tn-today { order: 0; } .tn-club { order: 1; } .tn-latest { order: 2; } }

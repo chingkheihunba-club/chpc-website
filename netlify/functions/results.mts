@@ -1,7 +1,8 @@
 // Tournament results, stored in Netlify Blobs so they go live without a new build.
 //
 //   GET  /api/results?t=hazari-2026   → the saved results (public; cached on Netlify's CDN)
-//   POST /api/results                 → save results from /tournament/update/ (needs the update key)
+//   POST /api/results                 → save results from /hazari26/update/ (needs the update key);
+//                                       {action: 'undo'} goes back to the previous save
 //
 // The update key is the RESULTS_ADMIN_KEY environment variable, set in the Netlify UI
 // (Project configuration → Environment variables). It is never stored in this repo.
@@ -69,6 +70,34 @@ export default async (req: Request) => {
   const t = String(body?.t || '');
   const fx = TOURNAMENTS[t];
   if (!fx) return json({ error: 'Unknown tournament.' }, 404);
+  const s = store();
+  const prev = ((await s.get(t, { type: 'json' })) as Live | null) ?? { updated: null, matches: {} };
+  // Refuse to overwrite a save made after this form was opened.
+  if ((body.baseUpdated ?? null) !== (prev.updated ?? null)) {
+    return json({ error: 'Someone saved results after you opened this page. Reload it to see them, then make your change again.', updated: prev.updated }, 409);
+  }
+
+  // Undo: go back to the save before the current one.
+  if (body.action === 'undo') {
+    if (!prev.updated) return json({ error: 'Nothing has been saved yet, so there is nothing to undo.' }, 400);
+    const { blobs } = await s.list({ prefix: `history/${t}/` });
+    const lastKey = blobs.map((b) => b.key).sort().pop();
+    let restoredFrom: string | null = null;
+    let updated: string | null = null;
+    if (lastKey) {
+      const older = (await s.get(lastKey, { type: 'json' })) as Live;
+      updated = new Date().toISOString();
+      restoredFrom = older.updated;
+      await s.setJSON(t, { updated, matches: older.matches });
+      await s.delete(lastKey);
+    } else {
+      // Undoing the first save: go back to the results built into the site.
+      await s.delete(t);
+    }
+    try { await purgeCache({ tags: [tag(t)] }); } catch (e) { console.warn('purgeCache failed', e); }
+    return json({ ok: true, updated, restoredFrom });
+  }
+
   if (!body.matches || typeof body.matches !== 'object') return json({ error: 'No results sent.' }, 400);
 
   const matches: Live['matches'] = {};
@@ -81,13 +110,6 @@ export default async (req: Request) => {
     if (clean.status !== 'walkover') clean.w = null;
     if (clean.status === 'scheduled' || clean.status === 'postponed') { clean.sa = null; clean.sb = null; }
     matches[String(m.id)] = clean;
-  }
-
-  const s = store();
-  const prev = ((await s.get(t, { type: 'json' })) as Live | null) ?? { updated: null, matches: {} };
-  // Refuse to overwrite a save made after this form was opened.
-  if ((body.baseUpdated ?? null) !== (prev.updated ?? null)) {
-    return json({ error: 'Someone saved results after you opened this page. Reload it to see them, then make your change again.', updated: prev.updated }, 409);
   }
 
   const next: Live = { updated: new Date().toISOString(), matches };
