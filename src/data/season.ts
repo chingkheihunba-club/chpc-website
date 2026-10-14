@@ -8,6 +8,7 @@ export type Fixture = {
   venue: string;
   result: string;
   firstMatch?: string;   // dd-mm-yyyy, the club's first match in this tournament
+  link?: string;         // page with this tournament's fixtures and results
 };
 
 export const season = {
@@ -17,7 +18,7 @@ export const season = {
     { tournament: 'Dr Ksh Chourjit Singh Inter-District Polo Tournament', dates: '', venue: '', result: '' },
     { tournament: 'Governor’s Cup Invitation Polo Tournament', dates: '', venue: '', result: '' },
     { tournament: 'District Level Polo Tournament', dates: '', venue: '', result: '' },
-    { tournament: '39th N. Hazari & Dr N. Tombi State Polo Tournament', dates: '12-10-2026 to 28-10-2026', venue: 'Imphal Polo Ground (Mapal Kangjeibung)', result: '', firstMatch: '22-10-2026' },
+    { tournament: '39th N. Hazari & Dr N. Tombi State Polo Tournament', dates: '12-10-2026 to 28-10-2026', venue: 'Imphal Polo Ground (Mapal Kangjeibung)', result: '', firstMatch: '22-10-2026', link: '/tournament/' },
     { tournament: 'Yairipok Polo Tournament', dates: '', venue: '', result: '' },
   ] as Fixture[],
 };

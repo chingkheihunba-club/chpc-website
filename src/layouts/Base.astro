@@ -6,10 +6,10 @@ import { Image } from 'astro:assets';
 import crestWhite from '../assets/logos/chpc-crest-white.png';
 import eartheners from '../assets/logos/eartheners-logo-notag.png';
 import unibrow from '../assets/logos/unibrow-logo.png';
-import { site } from '../config';
+import { site, tournament } from '../config';
 
-interface Props { title?: string; description?: string }
-const { title, description = `${site.name}: polo and horsemanship from Kongpal, Imphal East, since 1995.` } = Astro.props;
+interface Props { title?: string; description?: string; noindex?: boolean }
+const { title, noindex = false, description = `${site.name}: polo and horsemanship from Kongpal, Imphal East, since 1995.` } = Astro.props;
 const pageTitle = title ? `${title} | ${site.name}` : site.name;
 const path = Astro.url.pathname;
 const year = new Date().getFullYear();
@@ -32,7 +32,7 @@ const current = (href: string) => (path === href || path.startsWith(href) ? 'pag
     <meta name="theme-color" content="#c4161c" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    {!site.launched && <meta name="robots" content="noindex, nofollow" />}
+    {(!site.launched || noindex) && <meta name="robots" content="noindex, nofollow" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
@@ -52,16 +52,23 @@ const current = (href: string) => (path === href || path.startsWith(href) ? 'pag
         </a>
         <nav class="nav" aria-label="Main">
           {nav.map((n) => <a href={n.href} aria-current={current(n.href)}>{n.label}</a>)}
+          {tournament.active && <a class="nav-cta" href={tournament.href} aria-current={current(tournament.href)}>{tournament.navLabel}</a>}
         </nav>
         <details class="menu">
           <summary>Menu</summary>
           <nav aria-label="Main (mobile)">
             <a href="/" aria-current={path === '/' ? 'page' : undefined}>Home</a>
+            {tournament.active && <a href={tournament.href} aria-current={current(tournament.href)}>{tournament.navLabel}</a>}
             {nav.map((n) => <a href={n.href} aria-current={current(n.href)}>{n.label}</a>)}
           </nav>
         </details>
       </div>
     </header>
+    {tournament.active && !path.startsWith(tournament.href) && (
+      <a class="cta-bar" href={tournament.href}>
+        <div class="wrap"><span><b>{tournament.barText}</b></span><em>{tournament.barButton}</em></div>
+      </a>
+    )}
 
     <main id="main">
       <slot />

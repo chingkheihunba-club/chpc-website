@@ -52,6 +52,9 @@ const range = (d: string) => d.split(/\s+to\s+/);
                 </div>
               )}
             </dl>
+            {f.link && (
+              <p class="fx-more"><a class="btn" href={f.link}>Day-by-day fixtures and results</a></p>
+            )}
             {f.firstMatch && (
               <p class="fx-key">
                 <span class="fx-key-label">The club’s first match</span>

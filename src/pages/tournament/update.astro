@@ -1,0 +1,191 @@
+---
+import Base from '../../layouts/Base.astro';
+import fixture from '../../data/tournaments/hazari-2026.json';
+import type { Tournament } from '../../lib/tournament';
+
+// Private page for entering scores. Not linked anywhere, kept out of search and the sitemap.
+// Saving needs the update key (RESULTS_ADMIN_KEY on Netlify).
+const t = fixture as Tournament;
+const json = JSON.stringify(t).replace(/</g, '\\u003c');
+---
+<Base title={`Update results: ${t.short}`} description="Score entry for the club's tournament page." noindex>
+  <section class="page-head">
+    <div class="wrap">
+      <h1>Update results</h1>
+      <p>{t.name}. Scores saved here show on the <a href="/tournament/" style="color:#fff">tournament page</a> within a few seconds. No site rebuild needed.</p>
+    </div>
+  </section>
+  <section class="up">
+    <div class="wrap">
+      <div class="up-card">
+        <h2>Update key</h2>
+        <p>Enter the key once on this phone or computer. It is kept on this device only.</p>
+        <div class="up-key">
+          <label for="up-key">Key<input id="up-key" type="password" autocomplete="current-password" spellcheck="false" style="width:min(320px,100%)" /></label>
+          <label for="up-remember" style="display:flex;align-items:center;gap:6px;font-weight:600;color:var(--ink)"><input id="up-remember" type="checkbox" checked style="width:auto" /> Remember on this device</label>
+          <button type="button" class="tn-btn line" id="up-today">Go to today</button>
+        </div>
+      </div>
+      <div id="up-list"><p>Loading the latest results…</p></div>
+    </div>
+  </section>
+  <div class="up-bar">
+    <div class="wrap">
+      <p id="up-msg" aria-live="polite">Change a score, then save.</p>
+      <button type="button" class="tn-btn red" id="up-save">Save results</button>
+    </div>
+  </div>
+  <script type="application/json" id="tn-fixture" set:html={json} />
+</Base>
+
+<script>
+  import { merge, Draw, checkEdit, pickEdit, fmt, wd, todayIST, stamp, GROUNDS, esc, type Tournament, type Live, type Match } from '../../lib/tournament';
+
+  const fixture: Tournament = JSON.parse(document.getElementById('tn-fixture')!.textContent || '{}');
+  const list = document.getElementById('up-list')!;
+  const msg = document.getElementById('up-msg')!;
+  const saveBtn = document.getElementById('up-save') as HTMLButtonElement;
+  const keyIn = document.getElementById('up-key') as HTMLInputElement;
+  const remember = document.getElementById('up-remember') as HTMLInputElement;
+  const KEY = 'tn-update-key';
+
+  let state: Tournament = merge(fixture, null);
+  let baseUpdated: string | null = null;
+  const dirty = new Set<number>();
+
+  try { keyIn.value = localStorage.getItem(KEY) || ''; } catch {}
+
+  function say(text: string, kind: '' | 'err' | 'ok' = '') { msg.textContent = text; msg.className = kind; }
+
+  const STATUS_LABEL: Record<string, string> = { scheduled: 'Upcoming', played: 'Full time', walkover: 'Walkover', postponed: 'Postponed' };
+
+  function row(D: Draw, m: Match) {
+    const id = `m${m.id}`;
+    const sel = (f: string, opts: [string, string][], val: string) =>
+      `<select id="${id}-${f}" data-id="${m.id}" data-f="${f}">${opts.map(([v, l]) => `<option value="${v}"${v === val ? ' selected' : ''}>${esc(l)}</option>`).join('')}</select>`;
+    const team = (side: 'a' | 'b') => {
+      const s = m[side], n = D.name(s);
+      return `<span class="nm" data-name="${m.id}-${side}">${n ? esc(n) : `Winner of Match ${s.from}<small>${esc(D.contText(s))}</small>`}</span>`;
+    };
+    const v = (x: number | null) => (x === null || x === undefined ? '' : String(x));
+    return `<div class="up-m${dirty.has(m.id) ? ' dirty' : ''}" id="row-${m.id}">
+      <div class="up-mh"><span><b>Match ${m.id}</b> · ${esc(m.round)}</span><span>${esc(D.ground(m))}${D.time(m) ? ', ' + esc(D.time(m)) : ''}</span></div>
+      <div class="up-sc">
+        ${team('a')}<input id="${id}-sa" type="number" inputmode="numeric" min="0" max="99" data-id="${m.id}" data-f="sa" value="${v(m.sa)}" aria-label="Score, first team, Match ${m.id}" />
+        ${team('b')}<input id="${id}-sb" type="number" inputmode="numeric" min="0" max="99" data-id="${m.id}" data-f="sb" value="${v(m.sb)}" aria-label="Score, second team, Match ${m.id}" />
+      </div>
+      <div class="up-f">
+        <label for="${id}-status">Status${sel('status', Object.entries(STATUS_LABEL) as [string, string][], m.status)}</label>
+      </div>
+      <details class="up-more"${m.status === 'walkover' || m.status === 'postponed' ? ' open' : ''}>
+        <summary>Walkover, date, ground, note</summary>
+        <div class="up-f">
+          <label for="${id}-w">Walkover to${sel('w', [['', '—'], ['a', 'First team'], ['b', 'Second team']], m.w || '')}</label>
+          <label for="${id}-date">Date<input id="${id}-date" type="date" data-id="${m.id}" data-f="date" value="${m.date}" /></label>
+          <label for="${id}-ground">Ground${sel('ground', [['', m.place || 'None'], ...GROUNDS.map((g) => [g, `${g} Ground`] as [string, string])], m.ground || '')}</label>
+          <label class="note" for="${id}-note">Note<input id="${id}-note" type="text" maxlength="160" data-id="${m.id}" data-f="note" value="${esc(m.note || '')}" /></label>
+        </div>
+      </details>
+    </div>`;
+  }
+
+  function draw() {
+    const D = new Draw(state);
+    const dates = [...new Set(state.matches.map((m) => m.date))].sort();
+    list.innerHTML = dates.map((d) =>
+      `<h2 class="up-day" id="up-${d}">${wd(d)} ${fmt(d)}${d === todayIST() ? ' · Today' : ''}</h2>` +
+      D.on(d).map((m) => row(D, m)).join('')
+    ).join('');
+  }
+
+  function refreshNames() {
+    const D = new Draw(state);
+    state.matches.forEach((m) => (['a', 'b'] as const).forEach((side) => {
+      const el = list.querySelector(`[data-name="${m.id}-${side}"]`);
+      if (!el) return;
+      const s = m[side], n = D.name(s);
+      el.innerHTML = n ? esc(n) : `Winner of Match ${s.from}<small>${esc(D.contText(s))}</small>`;
+    }));
+  }
+
+  async function load() {
+    try {
+      const r = await fetch(`/api/results?t=${fixture.slug}&fresh=${Date.now()}`, { cache: 'no-store' });
+      if (!r.ok) throw new Error(String(r.status));
+      const live = (await r.json()) as Live;
+      baseUpdated = live.updated ?? null;
+      state = merge(fixture, live);
+      dirty.clear();
+      draw();
+      say(baseUpdated ? `Last saved ${stamp(baseUpdated)} IST.` : 'No results saved here yet. The page shows the results built into the site.');
+    } catch {
+      list.innerHTML = '<div class="up-card"><p>The results could not be loaded. Check the connection and reload this page.</p></div>';
+      say('Could not load the latest results.', 'err');
+      saveBtn.disabled = true;
+    }
+  }
+
+  list.addEventListener('input', (e) => {
+    const el = e.target as HTMLInputElement;
+    const id = Number(el.dataset.id), f = el.dataset.f;
+    const m = state.matches.find((x) => x.id === id);
+    if (!m || !f) return;
+    if (f === 'sa' || f === 'sb') {
+      const n = el.value === '' ? null : Math.max(0, Math.floor(Number(el.value)));
+      m[f] = Number.isFinite(n as number) ? n : null;
+      if (m.sa !== null && m.sb !== null && m.status === 'scheduled') {
+        m.status = 'played';
+        const s = document.getElementById(`m${id}-status`) as HTMLSelectElement | null;
+        if (s) s.value = 'played';
+      }
+    } else if (f === 'w' || f === 'ground') (m as any)[f] = el.value || null;
+    else (m as any)[f] = el.value;
+    dirty.add(id);
+    document.getElementById(`row-${id}`)?.classList.add('dirty');
+    say(`${dirty.size} ${dirty.size === 1 ? 'match' : 'matches'} changed. Not saved yet.`);
+  });
+  list.addEventListener('change', () => refreshNames());
+
+  document.getElementById('up-today')!.addEventListener('click', () => {
+    const t = todayIST();
+    const d = [...new Set(state.matches.map((m) => m.date))].sort().find((x) => x >= t);
+    if (d) document.getElementById(`up-${d}`)?.scrollIntoView({ block: 'start' });
+  });
+
+  saveBtn.addEventListener('click', async () => {
+    const key = keyIn.value.trim();
+    if (!key) { say('Enter the update key first.', 'err'); keyIn.focus(); return; }
+    for (const m of state.matches) {
+      const err = checkEdit(m.id, pickEdit(m));
+      if (err) { say(err, 'err'); document.getElementById(`row-${m.id}`)?.scrollIntoView({ block: 'center' }); return; }
+    }
+    const matches: Record<string, unknown> = {};
+    state.matches.forEach((m) => { matches[String(m.id)] = pickEdit(m); });
+    saveBtn.disabled = true;
+    say('Saving…');
+    try {
+      const r = await fetch('/api/results', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
+        body: JSON.stringify({ t: fixture.slug, baseUpdated, matches }),
+      });
+      const res = await r.json().catch(() => ({}));
+      if (r.ok) {
+        try { if (remember.checked) localStorage.setItem(KEY, key); else localStorage.removeItem(KEY); } catch {}
+        baseUpdated = res.updated;
+        dirty.clear();
+        list.querySelectorAll('.up-m.dirty').forEach((el) => el.classList.remove('dirty'));
+        say(`Saved ${stamp(res.updated)} IST. The tournament page shows it within a few seconds.`, 'ok');
+      } else {
+        say(res.error || 'The save did not go through. Try again.', 'err');
+      }
+    } catch {
+      say('No connection. Your changes are still here; try again when you are back online.', 'err');
+    } finally {
+      saveBtn.disabled = false;
+    }
+  });
+
+  window.addEventListener('beforeunload', (e) => { if (dirty.size) { e.preventDefault(); } });
+  load();
+</script>

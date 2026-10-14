@@ -25,6 +25,7 @@ npm run preview    # serve the built site locally
 | Honours (on The Club page) | `src/data/honours.ts` |
 | Press coverage (News page and Home) | `src/data/media.ts` |
 | Season calendar | `src/data/season.ts` |
+| Tournament fixtures and results (`/tournament/`) | `src/data/tournaments/<slug>.json`, `src/lib/tournament.ts`; header button in `src/config.ts` (`tournament`) |
 | Gallery photos | `src/data/gallery.ts`; files in `src/assets/photos/` |
 | Club news and stories (one Markdown file per post) | `src/content/news/` |
 | Pages | `src/pages/` |
@@ -53,6 +54,28 @@ The current design replaced the first one on 03-10-2026. The first design's sour
 ## Accounts
 
 The GitHub repo, Netlify site and domain belong to the club, registered under the club's own email. Unibrow Studio manages them and hands over all credentials if the association ends. Keep the account inventory in `07_Digital_Setup/`.
+
+## Tournament results (no rebuild needed)
+
+`/tournament/` shows the current tournament day by day: who plays whom, where, and the scores.
+The fixture (teams, draw, dates, grounds) is in `src/data/tournaments/hazari-2026.json` and is built into the page.
+**Scores do not need a rebuild.** They are entered at `/tournament/update/` (not linked anywhere, kept out of
+search), saved by the function `netlify/functions/results.mts` into Netlify Blobs, and the page picks them up
+from `/api/results` when it opens and every two minutes while it is open.
+
+- **Entering scores:** open `chingkheihunba.club/tournament/update/` on a phone, enter the update key once,
+  type the two scores, Save. Winners move into their next match on their own. Date, ground, walkover,
+  postponement and a short note can also be changed there.
+- **The update key** is the Netlify environment variable `RESULTS_ADMIN_KEY` (Project configuration →
+  Environment variables; mark it secret). Never put it in this repo. Change it there to lock out an old key.
+- **Cost:** saving scores triggers no deploy. Each page view makes one small request to `/api/results`, cached
+  on Netlify's CDN for up to five minutes and cleared on every save.
+- **Each save keeps the previous version** in the Blobs store under `history/<slug>/<time>`.
+- **During a tournament, change dates and grounds through the form, not the JSON file.** Saved values take
+  priority over the file.
+- **Next tournament:** add `src/data/tournaments/<new-slug>.json` in the same shape, register it in
+  `TOURNAMENTS` in `netlify/functions/results.mts`, point the two pages' imports at it, and update `tournament`
+  in `src/config.ts`. Set `tournament.active` to `false` when nothing is on, to hide the header button.
 
 ## Committing
 
