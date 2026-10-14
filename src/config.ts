@@ -35,3 +35,14 @@ export const nav = [
   { href: '/partners/', label: 'Partners' },
   { href: '/contact/', label: 'Contact' },
 ];
+
+// The tournament now on. While `active` is true, the header shows a highlighted button
+// (and a bar under the header on phones) linking to the fixtures and results page.
+// Set `active: false` when the tournament is over, or point it at the next one.
+export const tournament = {
+  active: true,
+  href: '/hazari26/',
+  navLabel: 'N. Hazari 2026',
+  barText: 'N. Hazari & Dr. N. Tombi State Polo is on',
+  barButton: 'Fixtures & results',
+};
