@@ -30,7 +30,9 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
       <details class="up-card up-help">
         <summary><b>How to use this form</b></summary>
         <ol>
-          <li><b>Enter a result:</b> type both scores. The status turns to Full time by itself. Tap <b>Save results</b> at the bottom.</li>
+          <li><b>During a match:</b> type the score so far (or tap <b>+1</b>) and tap <b>Save results</b>. A match being played today is marked <b>Ongoing</b> by itself, and an Ongoing match can be level, say 2–2. The page shows it as Ongoing and nobody moves to the next round yet. Save as often as you like.</li>
+          <li><b>When the match ends:</b> tap <b>Final score</b> on that match, then <b>Save results</b>. A final score cannot be level. The winner then moves into their next match.</li>
+          <li><b>Entering an older result:</b> type both scores. A match from an earlier day is marked Final score by itself. Save.</li>
           <li><b>Fix a wrong score:</b> change the number and save again. The page shows the new score within seconds.</li>
           <li><b>Remove a result entered too early, or for the wrong match:</b> tap <b>Clear result</b> on that match, then save. It goes back to Upcoming.</li>
           <li><b>Undo last save:</b> puts back everything as it was before your last save. Tap it again to go back one more save.</li>
@@ -72,7 +74,7 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
 
   function say(text: string, kind: '' | 'err' | 'ok' = '') { msg.textContent = text; msg.className = kind; }
 
-  const STATUS_LABEL: Record<string, string> = { scheduled: 'Upcoming', played: 'Full time', walkover: 'Walkover', postponed: 'Postponed' };
+  const STATUS_LABEL: Record<string, string> = { scheduled: 'Upcoming', live: 'Ongoing', played: 'Full time (final score)', walkover: 'Walkover', postponed: 'Postponed' };
 
   function row(D: Draw, m: Match) {
     const id = `m${m.id}`;
@@ -83,13 +85,17 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
       return `<span class="nm" data-name="${m.id}-${side}">${n ? esc(n) : `Winner of Match ${s.from}<small>${esc(D.contText(s))}</small>`}</span>`;
     };
     const v = (x: number | null) => (x === null || x === undefined ? '' : String(x));
-    return `<div class="up-m${dirty.has(m.id) ? ' dirty' : ''}" id="row-${m.id}">
-      <div class="up-mh"><span><b>Match ${m.id}</b> · ${esc(m.round)}</span><span>${esc(D.ground(m))}${D.time(m) ? ', ' + esc(D.time(m)) : ''}</span></div>
+    return `<div class="up-m${dirty.has(m.id) ? ' dirty' : ''}${m.status === 'live' ? ' live' : ''}" id="row-${m.id}">
+      <div class="up-mh"><span><b>Match ${m.id}</b> · ${esc(m.round)}</span><span>${esc(D.ground(m))}${D.time(m) ? ', ' + esc(D.time(m)) : ''}${m.was && m.was !== m.date ? ` · moved from ${fmt(m.was)}` : ''}</span></div>
       <div class="up-sc">
-        ${team('a')}<input id="${id}-sa" type="number" inputmode="numeric" min="0" max="99" data-id="${m.id}" data-f="sa" value="${v(m.sa)}" aria-label="Score, first team, Match ${m.id}" />
-        ${team('b')}<input id="${id}-sb" type="number" inputmode="numeric" min="0" max="99" data-id="${m.id}" data-f="sb" value="${v(m.sb)}" aria-label="Score, second team, Match ${m.id}" />
+        ${team('a')}<input id="${id}-sa" type="number" inputmode="numeric" min="0" max="99" data-id="${m.id}" data-f="sa" value="${v(m.sa)}" aria-label="Score, first team, Match ${m.id}" /><button type="button" class="up-plus" data-plus="${m.id}" data-side="sa" aria-label="Add a goal, first team, Match ${m.id}">+1</button>
+        ${team('b')}<input id="${id}-sb" type="number" inputmode="numeric" min="0" max="99" data-id="${m.id}" data-f="sb" value="${v(m.sb)}" aria-label="Score, second team, Match ${m.id}" /><button type="button" class="up-plus" data-plus="${m.id}" data-side="sb" aria-label="Add a goal, second team, Match ${m.id}">+1</button>
       </div>
       <div class="up-f">
+        <div class="up-seg" role="group" aria-label="Match ${m.id}: ongoing or final">
+          <button type="button" data-state="live" data-id="${m.id}" aria-pressed="${m.status === 'live'}">Ongoing</button>
+          <button type="button" data-state="played" data-id="${m.id}" aria-pressed="${m.status === 'played'}">Final score</button>
+        </div>
         <label for="${id}-status">Status${sel('status', Object.entries(STATUS_LABEL) as [string, string][], m.status)}</label>
         <button type="button" class="tn-btn line" data-clear="${m.id}">Clear result</button>
       </div>
@@ -103,6 +109,21 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
         </div>
       </details>
     </div>`;
+  }
+
+  /** Sets a match's status and keeps the select, the Ongoing / Final buttons and the row colour in step. */
+  function setStatus(m: Match, st: Match['status']) {
+    m.status = st;
+    const s = document.getElementById(`m${m.id}-status`) as HTMLSelectElement | null;
+    if (s) s.value = st;
+    const r = document.getElementById(`row-${m.id}`);
+    r?.classList.toggle('live', st === 'live');
+    r?.querySelectorAll<HTMLButtonElement>('[data-state]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.state === st)));
+  }
+
+  function markDirty(id: number) {
+    dirty.add(id);
+    document.getElementById(`row-${id}`)?.classList.add('dirty');
   }
 
   function draw() {
@@ -149,12 +170,11 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
     if (f === 'sa' || f === 'sb') {
       const n = el.value === '' ? null : Math.max(0, Math.floor(Number(el.value)));
       m[f] = Number.isFinite(n as number) ? n : null;
-      if (m.sa !== null && m.sb !== null && m.status === 'scheduled') {
-        m.status = 'played';
-        const s = document.getElementById(`m${id}-status`) as HTMLSelectElement | null;
-        if (s) s.value = 'played';
-      }
+      // Scores on an upcoming match: today's or a later match is in play (Ongoing);
+      // a match from an earlier day is being entered after the fact (Final score).
+      if (m.sa !== null && m.sb !== null && m.status === 'scheduled') setStatus(m, m.date >= todayIST() ? 'live' : 'played');
     } else if (f === 'w' || f === 'ground') (m as any)[f] = el.value || null;
+    else if (f === 'status') setStatus(m, el.value as Match['status']);
     else (m as any)[f] = el.value;
     dirty.add(id);
     document.getElementById(`row-${id}`)?.classList.add('dirty');
@@ -164,14 +184,47 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
 
   // Clear result: back to Upcoming, no scores.
   list.addEventListener('click', (e) => {
+    // Ongoing / Final score
+    const sb = (e.target as HTMLElement).closest('[data-state]') as HTMLElement | null;
+    if (sb) {
+      const m = state.matches.find((x) => x.id === Number(sb.dataset.id));
+      if (!m) return;
+      const st = sb.dataset.state as Match['status'];
+      if (m.sa === null) { m.sa = 0; (document.getElementById(`m${m.id}-sa`) as HTMLInputElement).value = '0'; }
+      if (m.sb === null) { m.sb = 0; (document.getElementById(`m${m.id}-sb`) as HTMLInputElement).value = '0'; }
+      setStatus(m, st);
+      markDirty(m.id);
+      refreshNames();
+      if (st === 'played' && m.sa === m.sb) say(`Match ${m.id} is level at ${m.sa}–${m.sb}. A final score needs a winner: correct the score, or keep it Ongoing.`, 'err');
+      else say(st === 'live' ? `Match ${m.id} marked Ongoing. Save to show the score so far.` : `Match ${m.id} marked Final score. Save to publish the result.`);
+      return;
+    }
+    // +1 goal
+    const pb = (e.target as HTMLElement).closest('[data-plus]') as HTMLElement | null;
+    if (pb) {
+      const id = Number(pb.dataset.plus), side = pb.dataset.side as 'sa' | 'sb';
+      const m = state.matches.find((x) => x.id === id);
+      if (!m) return;
+      const other = side === 'sa' ? 'sb' : 'sa';
+      m[side] = Math.min(99, (m[side] ?? 0) + 1);
+      if (m[other] === null) m[other] = 0;
+      (document.getElementById(`m${id}-${side}`) as HTMLInputElement).value = String(m[side]);
+      (document.getElementById(`m${id}-${other}`) as HTMLInputElement).value = String(m[other]);
+      if (m.status === 'scheduled') setStatus(m, m.date >= todayIST() ? 'live' : 'played');
+      markDirty(id);
+      refreshNames();
+      say(`Match ${id}: ${m.sa}–${m.sb}${m.status === 'live' ? ', Ongoing' : ''}. Not saved yet.`);
+      return;
+    }
     const b = (e.target as HTMLElement).closest('[data-clear]') as HTMLElement | null;
     if (!b) return;
     const id = Number(b.dataset.clear);
     const m = state.matches.find((x) => x.id === id);
     if (!m) return;
-    m.status = 'scheduled'; m.sa = null; m.sb = null; m.w = null;
+    m.sa = null; m.sb = null; m.w = null;
+    setStatus(m, 'scheduled');
     const set = (f: string, v: string) => { const el = document.getElementById(`m${id}-${f}`) as HTMLInputElement | null; if (el) el.value = v; };
-    set('sa', ''); set('sb', ''); set('status', 'scheduled'); set('w', '');
+    set('sa', ''); set('sb', ''); set('w', '');
     dirty.add(id);
     document.getElementById(`row-${id}`)?.classList.add('dirty');
     refreshNames();
@@ -228,7 +281,9 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
         baseUpdated = res.updated;
         dirty.clear();
         list.querySelectorAll('.up-m.dirty').forEach((el) => el.classList.remove('dirty'));
-        say(`Saved ${stamp(res.updated)} IST. The tournament page shows it within a few seconds.`, 'ok');
+        const going = state.matches.filter((m) => m.status === 'live').map((m) => m.id);
+        say(`Saved ${stamp(res.updated)} IST. The tournament page shows it within a few seconds.` +
+          (going.length ? ` Ongoing: Match ${going.join(', ')}. Tap Final score when ${going.length === 1 ? 'it ends' : 'each ends'}.` : ''), 'ok');
       } else {
         say(res.error || 'The save did not go through. Try again.', 'err');
       }

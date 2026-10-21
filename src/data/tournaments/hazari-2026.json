@@ -13,14 +13,19 @@
  "venue": "Imphal Polo Ground, Mapal Kangjeibung",
  "report": "Teams report at 1:00 PM",
  "start": "2026-10-12",
- "end": "2026-10-28",
+ "end": "2026-10-30",
  "club": "Chingkhei Hunba PC",
  "times": {
   "1st": "1:30 PM"
  },
- "updated": "2026-10-14T11:30:00+05:30",
+ "off": {
+  "2026-10-20": "Postponed by MHRPA (notice of 19-10-2026)",
+  "2026-10-21": "Postponed by MHRPA (notice of 19-10-2026)"
+ },
+ "updated": "2026-10-21T08:00:00+05:30",
  "notes": [
   "Fixture as issued by the Office of the Manipur Horse Riding & Polo Association, signed by N Bedajeet Singh, Chairman, Technical Committee. Dates can change for reasons beyond the organising committee's control.",
+  "Matches of 20 and 21 October were postponed by the MHRPA (notice of 19-10-2026). Play resumes on 22-10-2026 at Imphal Polo Ground, continuing the same fixture (notice of 20-10-2026). Every match from Match 20 onwards has moved two days later; the order of matches has not changed.",
   "Played under Indian Polo Association rules (2019), with some changes. In case of dispute, the Tournament Committee's decision is final.",
   "Match numbers are added on this page for easy reference; they are not on the official fixture. 1st Ground matches start at 1:30 PM."
  ],
@@ -369,7 +374,8 @@
   },
   {
    "id": 20,
-   "date": "2026-10-20",
+   "date": "2026-10-22",
+   "was": "2026-10-20",
    "ground": "1st",
    "round": "Round 2",
    "a": {
@@ -387,7 +393,8 @@
   },
   {
    "id": 21,
-   "date": "2026-10-20",
+   "date": "2026-10-22",
+   "was": "2026-10-20",
    "ground": "2nd",
    "round": "Round 2",
    "a": {
@@ -405,7 +412,8 @@
   },
   {
    "id": 22,
-   "date": "2026-10-20",
+   "date": "2026-10-22",
+   "was": "2026-10-20",
    "ground": "3rd",
    "round": "Round 3",
    "a": {
@@ -423,7 +431,8 @@
   },
   {
    "id": 23,
-   "date": "2026-10-21",
+   "date": "2026-10-23",
+   "was": "2026-10-21",
    "ground": "1st",
    "round": "Round 3",
    "a": {
@@ -441,7 +450,8 @@
   },
   {
    "id": 24,
-   "date": "2026-10-21",
+   "date": "2026-10-23",
+   "was": "2026-10-21",
    "ground": "2nd",
    "round": "Round 3",
    "a": {
@@ -459,7 +469,8 @@
   },
   {
    "id": 25,
-   "date": "2026-10-21",
+   "date": "2026-10-23",
+   "was": "2026-10-21",
    "ground": "3rd",
    "round": "Round 3",
    "a": {
@@ -477,7 +488,8 @@
   },
   {
    "id": 26,
-   "date": "2026-10-22",
+   "date": "2026-10-24",
+   "was": "2026-10-22",
    "ground": "1st",
    "round": "Round 3",
    "a": {
@@ -495,7 +507,8 @@
   },
   {
    "id": 27,
-   "date": "2026-10-22",
+   "date": "2026-10-24",
+   "was": "2026-10-22",
    "ground": "2nd",
    "round": "Round 3",
    "a": {
@@ -513,7 +526,8 @@
   },
   {
    "id": 28,
-   "date": "2026-10-23",
+   "date": "2026-10-25",
+   "was": "2026-10-23",
    "ground": "1st",
    "round": "Round 3",
    "a": {
@@ -531,7 +545,8 @@
   },
   {
    "id": 29,
-   "date": "2026-10-23",
+   "date": "2026-10-25",
+   "was": "2026-10-23",
    "ground": "1st",
    "round": "Round 3",
    "a": {
@@ -549,7 +564,8 @@
   },
   {
    "id": 30,
-   "date": "2026-10-24",
+   "date": "2026-10-26",
+   "was": "2026-10-24",
    "ground": "1st",
    "round": "Quarter-final",
    "a": {
@@ -567,7 +583,8 @@
   },
   {
    "id": 31,
-   "date": "2026-10-24",
+   "date": "2026-10-26",
+   "was": "2026-10-24",
    "ground": "2nd",
    "round": "Quarter-final",
    "a": {
@@ -585,7 +602,8 @@
   },
   {
    "id": 32,
-   "date": "2026-10-25",
+   "date": "2026-10-27",
+   "was": "2026-10-25",
    "ground": "1st",
    "round": "Quarter-final",
    "a": {
@@ -603,7 +621,8 @@
   },
   {
    "id": 33,
-   "date": "2026-10-24",
+   "date": "2026-10-26",
+   "was": "2026-10-24",
    "ground": "2nd",
    "round": "Quarter-final",
    "a": {
@@ -621,7 +640,8 @@
   },
   {
    "id": 34,
-   "date": "2026-10-26",
+   "date": "2026-10-28",
+   "was": "2026-10-26",
    "ground": "1st",
    "round": "Semi-final",
    "a": {
@@ -639,7 +659,8 @@
   },
   {
    "id": 35,
-   "date": "2026-10-26",
+   "date": "2026-10-28",
+   "was": "2026-10-26",
    "ground": "2nd",
    "round": "Semi-final",
    "a": {
@@ -657,7 +678,8 @@
   },
   {
    "id": 36,
-   "date": "2026-10-28",
+   "date": "2026-10-30",
+   "was": "2026-10-28",
    "ground": null,
    "round": "Final",
    "a": {
