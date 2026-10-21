@@ -37,7 +37,8 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
             <li>Type a team’s name under <b>Follow</b> to see only its matches, including the ones it plays if it keeps winning.</li>
             <li>A match waiting on an earlier result shows “Winner of Match …”. The winner’s name appears once that match is played.</li>
             <li><b>Copy as text</b> copies a day’s matches or results, ready to share on WhatsApp or Instagram.</li>
-            <li>The page checks for new scores every two minutes while it is open.</li>
+            <li>A match marked <b>Ongoing</b> shows the score so far. The final score is added at full time.</li>
+            <li>The page checks for new scores every two minutes while it is open, and every 30 seconds while a match is ongoing.</li>
           </ul>
         </details>
       </div>
@@ -187,7 +188,14 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
   window.addEventListener('resize', setHeaderOffset);
   draw();
   refresh();
-  // Check for new scores every two minutes while the page is open and visible.
-  setInterval(() => { if (document.visibilityState === 'visible') refresh(); }, 120_000);
+  // Check for new scores every two minutes while the page is open and visible,
+  // and every 30 seconds while a match is ongoing.
+  let tick = 0;
+  setInterval(() => {
+    tick++;
+    if (document.visibilityState !== 'visible') return;
+    const ongoing = current().matches.some((m) => m.status === 'live');
+    if (ongoing || tick % 4 === 0) refresh();
+  }, 30_000);
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') refresh(); });
 </script>
