@@ -356,7 +356,9 @@ p { margin: 0 0 1rem; max-width: 68ch; }
 @media (max-width: 860px) { .feature { grid-template-columns: 1fr; } .feature img { min-height: 260px; max-height: 420px; } }
 
 /* ---------- Tournament: fixtures and results (/hazari26/) ---------- */
-.tn-head h1 { font-size: clamp(3rem, 8.5vw, 6.4rem); }
+.tn-head { padding-top: clamp(2rem, 5vw, 3rem); padding-bottom: clamp(1.4rem, 3vw, 2rem); }
+.tn-head h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); line-height: .92; }
+@media (max-width: 640px) { .tn-facts { gap: .1rem 1rem; font-size: .95rem; line-height: 1.45; } .tn-head .tn-disclaimer { font-size: .88rem; } }
 .tn-head h1 span { display: inline; }
 .tn-yr { color: var(--red); }
 .tn-eyebrow { margin: 0 0 1rem !important; font-size: .8rem !important; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.75) !important; }
@@ -521,15 +523,6 @@ p { margin: 0 0 1rem; max-width: 68ch; }
 .up-bar p.ok { color: #b9f2b0; font-weight: 600; }
 
 /* Tournament: about this page */
-.tn-about { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px 36px; margin-top: 1.6rem; padding-top: 1.4rem; border-top: 1px solid rgba(255,255,255,.2); align-items: start; }
-@media (max-width: 900px) { .tn-about { grid-template-columns: 1fr; } }
-.tn-about p { margin: 0 0 .7rem; font-size: 1rem !important; color: rgba(255,255,255,.85) !important; max-width: 68ch; }
-.tn-about a { color: #fff; }
-.tn-disclaimer b { color: #fff; }
-.tn-howto { background: var(--navy-2); border-radius: 14px; padding: .8rem 1rem; }
-.tn-howto summary { cursor: pointer; font-weight: 700; color: #fff; }
-.tn-howto ul { margin: .7rem 0 .2rem; padding-left: 1.1rem; display: grid; gap: .35rem; font-size: .92rem; color: rgba(255,255,255,.85); }
-.tn-howto b { color: #fff; }
 
 /* Tournament: the club's panel, in jersey red */
 .tn-club { background-color: var(--red); background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.06) 0 1px, transparent 1px 26px), repeating-linear-gradient(-45deg, rgba(255,255,255,.06) 0 1px, transparent 1px 26px); box-shadow: 0 18px 40px rgba(196,22,28,.28); }
@@ -556,3 +549,22 @@ p { margin: 0 0 1rem; max-width: 68ch; }
 .up-help summary { cursor: pointer; }
 .up-help ol { margin: .8rem 0 0; padding-left: 1.2rem; display: grid; gap: .5rem; max-width: 72ch; }
 @media (max-width: 640px) { .tn-today { order: 0; } .tn-club { order: 1; } .tn-latest { order: 2; } }
+
+/* About / How to use: folded away so the three panels lead */
+.tn-info { margin-top: 1.1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.2); display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+.tn-head .tn-disclaimer { margin: 0; font-size: .92rem; color: rgba(255,255,255,.75); max-width: none; }
+.tn-disclaimer b { color: #fff; }
+.tn-toggles { display: flex; flex-wrap: wrap; gap: 8px; flex: 1 1 auto; align-items: flex-start; }
+.tn-more summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: .45rem; font-weight: 700; font-size: .9rem; color: #fff; padding: .4rem .85rem; border-radius: 999px; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.45); }
+.tn-more summary::-webkit-details-marker { display: none; }
+.tn-more summary::after { content: '+'; font-size: 1.05rem; line-height: 1; }
+.tn-more[open] summary::after { content: '–'; }
+.tn-more summary:hover { box-shadow: inset 0 0 0 1.5px #fff; }
+.tn-more[open] { flex-basis: 100%; }
+.tn-more[open] summary { background: #fff; color: var(--navy); }
+.tn-more-body { margin: .7rem 0 .2rem; background: var(--navy-2); border-radius: 14px; padding: .9rem 1.1rem; max-width: 80ch; font-size: .95rem; color: rgba(255,255,255,.85); }
+.tn-more-body p { margin: 0 0 .6rem; font-size: .95rem !important; color: rgba(255,255,255,.85) !important; max-width: none; }
+.tn-more-body p:last-child { margin-bottom: 0; }
+.tn-more-body a { color: #fff; }
+.tn-more-body b { color: #fff; }
+ul.tn-more-body { padding-left: 2.1rem; display: grid; gap: .35rem; }

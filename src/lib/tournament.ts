@@ -14,6 +14,7 @@ export type Match = {
   id: number;
   date: string;              // yyyy-mm-dd (display is dd-mm-yyyy)
   was?: string;              // the date on the original fixture, when the organisers have moved it
+  stale?: { date?: string[]; note?: string[] }; // saved values known to be out of date; the fixture's value is used instead
   ground: string | null;     // '1st' | '2nd' | '3rd' | null
   place: string | null;      // label when there is no ground, e.g. 'Opening match', 'Final'
   round: string;
@@ -63,6 +64,8 @@ export function merge(fx: Tournament, live: Live | null | undefined): Tournament
     // A save made before the organisers moved this match still carries the old date.
     // The rescheduled date in the fixture wins over it.
     if (m.was && e.date === m.was) e.date = m.date;
+    if (m.stale?.date?.includes(e.date)) e.date = m.date;
+    if (m.stale?.note?.includes(e.note)) e.note = m.note;
     return { ...m, ...e };
   });
   return { ...fx, matches, updated: live?.updated || fx.updated };

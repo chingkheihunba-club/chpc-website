@@ -24,23 +24,29 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
         <li>{new Set(t.matches.flatMap((m) => [m.a.team, m.b.team]).filter(Boolean)).size} teams · {t.matches.length} matches</li>
         <li>{t.report}</li>
       </ul>
-      <div class="tn-about">
-        <div class="tn-about-text">
-          <p>This page follows the tournament day by day: who plays whom, on which ground, and the score once each match is over. It is an effort to track the tournament in near real time. Scores are added soon after each match, so there can be a short delay.</p>
-          <p class="tn-disclaimer"><b>Not the official record.</b> Chingkhei Hunba Polo Club keeps this page as a voluntary effort for players and polo lovers. The fixture and results announced by the {t.organiser} are final. If you spot a mistake, please <a href={site.social.instagram} target="_blank" rel="noopener">message the club on Instagram</a> or use the <a href="/contact/">contact page</a>, and it will be corrected.</p>
+      <div class="tn-info">
+        <p class="tn-disclaimer"><b>Not the official record.</b> The fixture and results announced by the {t.organiser} are final.</p>
+        <div class="tn-toggles">
+          <details class="tn-more">
+            <summary>About this page</summary>
+            <div class="tn-more-body">
+              <p>This page follows the tournament day by day: who plays whom, on which ground, and the score once each match is over. It is an effort to track the tournament in near real time. Scores are added soon after each match, so there can be a short delay.</p>
+              <p>Chingkhei Hunba Polo Club keeps this page as a voluntary effort for players and polo lovers. If you spot a mistake, please <a href={site.social.instagram} target="_blank" rel="noopener">message the club on Instagram</a> or use the <a href="/contact/">contact page</a>, and it will be corrected.</p>
+            </div>
+          </details>
+          <details class="tn-more">
+            <summary>How to use this page</summary>
+            <ul class="tn-more-body">
+              <li><b>Today</b> and <b>Latest results</b> are at the top.</li>
+              <li>Tap a day in the date bar to jump to its matches.</li>
+              <li>Type a team’s name under <b>Follow</b> to see only its matches, including the ones it plays if it keeps winning.</li>
+              <li>A match waiting on an earlier result shows “Winner of Match …”. The winner’s name appears once that match is played.</li>
+              <li><b>Copy as text</b> copies a day’s matches or results, ready to share on WhatsApp or Instagram.</li>
+              <li>A match marked <b>Ongoing</b> shows the score so far. The final score is added at full time.</li>
+              <li>The page checks for new scores every two minutes while it is open, and every 30 seconds while a match is ongoing.</li>
+            </ul>
+          </details>
         </div>
-        <details class="tn-howto" id="tn-howto">
-          <summary>How to use this page</summary>
-          <ul>
-            <li><b>Today</b> and <b>Latest results</b> are at the top.</li>
-            <li>Tap a day in the date bar to jump to its matches.</li>
-            <li>Type a team’s name under <b>Follow</b> to see only its matches, including the ones it plays if it keeps winning.</li>
-            <li>A match waiting on an earlier result shows “Winner of Match …”. The winner’s name appears once that match is played.</li>
-            <li><b>Copy as text</b> copies a day’s matches or results, ready to share on WhatsApp or Instagram.</li>
-            <li>A match marked <b>Ongoing</b> shows the score so far. The final score is added at full time.</li>
-            <li>The page checks for new scores every two minutes while it is open, and every 30 seconds while a match is ongoing.</li>
-          </ul>
-        </details>
       </div>
     </div>
   </section>
@@ -182,8 +188,6 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
   });
   root.addEventListener('focusout', (e) => { if ((e.target as HTMLElement).id === 'tn-team-q') setTimeout(() => closeList(), 120); });
 
-  const howto = document.getElementById('tn-howto') as HTMLDetailsElement | null;
-  if (howto && window.matchMedia('(min-width: 900px)').matches) howto.open = true;
   setHeaderOffset();
   window.addEventListener('resize', setHeaderOffset);
   draw();
