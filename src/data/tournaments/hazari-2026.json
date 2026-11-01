@@ -13,7 +13,7 @@
  "venue": "Imphal Polo Ground, Mapal Kangjeibung",
  "report": "Teams report at 1:00 PM",
  "start": "2026-10-12",
- "end": "2026-11-02",
+ "end": "2026-11-03",
  "club": "Chingkhei Hunba PC",
  "times": {
   "1st": "1:30 PM"
@@ -23,13 +23,15 @@
   "2026-10-21": "Postponed by MHRPA (notice of 19-10-2026)",
   "2026-10-22": "Called off by MHRPA (notice of 22-10-2026)",
   "2026-10-23": "Called off by MHRPA (notice of 23-10-2026)",
-  "2026-10-24": "Called off by MHRPA (notice of 23-10-2026)"
+  "2026-10-24": "Called off by MHRPA (notice of 23-10-2026)",
+  "2026-10-31": "Semi-finals rescheduled to 01-11-2026"
  },
- "updated": "2026-10-23T19:00:00+05:30",
+ "updated": "2026-11-01T12:30:00+05:30",
  "notes": [
   "Fixture as issued by the Office of the Manipur Horse Riding & Polo Association, signed by N Bedajeet Singh, Chairman, Technical Committee. Dates can change for reasons beyond the organising committee's control.",
   "Matches of 20 and 21 October were postponed by the MHRPA (notice of 19-10-2026), and play was due to resume on 22-10-2026 (notice of 20-10-2026). The MHRPA then announced no matches on 22 October (notice of 22-10-2026) or on 23 and 24 October (notice of 23-10-2026), due to unavoidable circumstances.",
-  "The MHRPA has not yet announced when play resumes. This page assumes the same fixture continues in the same order from 25-10-2026, so every match from Match 20 onwards is now five days after its original date. Dates will be corrected if the MHRPA says otherwise.",
+  "The MHRPA did not announce a date for play to resume. This page assumed the same fixture continued in the same order from 25-10-2026, so Matches 20 to 33 are five days after their original dates.",
+  "The semi-finals (Matches 34 and 35), due on 31-10-2026, were rescheduled to 01-11-2026. The final (Match 36) is now on 03-11-2026.",
   "Match 33 (quarter-final) was printed on the original fixture as 24 October; the correct date was 25 October, so it is now on 30 October, 2nd Ground.",
   "Played under Indian Polo Association rules (2019), with some changes. In case of dispute, the Tournament Committee's decision is final.",
   "Match numbers are added on this page for easy reference; they are not on the official fixture. 1st Ground matches start at 1:30 PM."
@@ -600,9 +602,12 @@
    "stale": {
     "date": [
      "2026-10-25"
+    ],
+    "note": [
+     "Ground as printed: the fixture lists two matches on the 1st Ground this day."
     ]
    },
-   "ground": "1st",
+   "ground": "2nd",
    "round": "Round 3",
    "a": {
     "from": 21
@@ -614,7 +619,7 @@
    "sa": null,
    "sb": null,
    "w": null,
-   "note": "Ground as printed: the fixture lists two matches on the 1st Ground this day.",
+   "note": "",
    "place": null
   },
   {
@@ -720,11 +725,12 @@
   },
   {
    "id": 34,
-   "date": "2026-10-31",
+   "date": "2026-11-01",
    "was": "2026-10-26",
    "stale": {
     "date": [
-     "2026-10-28"
+     "2026-10-28",
+     "2026-10-31"
     ]
    },
    "ground": "1st",
@@ -744,11 +750,12 @@
   },
   {
    "id": 35,
-   "date": "2026-10-31",
+   "date": "2026-11-01",
    "was": "2026-10-26",
    "stale": {
     "date": [
-     "2026-10-28"
+     "2026-10-28",
+     "2026-10-31"
     ]
    },
    "ground": "2nd",
@@ -768,11 +775,12 @@
   },
   {
    "id": 36,
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "was": "2026-10-28",
    "stale": {
     "date": [
-     "2026-10-30"
+     "2026-10-30",
+     "2026-11-02"
     ]
    },
    "ground": null,
