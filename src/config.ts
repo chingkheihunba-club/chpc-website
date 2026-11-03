@@ -39,8 +39,9 @@ export const nav = [
 // The tournament now on. While `active` is true, the header shows a highlighted button
 // (and a bar under the header on phones) linking to the fixtures and results page.
 // Set `active: false` when the tournament is over, or point it at the next one.
+// N. Hazari 2026 ended on 03-11-2026; /hazari26/ is now its report, so the button is off.
 export const tournament = {
-  active: true,
+  active: false,
   href: '/hazari26/',
   navLabel: 'N. Hazari 2026',
   barText: 'N. Hazari & Dr. N. Tombi State Polo is on',

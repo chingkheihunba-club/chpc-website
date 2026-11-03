@@ -108,7 +108,7 @@ const picks = await Promise.all(
   {latest && (
     <section class="section">
       <div class="wrap">
-        <a class="feature" href={`/news/${latest.id}/`}>
+        <a class="feature" href={latest.data.href ?? `/news/${latest.id}/`}>
           {latest.data.photos[0] && <Image src={latest.data.photos[(latest.data.cover ?? 1) - 1] ?? latest.data.photos[0]} alt="" widths={[600, 1000]} sizes="(max-width: 860px) 100vw, 50vw" />}
           <div>
             <span class="feature-tag">From the club</span>

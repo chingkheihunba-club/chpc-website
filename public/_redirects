@@ -17,5 +17,8 @@
 /news/2026-02-28-the-winning-goal/       /news/governors-cup-2026-winning-goal/          301
 
 # The current tournament's page (14-10-2026). Point these at the next tournament's page when it starts.
+# Hazari 2026 is over (03-11-2026); /hazari26/ is now its report.
+/nhazari/     /hazari26/   301
+/nhazari      /hazari26/   301
 /tournament/   /hazari26/   302
 /tournament    /hazari26/   302

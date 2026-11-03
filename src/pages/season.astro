@@ -18,7 +18,7 @@ const range = (d: string) => d.split(/\s+to\s+/);
         {season.fixtures.map((f) => f.dates ? (
           <li class="fx fx--set">
             <div class="fx-head">
-              <p class="fx-eyebrow">Dates announced</p>
+              <p class="fx-eyebrow">{f.result ? 'Completed' : 'Dates announced'}</p>
               <p class="fx-name">{f.tournament}</p>
             </div>
             <dl class="fx-meta">
@@ -53,7 +53,7 @@ const range = (d: string) => d.split(/\s+to\s+/);
               )}
             </dl>
             {f.link && (
-              <p class="fx-more"><a class="btn" href={f.link}>Day-by-day fixtures and results</a></p>
+              <p class="fx-more"><a class="btn" href={f.link}>{f.linkLabel || 'Day-by-day fixtures and results'}</a></p>
             )}
             {f.firstMatch && (
               <p class="fx-key">

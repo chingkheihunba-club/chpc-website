@@ -26,15 +26,13 @@
   "2026-10-24": "Called off by MHRPA (notice of 23-10-2026)",
   "2026-10-31": "Semi-finals rescheduled to 01-11-2026"
  },
- "updated": "2026-11-01T12:30:00+05:30",
+ "updated": "2026-11-03T15:15:00+05:30",
  "notes": [
-  "Fixture as issued by the Office of the Manipur Horse Riding & Polo Association, signed by N Bedajeet Singh, Chairman, Technical Committee. Dates can change for reasons beyond the organising committee's control.",
-  "Matches of 20 and 21 October were postponed by the MHRPA (notice of 19-10-2026), and play was due to resume on 22-10-2026 (notice of 20-10-2026). The MHRPA then announced no matches on 22 October (notice of 22-10-2026) or on 23 and 24 October (notice of 23-10-2026), due to unavoidable circumstances.",
-  "The MHRPA did not announce a date for play to resume. This page assumed the same fixture continued in the same order from 25-10-2026, so Matches 20 to 33 are five days after their original dates.",
-  "The semi-finals (Matches 34 and 35), due on 31-10-2026, were rescheduled to 01-11-2026. The final (Match 36) is now on 03-11-2026.",
-  "Match 33 (quarter-final) was printed on the original fixture as 24 October; the correct date was 25 October, so it is now on 30 October, 2nd Ground.",
+  "Fixture as issued by the Office of the Manipur Horse Riding & Polo Association, signed by N Bedajeet Singh, Chairman, Technical Committee.",
+  "Matches of 20 and 21 October were postponed by the MHRPA (notice of 19-10-2026). The MHRPA then announced no matches on 22 October (notice of 22-10-2026) or on 23 and 24 October (notice of 23-10-2026), due to unavoidable circumstances. Play resumed on 25-10-2026, with the rest of the fixture in the same order.",
+  "The semi-finals (Matches 34 and 35), first due on 31-10-2026, were played on 01-11-2026. The final (Match 36) was played on 03-11-2026.",
   "Played under Indian Polo Association rules (2019), with some changes. In case of dispute, the Tournament Committee's decision is final.",
-  "Match numbers are added on this page for easy reference; they are not on the official fixture. 1st Ground matches start at 1:30 PM."
+  "Match numbers are added on this page for easy reference; they are not on the official fixture."
  ],
  "matches": [
   {
@@ -120,9 +118,9 @@
    "b": {
     "team": "New Vision"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 9,
+   "sb": 4,
    "w": null,
    "note": "",
    "place": null
@@ -138,9 +136,9 @@
    "b": {
     "team": "Southern Polo"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 12,
+   "sb": 0,
    "w": null,
    "note": "",
    "place": null
@@ -156,9 +154,9 @@
    "b": {
     "team": "Ibudhou Thangjing – A"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 0,
+   "sb": 5,
    "w": null,
    "note": "",
    "place": null
@@ -174,9 +172,9 @@
    "b": {
     "team": "K&MM Riding – B"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 14,
+   "sb": 2,
    "w": null,
    "note": "",
    "place": null
@@ -192,9 +190,9 @@
    "b": {
     "team": "Laman PC"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 5,
+   "sb": 4,
    "w": null,
    "note": "",
    "place": null
@@ -210,9 +208,9 @@
    "b": {
     "team": "Keibi Uchon"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 2,
+   "sb": 3,
    "w": null,
    "note": "",
    "place": null
@@ -228,9 +226,9 @@
    "b": {
     "team": "Loyalakpa – A"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 0,
+   "sb": 11,
    "w": null,
    "note": "",
    "place": null
@@ -246,9 +244,9 @@
    "b": {
     "team": "Ibudhou Thangjing – B"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 9,
+   "sb": 0,
    "w": null,
    "note": "",
    "place": null
@@ -264,9 +262,9 @@
    "b": {
     "team": "Ikop Ningthou"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 2,
+   "sb": 1,
    "w": null,
    "note": "",
    "place": null
@@ -282,9 +280,9 @@
    "b": {
     "team": "Thoubal PC"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 2,
+   "sb": 9,
    "w": null,
    "note": "",
    "place": null
@@ -300,9 +298,9 @@
    "b": {
     "from": 1
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 1,
+   "sb": 2,
    "w": null,
    "note": "",
    "place": null
@@ -318,9 +316,9 @@
    "b": {
     "from": 5
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 6,
+   "sb": 5,
    "w": null,
    "note": "",
    "place": null
@@ -336,9 +334,9 @@
    "b": {
     "from": 7
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 3,
+   "sb": 7,
    "w": null,
    "note": "",
    "place": null
@@ -354,9 +352,9 @@
    "b": {
     "team": "UPC – A"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 15,
+   "sb": 3,
    "w": null,
    "note": "",
    "place": null
@@ -372,9 +370,9 @@
    "b": {
     "from": 10
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 8,
+   "sb": 1,
    "w": null,
    "note": "",
    "place": null
@@ -396,9 +394,9 @@
    "b": {
     "from": 12
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 9,
+   "sb": 1,
    "w": null,
    "note": "",
    "place": null
@@ -420,9 +418,9 @@
    "b": {
     "from": 13
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 14,
+   "sb": 1,
    "w": null,
    "note": "",
    "place": null
@@ -444,9 +442,9 @@
    "b": {
     "from": 14
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 9,
+   "sb": 0,
    "w": null,
    "note": "",
    "place": null
@@ -468,9 +466,9 @@
    "b": {
     "from": 15
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 16,
+   "sb": 3,
    "w": null,
    "note": "",
    "place": null
@@ -492,9 +490,9 @@
    "b": {
     "team": "Tekcham PC"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 1,
+   "sb": 10,
    "w": null,
    "note": "",
    "place": null
@@ -516,9 +514,9 @@
    "b": {
     "team": "X – Polo Club"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 2,
+   "sb": 8,
    "w": null,
    "note": "",
    "place": null
@@ -540,9 +538,9 @@
    "b": {
     "from": 18
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 7,
+   "sb": 1,
    "w": null,
    "note": "",
    "place": null
@@ -564,9 +562,9 @@
    "b": {
     "team": "Chingkhei Hunba PC"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 3,
+   "sb": 17,
    "w": null,
    "note": "",
    "place": null
@@ -588,9 +586,9 @@
    "b": {
     "team": "MPSC – A"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 3,
+   "sb": 7,
    "w": null,
    "note": "",
    "place": null
@@ -615,9 +613,9 @@
    "b": {
     "team": "Assam Rifles – A"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 1,
+   "sb": 4,
    "w": null,
    "note": "",
    "place": null
@@ -639,9 +637,9 @@
    "b": {
     "from": 23
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 2,
+   "sb": 4,
    "w": null,
    "note": "",
    "place": null
@@ -663,9 +661,9 @@
    "b": {
     "from": 25
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 4,
+   "sb": 14,
    "w": null,
    "note": "",
    "place": null
@@ -687,9 +685,9 @@
    "b": {
     "from": 27
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 9,
+   "sb": 6,
    "w": null,
    "note": "",
    "place": null
@@ -716,9 +714,9 @@
    "b": {
     "from": 29
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 5,
+   "sb": 6,
    "w": null,
    "note": "",
    "place": null
@@ -741,9 +739,9 @@
    "b": {
     "from": 31
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 2,
+   "sb": 6,
    "w": null,
    "note": "",
    "place": null
@@ -766,9 +764,9 @@
    "b": {
     "from": 33
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 4,
+   "sb": 5,
    "w": null,
    "note": "",
    "place": null
@@ -791,9 +789,9 @@
    "b": {
     "from": 35
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 3,
+   "sb": 5,
    "w": null,
    "note": "",
    "place": "Final"

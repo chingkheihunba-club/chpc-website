@@ -4,7 +4,7 @@ import { getCollection, render } from 'astro:content';
 import { Image, getImage } from 'astro:assets';
 import Lightbox from '../../components/Lightbox.astro';
 export async function getStaticPaths() {
-  const posts = await getCollection('news', ({ data }) => data.approved);
+  const posts = await getCollection('news', ({ data }) => data.approved && !data.href);
   return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
 }
 const { post } = Astro.props;

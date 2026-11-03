@@ -1,205 +1,188 @@
 ---
 import Base from '../../layouts/Base.astro';
 import fixture from '../../data/tournaments/hazari-2026.json';
-import { render, todayIST, fmt, type Tournament } from '../../lib/tournament';
+import { Draw, fmt, wd, wdl, type Tournament, type Match } from '../../lib/tournament';
 import { site } from '../../config';
+import { Image } from 'astro:assets';
+import mhrpa from '../../assets/logos/mhrpa-logo.png';
 
-// The fixture is baked in at build time. Scores entered through /hazari26/update/
-// are fetched from /api/results when the page opens, so results go live without a build.
+// Tournament report, written after the final on 03-11-2026.
+// While the tournament was on, this address showed live fixtures and results (scores came from
+// /api/results). The final results are now in the JSON file, so this page is fully static.
+// The update form at /hazari26/update/ still works, but saves there no longer change this page.
 const t = fixture as Tournament;
-const html = render(t, { today: todayIST(), team: '' });
-const json = JSON.stringify(t).replace(/</g, '\\u003c');
+const D = new Draw(t);
+const club = t.club;
+// Keep "Assam Rifles – A" together when a line wraps.
+const nb = (name: string | null) => String(name ?? '').replace(/ – /g, '\u00a0–\u2060\u00a0');
+
+const final = t.matches.find((x) => x.round === 'Final')!;
+const fw = D.win(final)!;
+const fl = fw === 'a' ? 'b' : 'a';
+const champ = D.name(final[fw])!;
+const runner = D.name(final[fl])!;
+const champScore = fw === 'a' ? final.sa : final.sb;
+const runnerScore = fw === 'a' ? final.sb : final.sa;
+
+// Numbers for the "By the numbers" tiles, worked out from the results.
+const played = t.matches.filter((x) => D.win(x));
+const goals = played.reduce((s, x) => s + (x.sa ?? 0) + (x.sb ?? 0), 0);
+const matchDays = new Set(played.map((x) => x.date)).size;
+const margin = (x: Match) => Math.abs((x.sa ?? 0) - (x.sb ?? 0));
+const biggest = [...played].sort((a, b) => margin(b) - margin(a) || a.id - b.id)[0];
+const oneGoal = played.filter((x) => margin(x) === 1).length;
+
+// One result line, winner first: "Team 5–3 Team".
+function line(x: Match) {
+  const w = D.win(x)!, l = w === 'a' ? 'b' : 'a';
+  return { w: D.name(x[w])!, l: D.name(x[l])!, ws: w === 'a' ? x.sa : x.sb, ls: w === 'a' ? x.sb : x.sa };
+}
+
+// The knockout bracket, in draw order so each semi-final sits beside its two quarter-finals.
+const bracket = [
+  { label: 'Quarter-finals', ms: t.matches.filter((x) => x.round === 'Quarter-final') },
+  { label: 'Semi-finals', ms: t.matches.filter((x) => x.round === 'Semi-final') },
+  { label: 'Final', ms: [final] },
+];
+
+// All results, latest round first.
+const rounds = ['Final', 'Semi-final', 'Quarter-final', 'Round 3', 'Round 2', 'Round 1'].map((r) => {
+  const ms = t.matches.filter((x) => x.round === r).sort((a, b) => a.date.localeCompare(b.date) || a.id - b.id);
+  const first = ms[0].date, last = ms[ms.length - 1].date;
+  const label = r === 'Semi-final' ? 'Semi-finals' : r === 'Quarter-final' ? 'Quarter-finals' : r;
+  return { r, label, ms, when: first === last ? `${wd(first)} ${fmt(first)}` : `${fmt(first)} to ${fmt(last)}` };
+});
+const knockout = (r: string) => ['Final', 'Semi-final', 'Quarter-final'].includes(r);
+const where = (x: Match) => [`Match ${x.id}`, `${wd(x.date)} ${fmt(x.date)}`, x.ground ? `${x.ground} Ground` : x.place && x.place !== 'Final' ? x.place : ''].filter(Boolean).join(' · ');
+
+const title = `${champ} win the N. Hazari & Dr. N. Tombi 2026`;
+const description = `${champ} beat ${runner} ${champScore}–${runnerScore} in the final at Mapal Kangjeibung on ${fmt(final.date)} to win the ${t.name}. Report and all ${t.matches.length} results.`;
 ---
-<Base
-  title={`${t.short} fixtures and results`}
-  description={`Day-by-day fixtures and results of the ${t.name}, ${fmt(t.start)} to ${fmt(t.end)}, ${t.venue}.`}
->
-  <section class="page-head tn-head">
-    <div class="wrap">
-      <p class="tn-eyebrow">{t.edition} · {t.organiser}</p>
-      <h1>{t.titleLines.map((l) => <span>{l} </span>)}<span class="tn-yr">{t.year}</span></h1>
-      <ul class="tn-facts">
-        <li><b>{fmt(t.start)}</b> to <b>{fmt(t.end)}</b></li>
-        <li>{t.venue}</li>
-        <li>{new Set(t.matches.flatMap((m) => [m.a.team, m.b.team]).filter(Boolean)).size} teams · {t.matches.length} matches</li>
-        <li>{t.report}</li>
-      </ul>
-      <div class="tn-info">
-        <p class="tn-disclaimer"><b>Not the official record.</b> The fixture and results announced by the {t.organiser} are final.</p>
-        <div class="tn-toggles">
-          <details class="tn-more">
-            <summary>About this page</summary>
-            <div class="tn-more-body">
-              <p>This page follows the tournament day by day: who plays whom, on which ground, and the score once each match is over. It is an effort to track the tournament in near real time. Scores are added soon after each match, so there can be a short delay.</p>
-              <p>Chingkhei Hunba Polo Club keeps this page as a voluntary effort for players and polo lovers. If you spot a mistake, please <a href={site.social.instagram} target="_blank" rel="noopener">message the club on Instagram</a> or use the <a href="/contact/">contact page</a>, and it will be corrected.</p>
-            </div>
-          </details>
-          <details class="tn-more">
-            <summary>How to use this page</summary>
-            <ul class="tn-more-body">
-              <li><b>Today</b> and <b>Latest results</b> are at the top.</li>
-              <li>Tap a day in the date bar to jump to its matches.</li>
-              <li>Type a team’s name under <b>Follow</b> to see only its matches, including the ones it plays if it keeps winning.</li>
-              <li>A match waiting on an earlier result shows “Winner of Match …”. The winner’s name appears once that match is played.</li>
-              <li><b>Copy as text</b> copies a day’s matches or results, ready to share on WhatsApp or Instagram.</li>
-              <li>A match marked <b>Ongoing</b> shows the score so far. The final score is added at full time.</li>
-              <li>The page checks for new scores every two minutes while it is open, and every 30 seconds while a match is ongoing.</li>
-            </ul>
-          </details>
+<Base title={title} description={description} image="/og/hazari-2026-champions.jpg">
+  <article class="rp">
+    <header class="rp-hero">
+      <div class="wrap">
+        <p class="rp-kicker"><span class="tag">Tournament report</span><span>{t.edition} · {t.organiser}</span></p>
+        <h1><span class="nw">{nb(champ)}</span> <em>are champions</em></h1>
+        <p class="rp-stand">{champ} beat {runner} {champScore}–{runnerScore} in the final at the {t.venue}, on {wdl(final.date)}, <span class="nw">{fmt(final.date)}</span>, to win the {t.name}.</p>
+        <p class="rp-byline"><span>By <b>{site.name}</b></span><span>Published <b>{fmt(final.date)}</b></span><a href="#results">All {t.matches.length} results</a></p>
+      </div>
+    </header>
+
+    <div class="wrap rp-board-wrap">
+      <section class="rp-board" aria-label="The final">
+        <p class="rp-board-meta"><span>Final · Match {final.id}</span><span>{wdl(final.date)} {fmt(final.date)} · Mapal Kangjeibung</span></p>
+        <div class="rp-board-grid">
+          <div class="rp-side win"><span class="lbl">Champions</span><span class="nm">{nb(champ)}</span></div>
+          <span class="rp-num w" aria-hidden="true">{champScore}</span>
+          <span class="rp-num dash" aria-hidden="true">–</span>
+          <span class="rp-num l" aria-hidden="true">{runnerScore}</span>
+          <div class="rp-side lose"><span class="lbl">Runners-up</span><span class="nm">{nb(runner)}</span></div>
+          <p class="sr-only">{champ} {champScore}, {runner} {runnerScore}</p>
         </div>
+      </section>
+    </div>
+
+    <div class="wrap rp-body">
+      <aside class="rp-aside" aria-label="At a glance">
+        <h2>At a glance</h2>
+        <div class="rp-org"><Image src={mhrpa} alt="Manipur Horse Riding &amp; Polo Association logo" height={72} /><p><span>Organised by</span>{t.organiser}</p></div>
+        <dl>
+          <div><dt>Champions</dt><dd>{champ}</dd></div>
+          <div><dt>Runners-up</dt><dd>{runner}</dd></div>
+          <div><dt>Young Rising Polo Star</dt><dd>Moirangthem Chaoba, Luwangpokpa – A</dd></div>
+          <div><dt>Dates</dt><dd>{fmt(t.start)} to {fmt(t.end)}</dd></div>
+          <div><dt>Venue</dt><dd>{t.venue}</dd></div>
+          <div><dt>Teams</dt><dd>{D.teams().length}</dd></div>
+          <div><dt>Matches</dt><dd>{t.matches.length} over {matchDays} match days</dd></div>
+          <div><dt>Chingkhei Hunba PC</dt><dd>Quarter-finals</dd></div>
+        </dl>
+      </aside>
+
+      <div class="rp-article">
+        <p class="rp-lede">The 39th N. Hazari &amp; Dr. N. Tombi State Polo Tournament ended on Tuesday, <span class="nw">03-11-2026</span>, at the Imphal Polo Ground, Mapal Kangjeibung. Assam Rifles – A won the final 5–3 against X – Polo Club and are this year’s champions. Congratulations to both teams, and to everyone who played over the three weeks.</p>
+
+        <h2>The final</h2>
+        <p>Both finalists began in the third round, and they reached the final in different ways. X – Polo Club scored 28 goals in three matches on the way: 8–2 against Ibudhou Thangjing – A, 14–4 against Tekcham PC in the quarter-final and 6–2 against MPSC – B in the semi-final. They were in this final as past champions too, having won the 34th edition in 2021.</p>
+        <p>Assam Rifles – A came through closer games. They beat Paradise 4–1, then won their quarter-final 6–5 against MPSC – A and their semi-final 5–4 against Luwangpokpa – A. In the final they won by two goals, 5–3. They won all four of their matches, and none by more than three goals.</p>
+
+        <h2>Young Rising Polo Star</h2>
+        <p>Moirangthem Chaoba of Luwangpokpa – A received the Young Rising Polo Star certificate of excellence for his performance in the tournament. His team reached the semi-finals, beating Chingkhei Hunba PC 9–6 in the quarter-final before losing 5–4 to the champions. Congratulations to him.</p>
+
+        <h2>The road to the final</h2>
+        <figure class="rp-bracket" aria-label="Knockout rounds: quarter-finals, semi-finals and final">
+          {bracket.map((col) => (
+            <div class="rp-col">
+              <p class="rp-col-h">{col.label}</p>
+              <div class="rp-col-ms">
+                {col.ms.map((x) => {
+                  const w = D.win(x)!;
+                  return (
+                    <div class:list={['rp-bm', { final: x.round === 'Final' }]}>
+                      <small>Match {x.id} · {fmt(x.date)}</small>
+                      {(['a', 'b'] as const).map((s) => (
+                        <div class:list={['ln', w === s ? 'win' : 'lose', { club: D.name(x[s]) === club }]}>
+                          <span class="n">{nb(D.name(x[s]))}</span><span class="g">{s === 'a' ? x.sa : x.sb}</span>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </figure>
+
+        <h2>Three weeks at Mapal Kangjeibung</h2>
+        <p>{D.teams().length} teams entered, and {t.matches.length} matches were played over {matchDays} match days, starting with the opening match on Monday, <span class="nw">12-10-2026</span>. The tournament was organised by the Manipur Horse Riding &amp; Polo Association (MHRPA).</p>
+        <p>Play paused for five days in the middle of the tournament. The MHRPA postponed the matches of 20 and 21 October and called off play on 22, 23 and 24 October. Play resumed on Sunday, <span class="nw">25-10-2026</span>, with the rest of the fixture in the same order. The semi-finals, first due on <span class="nw">31-10-2026</span>, were played on Sunday, <span class="nw">01-11-2026</span>, and the final two days later.</p>
+
+        <div class="rp-stats">
+          <div class="rp-stat"><b>{D.teams().length}</b><span>teams</span></div>
+          <div class="rp-stat"><b>{t.matches.length}</b><span>matches</span></div>
+          <div class="rp-stat"><b>{goals}</b><span>goals, about {Math.round(goals / played.length)} a match</span></div>
+          <div class="rp-stat"><b>{oneGoal}</b><span>matches won by a single goal</span></div>
+          <div class="rp-stat wide"><b>{line(biggest).ws}–{line(biggest).ls}</b><span>Biggest win: {line(biggest).w} over {line(biggest).l}, {biggest.round}, {fmt(biggest.date)}</span></div>
+        </div>
+
+        <h2>Chingkhei Hunba Polo Club</h2>
+        <p>The club entered in the third round. On Tuesday, <span class="nw">27-10-2026</span>, the team beat Lamyanba Pakhang 17–3, the second-widest winning margin of the tournament. In the quarter-final on Friday, <span class="nw">30-10-2026</span>, the club lost 9–6 to Luwangpokpa – A, who went on to lose their semi-final 5–4 to the champions.</p>
+        <h2>Thank you</h2>
+        <p>Thank you to the MHRPA and its Technical Committee for running the tournament, to every team that took part, to the players, grooms and pony owners who keep the Manipuri pony on the ground, and to everyone who came to Mapal Kangjeibung or followed the matches on this page. The club’s next tournaments are on the <a href="/season/">Season page</a>.</p>
+
+        <p class="rp-src">Sources: X – Polo Club’s 2021 title, <a href="https://www.nenow.in/north-east-news/x-polo-club-wangkhei-emerges-champion-polo-tournament.html" rel="noopener">Northeast Now, November 2021</a>. The Young Rising Polo Star award, as announced by Luwangpokpa Polo Club on Instagram, 03-11-2026.</p>
       </div>
     </div>
-  </section>
-  <div id="tn-root" data-slug={t.slug} set:html={html} />
-  <script type="application/json" id="tn-fixture" set:html={json} />
+
+    <section class="section section--sky rp-results" id="results">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>All results</h2>
+          <p>{t.matches.length} matches, latest round first. Winners in bold.</p>
+        </div>
+        {rounds.map((rd) => (
+          <details class="rp-round" open={knockout(rd.r)}>
+            <summary><span class="rp-round-h">{rd.label}</span><span class="rp-round-sub">{rd.ms.length} {rd.ms.length === 1 ? 'match' : 'matches'} · {rd.when}</span></summary>
+            <ul class="rp-rows">
+              {rd.ms.map((x) => {
+                const w = D.win(x)!;
+                return (
+                  <li class:list={['rp-row', { club: D.involves(x, club) }]}>
+                    <span class="meta">{where(x)}</span>
+                    <span class:list={['t', w === 'a' ? 'win' : 'lose', { club: D.name(x.a) === club }]}>{nb(D.name(x.a))}</span>
+                    <span class="s"><span class="sa">{x.sa}</span><span class="sd">–</span><span class="sb">{x.sb}</span></span>
+                    <span class:list={['t', 'b', w === 'b' ? 'win' : 'lose', { club: D.name(x.b) === club }]}>{nb(D.name(x.b))}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </details>
+        ))}
+        <div class="rp-notes">
+          <p><b>Not the official record.</b> The results announced by the {t.organiser} are final. This page followed the tournament day by day while it was on, as a voluntary effort by {site.name} for players and polo lovers. If you spot a mistake, please <a href={site.social.instagram} target="_blank" rel="noopener">message the club on Instagram</a> or use the <a href="/contact/">contact page</a>, and it will be corrected.</p>
+          {t.notes.map((n) => <p>{n}</p>)}
+        </div>
+      </div>
+    </section>
+  </article>
 </Base>
-
-<script>
-  import { render, merge, dayText, todayIST, findTeams, esc, type Tournament, type Live } from '../../lib/tournament';
-
-  const root = document.getElementById('tn-root')!;
-  const slug = root.dataset.slug!;
-  const fixture: Tournament = JSON.parse(document.getElementById('tn-fixture')!.textContent || '{}');
-  let live: Live | null = null;
-  let team = '';
-  try { team = localStorage.getItem(`tn-team-${slug}`) || ''; } catch {}
-
-  const current = () => merge(fixture, live);
-
-  function setHeaderOffset() {
-    const h = document.querySelector('.site-header') as HTMLElement | null;
-    document.documentElement.style.setProperty('--hdr-h', `${h ? h.offsetHeight : 81}px`);
-  }
-
-  let drawn = false;
-  function draw() {
-    const days = document.getElementById('tn-days');
-    const keep = drawn && days ? days.scrollLeft : null;
-    drawn = true;
-    root.innerHTML = render(current(), { today: todayIST(), team });
-    const nd = document.getElementById('tn-days');
-    if (nd) {
-      const tc = nd.querySelector('.today') as HTMLElement | null;
-      if (keep !== null) nd.scrollLeft = keep;
-      else if (tc) nd.scrollLeft = Math.max(0, tc.offsetLeft - nd.offsetLeft - 60);
-    }
-  }
-
-  async function refresh() {
-    try {
-      const r = await fetch(`/api/results?t=${encodeURIComponent(slug)}`, { headers: { accept: 'application/json' } });
-      if (!r.ok) return;
-      const data = await r.json();
-      if (data && data.matches) {
-        const changed = JSON.stringify(data) !== JSON.stringify(live);
-        live = data;
-        if (changed) draw();
-      }
-    } catch { /* offline or function not available: the built-in results stay */ }
-  }
-
-  function setTeam(v: string) {
-    team = v;
-    try { localStorage.setItem(`tn-team-${slug}`, team); } catch {}
-    draw();
-    document.querySelector('.tn-strip')?.scrollIntoView({ block: 'start' });
-  }
-
-  root.addEventListener('click', (e) => {
-    const el = (e.target as HTMLElement).closest('[data-jump],[data-follow],[data-copy]') as HTMLElement | null;
-    if (!el) return;
-    if (el.dataset.jump !== undefined) {
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      document.getElementById(`d-${el.dataset.jump}`)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-    } else if (el.dataset.follow !== undefined) {
-      setTeam(el.dataset.follow);
-    } else if (el.dataset.copy) {
-      const d = el.dataset.copy;
-      const text = dayText(current(), d, team);
-      const out = document.getElementById(`cp-${d}`);
-      const done = (ok: boolean) => { if (out) out.textContent = ok ? 'Copied' : 'Could not copy'; };
-      const fallback = () => {
-        const ta = document.createElement('textarea');
-        ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
-        document.body.appendChild(ta); ta.select();
-        let ok = false; try { ok = document.execCommand('copy'); } catch {}
-        ta.remove(); done(ok);
-      };
-      if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => done(true), fallback); else fallback();
-    }
-  });
-  // Follow: type to narrow the team list.
-  let active = -1;
-  let shown: string[] = [];
-  const q = () => document.getElementById('tn-team-q') as HTMLInputElement | null;
-  const listEl = () => document.getElementById('tn-team-list') as HTMLUListElement | null;
-  function openList() {
-    const input = q(), ul = listEl();
-    if (!input || !ul) return;
-    const typed = input.value === team ? '' : input.value;
-    shown = findTeams(fixture, typed);
-    active = typed && shown.length ? 0 : -1;
-    const s = typed.trim();
-    const mark = (name: string) => {
-      if (!s) return esc(name);
-      const n = name.toLowerCase(), k = s.toLowerCase();
-      let idx = n.startsWith(k) ? 0 : -1;
-      const re = /[\s–&-]+/g;
-      let m: RegExpExecArray | null;
-      while (idx < 0 && (m = re.exec(n))) { const at = m.index + m[0].length; if (n.startsWith(k, at)) idx = at; }
-      if (idx < 0) return esc(name);
-      return `${esc(name.slice(0, idx))}<b>${esc(name.slice(idx, idx + s.length))}</b>${esc(name.slice(idx + s.length))}`;
-    };
-    ul.innerHTML = shown.length
-      ? shown.map((name, i) => `<li role="option" id="tn-opt-${i}" data-team="${esc(name)}" aria-selected="${i === active}">${mark(name)}</li>`).join('')
-      : `<li class="none" role="presentation">No team starts with “${esc(s)}”</li>`;
-    ul.hidden = false;
-    input.setAttribute('aria-expanded', 'true');
-    input.setAttribute('aria-activedescendant', active >= 0 ? `tn-opt-${active}` : '');
-  }
-  function closeList(restore = true) {
-    const input = q(), ul = listEl();
-    if (ul) ul.hidden = true;
-    if (input) { input.setAttribute('aria-expanded', 'false'); input.removeAttribute('aria-activedescendant'); if (restore) input.value = team; }
-  }
-  function move(step: number) {
-    const ul = listEl();
-    if (!ul || !shown.length) return;
-    active = (active + step + shown.length) % shown.length;
-    ul.querySelectorAll('li[role=option]').forEach((li, i) => li.setAttribute('aria-selected', String(i === active)));
-    ul.querySelector(`#tn-opt-${active}`)?.scrollIntoView({ block: 'nearest' });
-    q()?.setAttribute('aria-activedescendant', `tn-opt-${active}`);
-  }
-  root.addEventListener('focusin', (e) => { if ((e.target as HTMLElement).id === 'tn-team-q') { (e.target as HTMLInputElement).select(); openList(); } });
-  root.addEventListener('input', (e) => { if ((e.target as HTMLElement).id === 'tn-team-q') openList(); });
-  root.addEventListener('keydown', (e) => {
-    if ((e.target as HTMLElement).id !== 'tn-team-q') return;
-    if (e.key === 'ArrowDown') { e.preventDefault(); if (listEl()?.hidden) openList(); else move(1); }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
-    else if (e.key === 'Enter') { e.preventDefault(); const pick = shown[active >= 0 ? active : 0]; if (pick) { closeList(false); setTeam(pick); } }
-    else if (e.key === 'Escape') { closeList(); (e.target as HTMLInputElement).blur(); }
-  });
-  root.addEventListener('mousedown', (e) => {
-    const li = (e.target as HTMLElement).closest('li[data-team]') as HTMLElement | null;
-    if (!li) return;
-    e.preventDefault();
-    closeList(false);
-    setTeam(li.dataset.team || '');
-  });
-  root.addEventListener('focusout', (e) => { if ((e.target as HTMLElement).id === 'tn-team-q') setTimeout(() => closeList(), 120); });
-
-  setHeaderOffset();
-  window.addEventListener('resize', setHeaderOffset);
-  draw();
-  refresh();
-  // Check for new scores every two minutes while the page is open and visible,
-  // and every 30 seconds while a match is ongoing.
-  let tick = 0;
-  setInterval(() => {
-    tick++;
-    if (document.visibilityState !== 'visible') return;
-    const ongoing = current().matches.some((m) => m.status === 'live');
-    if (ongoing || tick % 4 === 0) refresh();
-  }, 30_000);
-  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') refresh(); });
-</script>

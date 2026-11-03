@@ -57,7 +57,9 @@ The GitHub repo, Netlify site and domain belong to the club, registered under th
 
 ## Tournament results (no rebuild needed)
 
-`/hazari26/` shows the N. Hazari & Dr. N. Tombi State Polo Tournament 2026 day by day (`/tournament/` redirects there): who plays whom, where, and the scores.
+**N. Hazari 2026 is over (final 03-11-2026).** `/hazari26/` is now a static tournament report: the champions, the story, the knockout bracket and all 36 results, all built from `src/data/tournaments/hazari-2026.json` (final scores copied in from the live store on 03-11-2026). It no longer reads `/api/results`, and `tournament.active` is `false`, so the header button is gone. The live-page renderer in `src/lib/tournament.ts` and the update form are kept for the next tournament.
+
+While it was on, `/hazari26/` showed the tournament day by day (`/tournament/` redirects there): who plays whom, where, and the scores.
 The fixture (teams, draw, dates, grounds) is in `src/data/tournaments/hazari-2026.json` and is built into the page.
 **Scores do not need a rebuild.** They are entered at `/hazari26/update/` (not linked anywhere, kept out of
 search), saved by the function `netlify/functions/results.mts` into Netlify Blobs, and the page picks them up

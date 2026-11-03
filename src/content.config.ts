@@ -13,6 +13,9 @@ const news = defineCollection({
     date: z.coerce.date(),
     summary: z.string(),
     approved: z.boolean().default(false),
+    // A post whose story lives on its own page elsewhere on the site (e.g. a tournament report at /hazari26/).
+    // News and Home link there, and no /news/<slug>/ page is built for it.
+    href: z.string().startsWith('/').optional(),
     // Photos shown with the post, in order (the first is the cover). Paths relative to the post file.
     photos: z.array(image()).default([]),
     photoCaption: z.string().default(''),

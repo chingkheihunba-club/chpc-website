@@ -6,6 +6,7 @@ import { Image } from 'astro:assets';
 const posts = (await getCollection('news', ({ data }) => data.approved))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const press = [...media].sort((a, b) => b.date.localeCompare(a.date));
+const link = (p: (typeof posts)[number]) => p.data.href ?? `/news/${p.id}/`;
 const fmt = (d: Date) => d.toLocaleDateString('en-GB').replaceAll('/', '-');
 ---
 <Base title="News" description="Updates and stories from Chingkhei Hunba Polo Club, and press coverage of the club.">
@@ -23,10 +24,10 @@ const fmt = (d: Date) => d.toLocaleDateString('en-GB').replaceAll('/', '-');
         <ul class="press">
           {posts.map((p) => (
             <li class="club-post">
-              {p.data.photos[0] ? <a class="thumb" href={`/news/${p.id}/`}><Image src={p.data.photos[0]} alt="" widths={[360, 600]} sizes="(max-width: 640px) 100vw, 220px" /></a> : <div class="src">Club news</div>}
+              {p.data.photos[0] ? <a class="thumb" href={link(p)}><Image src={p.data.photos[0]} alt="" widths={[360, 600]} sizes="(max-width: 640px) 100vw, 220px" /></a> : <div class="src">Club news</div>}
               <div>
                 <time class="post-date">{fmt(p.data.date)}</time>
-                <h3><a href={`/news/${p.id}/`}>{p.data.title}</a></h3>
+                <h3><a href={link(p)}>{p.data.title}</a></h3>
                 <p>{p.data.summary}</p>
               </div>
             </li>

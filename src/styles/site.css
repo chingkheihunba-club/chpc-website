@@ -568,3 +568,124 @@ p { margin: 0 0 1rem; max-width: 68ch; }
 .tn-more-body a { color: #fff; }
 .tn-more-body b { color: #fff; }
 ul.tn-more-body { padding-left: 2.1rem; display: grid; gap: .35rem; }
+
+/* ---------- Tournament report (/hazari26/, after the final) ---------- */
+.rp-hero { background: var(--navy); color: #fff; padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(7rem, 13vw, 9rem); }
+.rp-kicker { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .9rem; margin: 0 0 1.3rem; max-width: none;
+  font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.75); }
+.rp-kicker .tag { background: var(--red); color: #fff; padding: .28rem .7rem; border-radius: 999px; }
+.rp-hero h1 { font-size: clamp(3rem, 9vw, 7rem); text-transform: uppercase; line-height: .86; max-width: 13ch; }
+.rp-hero h1 em { display: block; font-style: normal; color: var(--red); }
+.rp-stand { margin: 1.5rem 0 0; font-size: clamp(1.12rem, 2vw, 1.35rem); line-height: 1.5; color: rgba(255,255,255,.9); max-width: 58ch; }
+.rp-byline { display: flex; flex-wrap: wrap; gap: .3rem 1.4rem; margin: 1.8rem 0 0; padding-top: 1rem; max-width: none;
+  border-top: 1px solid rgba(255,255,255,.2); font-size: .92rem; color: rgba(255,255,255,.7); }
+.rp-byline b { color: #fff; font-weight: 600; }
+.rp-byline a { color: #fff; font-weight: 600; }
+
+/* The final's scoreboard, lifted over the bottom of the hero. */
+.rp-board-wrap { margin-top: calc(clamp(7rem, 13vw, 9rem) * -1 + 1.75rem); position: relative; }
+.rp-board { background: #fff; border-radius: 20px; border-top: 8px solid var(--red); box-shadow: 0 24px 60px rgba(15,31,61,.18);
+  padding: clamp(1.1rem, 3vw, 1.8rem) clamp(1.1rem, 4vw, 2.5rem) clamp(1.3rem, 3vw, 2rem); }
+.rp-board-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .2rem 1rem; margin: 0 0 1.1rem; max-width: none;
+  font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+.rp-board-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto minmax(0, 1fr); align-items: center; gap: 1rem clamp(.4rem, 1.5vw, 1rem); }
+.rp-side .lbl { display: inline-block; margin-bottom: .55rem; padding: .22rem .65rem; border-radius: 999px; white-space: nowrap;
+  font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; background: var(--sky); color: var(--ink-soft); }
+.rp-side.win .lbl { background: var(--red); color: #fff; }
+.rp-side .nm { display: block; font-family: var(--display); font-weight: 800; font-size: clamp(1.35rem, 4vw, 2.9rem); line-height: .95; text-transform: uppercase; }
+.rp-side.lose .nm { color: var(--ink-soft); }
+.rp-side.lose { text-align: right; }
+.rp-num { font-family: var(--display); font-weight: 900; font-size: clamp(3.4rem, 11vw, 7.5rem); line-height: .8; color: var(--ink-soft); }
+.rp-num.w { color: var(--red); padding-left: clamp(.4rem, 2vw, 1.5rem); }
+.rp-num.l { padding-right: clamp(.4rem, 2vw, 1.5rem); }
+.rp-num.dash { color: var(--rule); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.nw { white-space: nowrap; }
+@media (max-width: 600px) {
+  /* Stacked: champions on top, each with its score on the right. */
+  .rp-board-grid { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'win ws' 'lose ls'; gap: 1.1rem 1rem; }
+  .rp-side.win { grid-area: win; } .rp-num.w { grid-area: ws; padding: 0; }
+  .rp-side.lose { grid-area: lose; text-align: left; padding-top: 1.1rem; border-top: 1px solid var(--rule); }
+  .rp-num.l { grid-area: ls; padding: 1.1rem 0 0; border-top: 1px solid var(--rule); align-self: stretch; display: flex; align-items: center; }
+  .rp-num.dash { display: none; }
+  .rp-num { font-size: 4.2rem; text-align: right; }
+  .rp-side .nm { font-size: 1.9rem; }
+}
+
+/* Body: the story, with an "at a glance" card beside it. */
+.rp-body { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: clamp(2rem, 5vw, 4.5rem); align-items: start;
+  padding-top: clamp(2.5rem, 5vw, 3.75rem); padding-bottom: clamp(3rem, 7vw, 5rem); }
+.rp-article { grid-column: 1; grid-row: 1; max-width: 72ch; }
+.rp-article p { font-size: 1.12rem; }
+.rp-article .rp-lede { font-size: clamp(1.2rem, 2vw, 1.35rem); line-height: 1.55; }
+.rp-article h2 { font-size: clamp(1.9rem, 3.4vw, 2.5rem); text-transform: uppercase; margin: 2.6rem 0 .9rem; }
+.rp-src { font-size: .9rem !important; color: var(--ink-soft); border-top: 1px solid var(--rule); padding-top: 1rem; margin-top: 2rem; }
+.rp-aside { grid-column: 2; grid-row: 1; position: sticky; top: 104px; background: var(--sky); border-radius: 16px; padding: 1.35rem 1.5rem 1.1rem; }
+.rp-aside h2 { font-size: 1.6rem; text-transform: uppercase; margin-bottom: .8rem; }
+.rp-org { display: flex; align-items: center; gap: .9rem; padding: .2rem 0 .9rem; }
+.rp-org img { height: 72px; width: auto; flex: none; }
+.rp-org p { margin: 0; font-weight: 600; line-height: 1.3; }
+.rp-org span { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.rp-aside dl { margin: 0; }
+.rp-aside dl div { padding: .6rem 0; border-top: 1px solid var(--rule); }
+.rp-aside dt { font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.rp-aside dd { margin: .1rem 0 0; font-weight: 600; line-height: 1.35; }
+@media (max-width: 960px) {
+  .rp-body { grid-template-columns: 1fr; }
+  .rp-article, .rp-aside { grid-column: 1; grid-row: auto; }
+  .rp-aside { position: static; order: 2; }
+  .rp-aside dl { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); column-gap: 1.25rem; }
+}
+
+/* Knockout bracket: each column spreads its matches so a semi-final sits beside its two quarter-finals. */
+.rp-bracket { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .9rem; margin: 1.4rem 0 .5rem; }
+.rp-col { display: flex; flex-direction: column; }
+.rp-col-h { margin: 0 0 .5rem; font-size: .74rem !important; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.rp-col-ms { flex: 1; display: flex; flex-direction: column; justify-content: space-around; gap: .6rem; }
+.rp-bm { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: .55rem .75rem .6rem; font-size: .93rem; line-height: 1.3; }
+.rp-bm small { display: block; margin-bottom: .3rem; font-size: .74rem; color: var(--ink-soft); }
+.rp-bm .ln { display: flex; justify-content: space-between; gap: .6rem; padding: .12rem 0; }
+.rp-bm .ln .g { font-family: var(--display); font-weight: 800; font-size: 1.15rem; line-height: 1.1; }
+.rp-bm .ln.win { font-weight: 700; }
+.rp-bm .ln.lose { color: var(--ink-soft); }
+.rp-bm .ln.club .n { color: var(--red); }
+.rp-bm.final { border: 2px solid var(--red); box-shadow: 0 12px 28px rgba(196,22,28,.12); }
+.rp-bm.final .ln.win .g, .rp-bm.final .ln.win .n { color: var(--red); }
+@media (max-width: 640px) { .rp-bracket { grid-template-columns: 1fr; } .rp-col-ms { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); } }
+
+.rp-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); gap: .7rem; margin: 1.6rem 0 .5rem; }
+.rp-stat { background: var(--navy); color: #fff; border-radius: 14px; padding: 1rem 1.1rem 1.05rem; }
+.rp-stat.wide { grid-column: 1 / -1; display: flex; align-items: center; gap: .4rem 1.2rem; flex-wrap: wrap; }
+.rp-stat b { display: block; font-family: var(--display); font-weight: 900; font-size: 2.8rem; line-height: .9; }
+.rp-stat span { display: block; margin-top: .35rem; font-size: .9rem; line-height: 1.35; color: rgba(255,255,255,.8); }
+.rp-stat.wide span { margin-top: 0; }
+
+/* All results */
+.rp-round { background: #fff; border: 1px solid var(--rule); border-radius: 16px; margin-bottom: .8rem; }
+.rp-round summary { list-style: none; cursor: pointer; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .2rem 1rem; padding: 1rem 3rem 1rem 1.25rem; position: relative; }
+.rp-round summary::-webkit-details-marker { display: none; }
+.rp-round summary::after { content: '+'; position: absolute; right: 1.2rem; top: 50%; transform: translateY(-50%); font-size: 1.6rem; font-weight: 400; color: var(--ink-soft); }
+.rp-round[open] summary::after { content: '−'; }
+.rp-round-h { font-family: var(--display); font-weight: 800; font-size: 1.7rem; line-height: 1; text-transform: uppercase; }
+.rp-round-sub { font-size: .9rem; color: var(--ink-soft); }
+.rp-rows { list-style: none; margin: 0; padding: 0 1.25rem .9rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); column-gap: 2rem; }
+.rp-row { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: .15rem .8rem; padding: .7rem 0; border-top: 1px solid var(--rule); }
+.rp-row .meta { grid-column: 1 / -1; font-size: .76rem; color: var(--ink-soft); }
+.rp-row .t { line-height: 1.25; }
+.rp-row .t.b { text-align: right; }
+.rp-row .t.win { font-weight: 700; }
+.rp-row .t.lose { color: var(--ink-soft); }
+.rp-row .t.club { color: var(--red); }
+.rp-row .s { font-family: var(--display); font-weight: 800; font-size: 1.45rem; line-height: 1; white-space: nowrap; }
+@media (max-width: 600px) {
+  /* Each result on two lines, winner bold, score at the right. */
+  .rp-row { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'meta meta' 'a sa' 'b sb'; gap: .1rem .8rem; }
+  .rp-row .meta { grid-area: meta; margin-bottom: .15rem; }
+  .rp-row .t { grid-area: a; } .rp-row .t.b { grid-area: b; text-align: left; }
+  .rp-row .s { display: contents; } .rp-row .sd { display: none; }
+  .rp-row .sa { grid-area: sa; text-align: right; } .rp-row .sb { grid-area: sb; text-align: right; }
+  .rp-row .sa, .rp-row .sb { font-size: 1.25rem; }
+}
+.rp-notes { margin-top: 2rem; font-size: .9rem; color: var(--ink-soft); }
+.rp-notes p { max-width: 90ch; margin-bottom: .6rem; }
+.rp-notes b { color: var(--ink); }
