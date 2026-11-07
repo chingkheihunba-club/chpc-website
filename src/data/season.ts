@@ -16,7 +16,7 @@ export const season = {
   label: '2026–27',
   fixtures: [
     { tournament: 'DGAR Men & Women Polo Championship', dates: '', venue: '', result: '' },
-    { tournament: 'Dr Ksh Chourjit Singh Inter-District Polo Tournament', dates: '', venue: '', result: '' },
+    { tournament: '3rd Dr. Ksh. Chourjit Singh Inter District Polo Tournament', dates: '08-11-2026 to 16-11-2026', venue: 'Imphal Polo Ground (Mapal Kangjeibung)', result: '', firstMatch: '08-11-2026', link: '/interdistrict26/' },
     { tournament: 'Governor’s Cup Invitation Polo Tournament', dates: '', venue: '', result: '' },
     { tournament: 'District Level Polo Tournament', dates: '', venue: '', result: '' },
     { tournament: '39th N. Hazari & Dr N. Tombi State Polo Tournament', dates: '12-10-2026 to 03-11-2026', venue: 'Imphal Polo Ground (Mapal Kangjeibung)', result: 'Club reached the quarter-finals. Won by Assam Rifles – A', firstMatch: '27-10-2026', link: '/hazari26/', linkLabel: 'Tournament report and results' },

@@ -1,5 +1,5 @@
 // Tournament fixtures and results.
-// Shared by the public page (/hazari26/), the update form (/hazari26/update/)
+// Shared by the public page (e.g. /interdistrict26/), the update form (e.g. /interdistrict26/update/)
 // and the results function (netlify/functions/results.mts).
 //
 // The fixture (teams, draw, dates, grounds) lives in src/data/tournaments/<slug>.json.
@@ -28,6 +28,7 @@ export type Match = {
 };
 export type Tournament = {
   slug: string;
+  path?: string;               // the page's address, e.g. '/interdistrict26/' (used in shared text)
   name: string;
   short: string;
   titleLines: string[];
@@ -43,6 +44,8 @@ export type Tournament = {
   off?: Record<string, string>; // days inside the tournament with no play, and why (e.g. postponed)
   updated: string;
   notes: string[];
+  groups?: { name: string; teams: string[] }[]; // e.g. districts, shown on the page
+  groupsNote?: string;
   matches: Match[];
 };
 /** What the update form saves: the editable fields of every match. */
@@ -172,7 +175,7 @@ export class Draw {
   time(m: Match) { return (m.ground && this.t.times[m.ground]) || ''; }
   on(date: string) {
     return this.t.matches.filter((m) => m.date === date)
-      .sort((a, b) => (a.ground || '0').localeCompare(b.ground || '0') || a.id - b.id);
+      .sort((a, b) => (a.ground && b.ground ? a.ground.localeCompare(b.ground) : 0) || a.id - b.id);
   }
   involves(m: Match, team: string) { return this.name(m.a) === team || this.name(m.b) === team; }
   teams() {
@@ -381,7 +384,7 @@ export function dayText(t: Tournament, d: string, team = '') {
     else if (m.status === 'walkover' && w) lines.push(`${D.name(m[w])} won by walkover (${A} vs ${B})`);
     else lines.push(`${D.ground(m)}${D.time(m) ? ', ' + D.time(m) : ''}: ${A} vs ${B}${m.status === 'postponed' ? ' (postponed)' : ''}`);
   });
-  lines.push('', 'Full fixture: chingkheihunba.club/hazari26/');
+  lines.push('', `Full fixture: chingkheihunba.club${t.path || '/tournament/'}`);
   return lines.join('\n');
 }
 

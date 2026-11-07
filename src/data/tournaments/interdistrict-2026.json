@@ -1,0 +1,275 @@
+{
+ "slug": "interdistrict-2026",
+ "path": "/interdistrict26/",
+ "name": "3rd Dr. Ksh. Chourjit Singh Inter District Polo Tournament 2026",
+ "short": "Inter District 2026",
+ "titleLines": [
+  "Dr. Ksh. Chourjit Singh",
+  "Inter District",
+  "Polo"
+ ],
+ "year": "2026",
+ "edition": "3rd edition",
+ "organiser": "Manipur Horse Riding & Polo Association",
+ "venue": "Imphal Polo Ground, Mapal Kangjeibung",
+ "report": "Teams report at 1:00 PM",
+ "start": "2026-11-08",
+ "end": "2026-11-16",
+ "club": "Chingkhei Hunba PC",
+ "times": {
+  "1st": "1:30 PM",
+  "2nd": "2:30 PM"
+ },
+ "updated": "2026-11-07T13:00:00+05:30",
+ "groups": [
+  {
+   "name": "Imphal West District",
+   "teams": [
+    "Loyalakpa PC",
+    "Thangmeiband Youth PC"
+   ]
+  },
+  {
+   "name": "Imphal East District",
+   "teams": [
+    "X-Polo Club",
+    "Luwangpokpa PC"
+   ]
+  },
+  {
+   "name": "Thoubal District",
+   "teams": [
+    "Tekcham PC",
+    "Thoubal District PA"
+   ]
+  },
+  {
+   "name": "Kakching District",
+   "teams": [
+    "Southern PC",
+    "Chingkhei Hunba PC"
+   ]
+  },
+  {
+   "name": "Bishnupur District",
+   "teams": [
+    "Khoriphaba PC",
+    "MPSC – A"
+   ]
+  },
+  {
+   "name": "Forces",
+   "teams": [
+    "Assam Rifles",
+    "MPSC – B"
+   ]
+  }
+ ],
+ "groupsNote": "Chingkhei Hunba PC and MPSC – A represent Kakching and Bishnupur districts, as resolved by the MHRPA Technical Committee in the interest of promoting polo in other districts.",
+ "notes": [
+  "Fixture as issued by the Manipur Horse Riding & Polo Association Tournament Committee, signed by Dr. Th. Chaa Mangilal, Organising Secretary. Dates can change for reasons beyond the organising committee's control.",
+  "Times as printed: 1st Ground 1:30 PM, 2nd Ground 2:30 PM. The fixture does not say which match of the day is on which ground; this page adds it once known.",
+  "Played under the latest Indian Polo Association rules, with some changes. In case of dispute, the Tournament Committee's decision is final.",
+  "Match numbers are added on this page for easy reference; they are not on the official fixture. Team names are shortened: PC is Polo Club, PA is Polo Association, MPSC is Manipur Police Sports Club."
+ ],
+ "matches": [
+  {
+   "id": 1,
+   "date": "2026-11-08",
+   "ground": null,
+   "place": "Opening match",
+   "round": "Round 1",
+   "a": {
+    "team": "Chingkhei Hunba PC"
+   },
+   "b": {
+    "team": "Loyalakpa PC"
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  },
+  {
+   "id": 2,
+   "date": "2026-11-09",
+   "ground": null,
+   "place": "1st or 2nd Ground",
+   "round": "Round 1",
+   "a": {
+    "team": "MPSC – A"
+   },
+   "b": {
+    "team": "Thoubal District PA"
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  },
+  {
+   "id": 3,
+   "date": "2026-11-09",
+   "ground": null,
+   "place": "1st or 2nd Ground",
+   "round": "Round 1",
+   "a": {
+    "team": "Khoriphaba PC"
+   },
+   "b": {
+    "team": "Tekcham PC"
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  },
+  {
+   "id": 4,
+   "date": "2026-11-10",
+   "ground": null,
+   "place": null,
+   "round": "Round 1",
+   "a": {
+    "team": "Southern PC"
+   },
+   "b": {
+    "team": "Thangmeiband Youth PC"
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  },
+  {
+   "id": 5,
+   "date": "2026-11-12",
+   "ground": null,
+   "place": "1st or 2nd Ground",
+   "round": "Quarter-final",
+   "a": {
+    "team": "MPSC – B"
+   },
+   "b": {
+    "from": 3
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  },
+  {
+   "id": 6,
+   "date": "2026-11-12",
+   "ground": null,
+   "place": "1st or 2nd Ground",
+   "round": "Quarter-final",
+   "a": {
+    "from": 1
+   },
+   "b": {
+    "team": "X-Polo Club"
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  },
+  {
+   "id": 7,
+   "date": "2026-11-13",
+   "ground": null,
+   "place": "1st or 2nd Ground",
+   "round": "Quarter-final",
+   "a": {
+    "team": "Assam Rifles"
+   },
+   "b": {
+    "from": 4
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  },
+  {
+   "id": 8,
+   "date": "2026-11-13",
+   "ground": null,
+   "place": "1st or 2nd Ground",
+   "round": "Quarter-final",
+   "a": {
+    "from": 2
+   },
+   "b": {
+    "team": "Luwangpokpa PC"
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  },
+  {
+   "id": 9,
+   "date": "2026-11-14",
+   "ground": null,
+   "place": "1st or 2nd Ground",
+   "round": "Semi-final",
+   "a": {
+    "from": 5
+   },
+   "b": {
+    "from": 6
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": "1st Semi-final"
+  },
+  {
+   "id": 10,
+   "date": "2026-11-14",
+   "ground": null,
+   "place": "1st or 2nd Ground",
+   "round": "Semi-final",
+   "a": {
+    "from": 7
+   },
+   "b": {
+    "from": 8
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": "2nd Semi-final"
+  },
+  {
+   "id": 11,
+   "date": "2026-11-16",
+   "ground": null,
+   "place": "Final",
+   "round": "Final",
+   "a": {
+    "from": 9
+   },
+   "b": {
+    "from": 10
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  }
+ ]
+}

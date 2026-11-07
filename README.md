@@ -25,7 +25,7 @@ npm run preview    # serve the built site locally
 | Honours (on The Club page) | `src/data/honours.ts` |
 | Press coverage (News page and Home) | `src/data/media.ts` |
 | Season calendar | `src/data/season.ts` |
-| Tournament fixtures and results (`/hazari26/`) | `src/data/tournaments/<slug>.json`, `src/lib/tournament.ts`; header button in `src/config.ts` (`tournament`) |
+| Tournament fixtures and results (`/interdistrict26/`; past: `/hazari26/`) | `src/data/tournaments/<slug>.json`, `src/lib/tournament.ts`; header button in `src/config.ts` (`tournament`) |
 | Gallery photos | `src/data/gallery.ts`; files in `src/assets/photos/` |
 | Club news and stories (one Markdown file per post) | `src/content/news/` |
 | Pages | `src/pages/` |
@@ -56,6 +56,8 @@ The current design replaced the first one on 03-10-2026. The first design's sour
 The GitHub repo, Netlify site and domain belong to the club, registered under the club's own email. Unibrow Studio manages them and hands over all credentials if the association ends. Keep the account inventory in `07_Digital_Setup/`.
 
 ## Tournament results (no rebuild needed)
+
+**Now on: 3rd Dr. Ksh. Chourjit Singh Inter District 2026 (08 to 16-11-2026).** Public page `/interdistrict26/` (`/tournament/` and `/interdistrict/` lead there); score form `/interdistrict26/update/`; fixture in `src/data/tournaments/interdistrict-2026.json`. Same update key and same form as N. Hazari. When it ends, set `tournament.active` to `false`.
 
 **N. Hazari 2026 is over (final 03-11-2026).** `/hazari26/` is now a static tournament report: the champions, the story, the knockout bracket and all 36 results, all built from `src/data/tournaments/hazari-2026.json` (final scores copied in from the live store on 03-11-2026). It no longer reads `/api/results`, and `tournament.active` is `false`, so the header button is gone. The live-page renderer in `src/lib/tournament.ts` and the update form are kept for the next tournament.
 

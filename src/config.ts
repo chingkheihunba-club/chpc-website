@@ -39,11 +39,12 @@ export const nav = [
 // The tournament now on. While `active` is true, the header shows a highlighted button
 // (and a bar under the header on phones) linking to the fixtures and results page.
 // Set `active: false` when the tournament is over, or point it at the next one.
-// N. Hazari 2026 ended on 03-11-2026; /hazari26/ is now its report, so the button is off.
+// N. Hazari 2026 ended on 03-11-2026; /hazari26/ is now its report.
+// 3rd Dr. Ksh. Chourjit Singh Inter District, 08-11-2026 to 16-11-2026: /interdistrict26/.
 export const tournament = {
-  active: false,
-  href: '/hazari26/',
-  navLabel: 'N. Hazari 2026',
-  barText: 'N. Hazari & Dr. N. Tombi State Polo is on',
+  active: true,
+  href: '/interdistrict26/',
+  navLabel: 'Inter District 2026',
+  barText: 'Inter District Polo, 08-11-2026 to 16-11-2026',
   barButton: 'Fixtures & results',
 };
