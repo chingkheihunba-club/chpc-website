@@ -14,13 +14,13 @@
  "venue": "Imphal Polo Ground, Mapal Kangjeibung",
  "report": "Teams report at 1:00 PM",
  "start": "2026-11-08",
- "end": "2026-11-16",
+ "end": "2026-11-17",
  "club": "Chingkhei Hunba PC",
  "times": {
   "1st": "1:30 PM",
   "2nd": "2:30 PM"
  },
- "updated": "2026-11-07T13:00:00+05:30",
+ "updated": "2026-11-14T16:50:00+05:30",
  "groups": [
   {
    "name": "Imphal West District",
@@ -68,6 +68,7 @@
  "groupsNote": "Chingkhei Hunba PC and MPSC – A represent Kakching and Bishnupur districts, as resolved by the MHRPA Technical Committee in the interest of promoting polo in other districts.",
  "notes": [
   "Fixture as issued by the Manipur Horse Riding & Polo Association Tournament Committee, signed by Dr. Th. Chaa Mangilal, Organising Secretary. Dates can change for reasons beyond the organising committee's control.",
+  "The 2nd Semi-final (Match 10), due on 14-11-2026, was postponed to 15-11-2026. The final (Match 11) moved by one day, from 16-11-2026 to 17-11-2026.",
   "Times as printed: 1st Ground 1:30 PM, 2nd Ground 2:30 PM. The fixture does not say which match of the day is on which ground; this page adds it once known.",
   "Played under the latest Indian Polo Association rules, with some changes. In case of dispute, the Tournament Committee's decision is final.",
   "Match numbers are added on this page for easy reference; they are not on the official fixture. Team names are shortened: PC is Polo Club, PA is Polo Association, MPSC is Manipur Police Sports Club."
@@ -237,7 +238,8 @@
   },
   {
    "id": 10,
-   "date": "2026-11-14",
+   "date": "2026-11-15",
+   "was": "2026-11-14",
    "ground": null,
    "place": "1st or 2nd Ground",
    "round": "Semi-final",
@@ -255,7 +257,8 @@
   },
   {
    "id": 11,
-   "date": "2026-11-16",
+   "date": "2026-11-17",
+   "was": "2026-11-16",
    "ground": null,
    "place": "Final",
    "round": "Final",
