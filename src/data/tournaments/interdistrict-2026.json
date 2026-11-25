@@ -20,7 +20,7 @@
   "1st": "1:30 PM",
   "2nd": "2:30 PM"
  },
- "updated": "2026-11-14T16:50:00+05:30",
+ "updated": "2026-11-17T22:45:00+05:30",
  "groups": [
   {
    "name": "Imphal West District",
@@ -67,9 +67,9 @@
  ],
  "groupsNote": "Chingkhei Hunba PC and MPSC – A represent Kakching and Bishnupur districts, as resolved by the MHRPA Technical Committee in the interest of promoting polo in other districts.",
  "notes": [
-  "Fixture as issued by the Manipur Horse Riding & Polo Association Tournament Committee, signed by Dr. Th. Chaa Mangilal, Organising Secretary. Dates can change for reasons beyond the organising committee's control.",
-  "The 2nd Semi-final (Match 10), due on 14-11-2026, was postponed to 15-11-2026. The final (Match 11) moved by one day, from 16-11-2026 to 17-11-2026.",
-  "Times as printed: 1st Ground 1:30 PM, 2nd Ground 2:30 PM. The fixture does not say which match of the day is on which ground; this page adds it once known.",
+  "Fixture as issued by the Manipur Horse Riding & Polo Association Tournament Committee, signed by Dr. Th. Chaa Mangilal, Organising Secretary.",
+  "The 2nd Semi-final (Match 10), due on 14-11-2026, was played on 15-11-2026. The final (Match 11) moved by one day, from 16-11-2026 to 17-11-2026.",
+  "Times as printed: 1st Ground 1:30 PM, 2nd Ground 2:30 PM. The fixture did not say which match of the day was on which ground, so grounds are not shown.",
   "Played under the latest Indian Polo Association rules, with some changes. In case of dispute, the Tournament Committee's decision is final.",
   "Match numbers are added on this page for easy reference; they are not on the official fixture. Team names are shortened: PC is Polo Club, PA is Polo Association, MPSC is Manipur Police Sports Club."
  ],
@@ -86,9 +86,9 @@
    "b": {
     "team": "Loyalakpa PC"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 8,
+   "sb": 5,
    "w": null,
    "note": ""
   },
@@ -96,7 +96,7 @@
    "id": 2,
    "date": "2026-11-09",
    "ground": null,
-   "place": "1st or 2nd Ground",
+   "place": null,
    "round": "Round 1",
    "a": {
     "team": "MPSC – A"
@@ -104,9 +104,9 @@
    "b": {
     "team": "Thoubal District PA"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 10,
+   "sb": 1,
    "w": null,
    "note": ""
   },
@@ -114,7 +114,7 @@
    "id": 3,
    "date": "2026-11-09",
    "ground": null,
-   "place": "1st or 2nd Ground",
+   "place": null,
    "round": "Round 1",
    "a": {
     "team": "Khoriphaba PC"
@@ -122,9 +122,9 @@
    "b": {
     "team": "Tekcham PC"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 3,
+   "sb": 16,
    "w": null,
    "note": ""
   },
@@ -140,9 +140,9 @@
    "b": {
     "team": "Thangmeiband Youth PC"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 0,
+   "sb": 11,
    "w": null,
    "note": ""
   },
@@ -150,7 +150,7 @@
    "id": 5,
    "date": "2026-11-12",
    "ground": null,
-   "place": "1st or 2nd Ground",
+   "place": null,
    "round": "Quarter-final",
    "a": {
     "team": "MPSC – B"
@@ -158,9 +158,9 @@
    "b": {
     "from": 3
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 8,
+   "sb": 1,
    "w": null,
    "note": ""
   },
@@ -168,7 +168,7 @@
    "id": 6,
    "date": "2026-11-12",
    "ground": null,
-   "place": "1st or 2nd Ground",
+   "place": null,
    "round": "Quarter-final",
    "a": {
     "from": 1
@@ -176,9 +176,9 @@
    "b": {
     "team": "X-Polo Club"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 1,
+   "sb": 5,
    "w": null,
    "note": ""
   },
@@ -186,7 +186,7 @@
    "id": 7,
    "date": "2026-11-13",
    "ground": null,
-   "place": "1st or 2nd Ground",
+   "place": null,
    "round": "Quarter-final",
    "a": {
     "team": "Assam Rifles"
@@ -194,9 +194,9 @@
    "b": {
     "from": 4
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 4,
+   "sb": 7,
    "w": null,
    "note": ""
   },
@@ -204,7 +204,7 @@
    "id": 8,
    "date": "2026-11-13",
    "ground": null,
-   "place": "1st or 2nd Ground",
+   "place": null,
    "round": "Quarter-final",
    "a": {
     "from": 2
@@ -212,9 +212,9 @@
    "b": {
     "team": "Luwangpokpa PC"
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 5,
+   "sb": 10,
    "w": null,
    "note": ""
   },
@@ -222,7 +222,7 @@
    "id": 9,
    "date": "2026-11-14",
    "ground": null,
-   "place": "1st or 2nd Ground",
+   "place": null,
    "round": "Semi-final",
    "a": {
     "from": 5
@@ -230,9 +230,9 @@
    "b": {
     "from": 6
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 5,
+   "sb": 9,
    "w": null,
    "note": "1st Semi-final"
   },
@@ -241,7 +241,7 @@
    "date": "2026-11-15",
    "was": "2026-11-14",
    "ground": null,
-   "place": "1st or 2nd Ground",
+   "place": null,
    "round": "Semi-final",
    "a": {
     "from": 7
@@ -249,9 +249,9 @@
    "b": {
     "from": 8
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 6,
+   "sb": 5,
    "w": null,
    "note": "2nd Semi-final"
   },
@@ -268,9 +268,9 @@
    "b": {
     "from": 10
    },
-   "status": "scheduled",
-   "sa": null,
-   "sb": null,
+   "status": "played",
+   "sa": 5,
+   "sb": 3,
    "w": null,
    "note": ""
   }

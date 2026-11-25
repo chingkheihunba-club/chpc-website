@@ -1,0 +1,159 @@
+{
+ "slug": "governors-cup-2026",
+ "path": "/governorscup26/",
+ "name": "33rd Governor’s Cup Invitation Polo Tournament 2026",
+ "short": "Governor’s Cup 2026",
+ "titleLines": [
+  "Governor’s Cup",
+  "Invitation",
+  "Polo"
+ ],
+ "year": "2026",
+ "edition": "33rd edition",
+ "organiser": "Manipur Horse Riding & Polo Association",
+ "venue": "Imphal Polo Ground, Mapal Kangjeibung",
+ "report": "Teams report at 1:30 PM",
+ "start": "2026-11-25",
+ "end": "2026-12-02",
+ "club": "Chingkhei Hunba PC",
+ "times": {
+  "1st": "2:00 PM"
+ },
+ "updated": "2026-11-25T14:30:00+05:30",
+ "notes": [
+  "Fixture as published under the name of the Manipur Horse Riding & Polo Association, shared with the club on 25-11-2026. The MHRPA’s invitation to the eight teams is dated 23-11-2026 and signed by Dr. Th. Chaa Mangilal, Hony. Secretary General. Dates can change for reasons beyond the organisers’ control.",
+  "A knockout of eight teams. Match numbers 1 to 4 are the quarter-final numbers on the official fixture; Match 5 is the 1st Semi-final, Match 6 the 2nd Semi-final and Match 7 the final. Quarter-final 2 is the opening match, so Match 2 is played first.",
+  "Times as printed: teams report at 1:30 PM; play on the 1st Ground starts at 2:00 PM. The fixture gives no time for the 2nd Ground, and no ground for the opening match or the final.",
+  "Chingkhei Hunba PC are the defending champions: the club won the 32nd edition on 28-02-2026, beating X-Polo Club 7–6 in the final (The Sangai Express, 01-03-2026).",
+  "The 22nd Governor’s Cup Women’s Polo Tournament is played at the same time, from 25-11-2026. Its fixture is not on this page.",
+  "Team names are shortened: PC is Polo Club, MPSC is Manipur Police Sports Club. Assam Rifles is the AR Polo Team."
+ ],
+ "matches": [
+  {
+   "id": 1,
+   "date": "2026-11-26",
+   "ground": "1st",
+   "place": null,
+   "round": "Quarter-final",
+   "a": {
+    "team": "X-Polo Club"
+   },
+   "b": {
+    "team": "MPSC – A"
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  },
+  {
+   "id": 2,
+   "date": "2026-11-25",
+   "ground": null,
+   "place": "Opening match",
+   "round": "Quarter-final",
+   "a": {
+    "team": "Luwangpokpa PC"
+   },
+   "b": {
+    "team": "Assam Rifles"
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  },
+  {
+   "id": 3,
+   "date": "2026-11-26",
+   "ground": "2nd",
+   "place": null,
+   "round": "Quarter-final",
+   "a": {
+    "team": "Thangmeiband Youth PC"
+   },
+   "b": {
+    "team": "Tekcham PC"
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  },
+  {
+   "id": 4,
+   "date": "2026-11-27",
+   "ground": "2nd",
+   "place": null,
+   "round": "Quarter-final",
+   "a": {
+    "team": "MPSC – B"
+   },
+   "b": {
+    "team": "Chingkhei Hunba PC"
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  },
+  {
+   "id": 5,
+   "date": "2026-11-28",
+   "ground": "2nd",
+   "place": null,
+   "round": "Semi-final",
+   "a": {
+    "from": 1
+   },
+   "b": {
+    "from": 2
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": "1st Semi-final"
+  },
+  {
+   "id": 6,
+   "date": "2026-11-30",
+   "ground": "2nd",
+   "place": null,
+   "round": "Semi-final",
+   "a": {
+    "from": 3
+   },
+   "b": {
+    "from": 4
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": "2nd Semi-final"
+  },
+  {
+   "id": 7,
+   "date": "2026-12-02",
+   "ground": null,
+   "place": "Final",
+   "round": "Final",
+   "a": {
+    "from": 5
+   },
+   "b": {
+    "from": 6
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  }
+ ]
+}

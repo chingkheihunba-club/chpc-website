@@ -572,7 +572,7 @@ p { margin: 0 0 1rem; max-width: 68ch; }
 .tn-more-body b { color: #fff; }
 ul.tn-more-body { padding-left: 2.1rem; display: grid; gap: .35rem; }
 
-/* ---------- Tournament report (/hazari26/, after the final) ---------- */
+/* ---------- Tournament report (/hazari26/ and /interdistrict26/, after the final) ---------- */
 .rp-hero { background: var(--navy); color: #fff; padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(7rem, 13vw, 9rem); }
 .rp-kicker { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .9rem; margin: 0 0 1.3rem; max-width: none;
   font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.75); }
@@ -662,6 +662,12 @@ ul.tn-more-body { padding-left: 2.1rem; display: grid; gap: .35rem; }
 .rp-stat b { display: block; font-family: var(--display); font-weight: 900; font-size: 2.8rem; line-height: .9; }
 .rp-stat span { display: block; margin-top: .35rem; font-size: .9rem; line-height: 1.35; color: rgba(255,255,255,.8); }
 .rp-stat.wide span { margin-top: 0; }
+
+/* Teams by district (/interdistrict26/) */
+.rp-districts { list-style: none; margin: 1.2rem 0 1.4rem; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr)); gap: .6rem; }
+.rp-districts li { margin: 0; background: var(--sky); border-radius: 12px; padding: .7rem .9rem .75rem; font-size: .98rem; line-height: 1.4; }
+.rp-districts b { display: block; margin-bottom: .15rem; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.rp-districts .rp-champ { font-weight: 700; color: var(--red); }
 
 /* All results */
 .rp-round { background: #fff; border: 1px solid var(--rule); border-radius: 16px; margin-bottom: .8rem; }

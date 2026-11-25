@@ -1,7 +1,7 @@
 // Tournament results, stored in Netlify Blobs so they go live without a new build.
 //
-//   GET  /api/results?t=interdistrict-2026 → the saved results (public; cached on Netlify's CDN)
-//   POST /api/results                 → save results from the update form (e.g. /interdistrict26/update/) (needs the update key);
+//   GET  /api/results?t=governors-cup-2026 → the saved results (public; cached on Netlify's CDN)
+//   POST /api/results                 → save results from the update form (e.g. /governorscup26/update/) (needs the update key);
 //                                       {action: 'undo'} goes back to the previous save
 //
 // The update key is the RESULTS_ADMIN_KEY environment variable, set in the Netlify UI
@@ -12,12 +12,14 @@ import { purgeCache, type Config } from '@netlify/functions';
 import { createHash, timingSafeEqual } from 'node:crypto';
 import hazari2026 from '../../src/data/tournaments/hazari-2026.json';
 import interdistrict2026 from '../../src/data/tournaments/interdistrict-2026.json';
+import governorsCup2026 from '../../src/data/tournaments/governors-cup-2026.json';
 import { checkEdit, pickEdit, type Live, type Tournament } from '../../src/lib/tournament';
 
 // Every tournament that can take results. Add the next one here.
 const TOURNAMENTS: Record<string, Tournament> = {
   'hazari-2026': hazari2026 as Tournament,
   'interdistrict-2026': interdistrict2026 as Tournament,
+  'governors-cup-2026': governorsCup2026 as Tournament,
 };
 
 const store = () => getStore({ name: 'tournament-results', consistency: 'strong' });

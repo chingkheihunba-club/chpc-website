@@ -22,7 +22,12 @@
 /nhazari      /hazari26/   301
 
 # 3rd Dr. Ksh. Chourjit Singh Inter District 2026 (07-11-2026): short address /interdistrict26/
+# Over (17-11-2026); /interdistrict26/ is now its report.
 /interdistrict/   /interdistrict26/   301
 /interdistrict    /interdistrict26/   301
-/tournament/      /interdistrict26/   302
-/tournament       /interdistrict26/   302
+
+# 33rd Governor's Cup Invitation 2026 (25-11-2026): short address /governorscup26/
+/governorscup/    /governorscup26/    301
+/governorscup     /governorscup26/    301
+/tournament/      /governorscup26/    302
+/tournament       /governorscup26/    302

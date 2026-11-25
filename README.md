@@ -25,7 +25,7 @@ npm run preview    # serve the built site locally
 | Honours (on The Club page) | `src/data/honours.ts` |
 | Press coverage (News page and Home) | `src/data/media.ts` |
 | Season calendar | `src/data/season.ts` |
-| Tournament fixtures and results (`/interdistrict26/`; past: `/hazari26/`) | `src/data/tournaments/<slug>.json`, `src/lib/tournament.ts`; header button in `src/config.ts` (`tournament`) |
+| Tournament fixtures and results (`/governorscup26/`; past: `/interdistrict26/`, `/hazari26/`) | `src/data/tournaments/<slug>.json`, `src/lib/tournament.ts`; header button in `src/config.ts` (`tournament`) |
 | Gallery photos | `src/data/gallery.ts`; files in `src/assets/photos/` |
 | Club news and stories (one Markdown file per post) | `src/content/news/` |
 | Pages | `src/pages/` |
@@ -57,7 +57,9 @@ The GitHub repo, Netlify site and domain belong to the club, registered under th
 
 ## Tournament results (no rebuild needed)
 
-**Now on: 3rd Dr. Ksh. Chourjit Singh Inter District 2026 (08 to 16-11-2026).** Public page `/interdistrict26/` (`/tournament/` and `/interdistrict/` lead there); score form `/interdistrict26/update/`; fixture in `src/data/tournaments/interdistrict-2026.json`. Same update key and same form as N. Hazari. When it ends, set `tournament.active` to `false`.
+**Now on: 33rd Governor’s Cup Invitation 2026 (25-11 to 02-12-2026).** Public page `/governorscup26/` (`/tournament/` and `/governorscup/` lead there); score form `/governorscup26/update/`; fixture in `src/data/tournaments/governors-cup-2026.json` (MHRPA fixture shared 25-11-2026). Same update key and same form as before. Match numbers 1 to 4 are the official quarter-final numbers, so Match 2 (the opening match) is played first. When it ends, set `tournament.active` to `false`.
+
+**Inter District 2026 is over (final 17-11-2026).** `/interdistrict26/` is now a static tournament report (champions X-Polo Club, 5–3 over Thangmeiband Youth PC; the story, teams by district, bracket and all 11 results), built from `src/data/tournaments/interdistrict-2026.json` (final scores copied in from the live store on 25-11-2026). Listed on News and Home through `src/content/news/2026-11-25-interdistrict-2026-champions.md`.
 
 **N. Hazari 2026 is over (final 03-11-2026).** `/hazari26/` is now a static tournament report: the champions, the story, the knockout bracket and all 36 results, all built from `src/data/tournaments/hazari-2026.json` (final scores copied in from the live store on 03-11-2026). It no longer reads `/api/results`, and `tournament.active` is `false`, so the header button is gone. The live-page renderer in `src/lib/tournament.ts` and the update form are kept for the next tournament.
 
