@@ -14,7 +14,10 @@ export type Match = {
   id: number;
   date: string;              // yyyy-mm-dd (display is dd-mm-yyyy)
   was?: string;              // the date on the original fixture, when the organisers have moved it
-  stale?: { date?: string[]; note?: string[] }; // saved values known to be out of date; the fixture's value is used instead
+  stale?: { date?: string[]; note?: string[]; ground?: string[] }; // saved values known to be out of date; the fixture's value is used instead
+  label?: string;            // shown instead of the id, e.g. 'W1' → "Match W1" (a second competition on the same page)
+  div?: 'women';             // the match belongs to the women's competition played alongside
+  time?: string;             // start time for this match, when it differs from the ground's usual time
   ground: string | null;     // '1st' | '2nd' | '3rd' | null
   place: string | null;      // label when there is no ground, e.g. 'Opening match', 'Final'
   round: string;
@@ -40,6 +43,7 @@ export type Tournament = {
   start: string;
   end: string;
   club: string;
+  also?: string;               // a line for a second competition shown on the same page
   times: Record<string, string>;
   off?: Record<string, string>; // days inside the tournament with no play, and why (e.g. postponed)
   updated: string;
@@ -69,6 +73,7 @@ export function merge(fx: Tournament, live: Live | null | undefined): Tournament
     if (m.was && e.date === m.was) e.date = m.date;
     if (m.stale?.date?.includes(e.date)) e.date = m.date;
     if (m.stale?.note?.includes(e.note)) e.note = m.note;
+    if (e.ground && m.stale?.ground?.includes(e.ground)) e.ground = m.ground;
     return { ...m, ...e };
   });
   return { ...fx, matches, updated: live?.updated || fx.updated };
@@ -170,9 +175,11 @@ export class Draw {
     const c = this.contenders(s);
     return c.length <= 4 ? c.join(' / ') : `One of ${c.length} teams`;
   }
-  label(s: Slot) { return this.name(s) || `Winner of Match ${s.from}`; }
+  /** "Match 4", or "Match W1" for a match with its own label. */
+  mno(id?: number) { const m = id ? this.by.get(id) : undefined; return `Match ${m?.label || id}`; }
+  label(s: Slot) { return this.name(s) || `Winner of ${this.mno(s.from)}`; }
   ground(m: Match) { return m.ground ? `${m.ground} Ground` : (m.place || 'Ground to be announced'); }
-  time(m: Match) { return (m.ground && this.t.times[m.ground]) || ''; }
+  time(m: Match) { return m.time || (m.ground && this.t.times[m.ground]) || ''; }
   on(date: string) {
     return this.t.matches.filter((m) => m.date === date)
       .sort((a, b) => (a.ground && b.ground ? a.ground.localeCompare(b.ground) : 0) || a.id - b.id);
@@ -209,7 +216,7 @@ type Opts = { today: string; team: string };
 
 function miniItem(D: Draw, m: Match) {
   const w = D.win(m), A = D.label(m.a), B = D.label(m.b), club = D.t.club;
-  const where = `${esc(D.ground(m))}${D.time(m) ? ' · ' + esc(D.time(m)) : ''} · Match ${m.id}${m.status === 'postponed' ? ' · Postponed' : ''}${m.status === 'live' ? ' · <span class="tn-live-tag">Ongoing</span>' : ''}`;
+  const where = `${esc(D.ground(m))}${D.time(m) ? ' · ' + esc(D.time(m)) : ''} · ${esc(D.mno(m.id))}${m.status === 'postponed' ? ' · Postponed' : ''}${m.status === 'live' ? ' · <span class="tn-live-tag">Ongoing</span>' : ''}`;
   const ln = (side: 'a' | 'b', nm: string) => {
     const cls = [w && w !== side ? 'lose' : '', nm === club ? 'club' : ''].join(' ');
     let sc = '';
@@ -227,7 +234,7 @@ function nextLine(D: Draw, m: Match) {
   if (!n) return '';
   const other = n.a.from === m.id ? n.b : n.a;
   const on = D.name(other);
-  const opp = on ? `<b>${esc(on)}</b>` : `the winner of Match ${other.from}`;
+  const opp = on ? `<b>${esc(on)}</b>` : `the winner of ${esc(D.mno(other.from))}`;
   const w = D.win(m);
   const who = w ? `<b>${esc(D.name(m[w]))}</b> play` : 'Winner plays';
   return `<p class="tn-next">${who} ${opp} next · ${wd(n.date)} ${fmt(n.date)}, ${esc(D.ground(n))}</p>`;
@@ -245,9 +252,9 @@ function slot(D: Draw, m: Match, side: 'a' | 'b', kind: string, team: string) {
   if (shows(m) && fin(v)) sc = `<span class="tn-score">${v}</span>`;
   else if (m.status === 'walkover' && w === side) sc = '<span class="tn-score wo">W/O</span>';
   const l = ifw
-    ? `<span class="tn-name">${esc(nm)}</span><span class="tn-sub">If they win Match ${s.from}</span>`
+    ? `<span class="tn-name">${esc(nm)}</span><span class="tn-sub">If they win ${esc(D.mno(s.from))}</span>`
     : nm ? `<span class="tn-name">${esc(nm)}</span>`
-      : `<span class="tn-name tbd">Winner of Match ${s.from}</span><span class="tn-sub">${esc(D.contText(s))}</span>`;
+      : `<span class="tn-name tbd">Winner of ${esc(D.mno(s.from))}</span><span class="tn-sub">${esc(D.contText(s))}</span>`;
   return `<div class="${cls.join(' ')}"><div class="tn-tl">${l}</div>${sc}</div>`;
 }
 
@@ -264,7 +271,7 @@ function card(D: Draw, m: Match, kind: string, o: Opts) {
   const moved = m.was && m.was !== m.date ? `<p class="tn-moved">Moved from ${wd(m.was)} ${fmt(m.was)}</p>` : '';
   return `<article class="tn-match${club ? ' is-club' : ''}${kind === 'ifwin' ? ' ifwin' : ''}${m.status === 'live' ? ' is-live' : ''}" id="m-${m.id}">` +
     `<div class="tn-meta"><span><span class="tn-where">${esc(D.ground(m))}</span>${D.time(m) ? ' · ' + esc(D.time(m)) : ''}</span>` +
-    `<span class="tn-tags"><span>Match ${m.id} · ${esc(m.round)}</span>${tags.join('')}</span></div>` +
+    `<span class="tn-tags"><span>${esc(D.mno(m.id))} · ${esc(m.round)}</span>${tags.join('')}</span></div>` +
     `<div class="tn-teams">${slot(D, m, 'a', kind, o.team)}${vs}${slot(D, m, 'b', kind, o.team)}</div>` +
     (m.status === 'live' ? '<p class="tn-note">Score so far. The final score is added at full time.</p>' : '') +
     (m.note ? `<p class="tn-note">${esc(m.note)}</p>` : '') + moved +
@@ -310,12 +317,12 @@ export function render(t: Tournament, o: Opts) {
     const opp = D.name(m.a) === club ? m.b : m.a;
     const on = D.name(opp);
     clubBody = `<div class="tn-big">${wd(m.date).toUpperCase()} ${dayNum(m.date)}<small>${fmt(m.date)} · ${esc(D.ground(m))}${D.time(m) ? ', ' + esc(D.time(m)) : ''}</small></div>` +
-      `<p>${wonN ? 'Next' : 'First'} match, ${esc(m.round)}, against ${on ? `<b>${esc(on)}</b>` : `the winner of Match ${opp.from} (${esc(D.contText(opp))})`}.</p>` +
+      `<p>${wonN ? 'Next' : 'First'} match, ${esc(m.round)}, against ${on ? `<b>${esc(on)}</b>` : `the winner of ${esc(D.mno(opp.from))} (${esc(D.contText(opp))})`}.</p>` +
       (m.status === 'live' ? `<p class="tn-club-live"><span class="tn-live-tag">Ongoing</span> ${esc(D.label(m.a))} <b>${m.sa}–${m.sb}</b> ${esc(D.label(m.b))}</p>` : '');
   } else if (lost) {
     const lm = lost.m, lw = D.win(lm)!;
     const score = lm.status === 'walkover' ? 'by walkover' : `${lw === 'a' ? lm.sa : lm.sb}–${lw === 'a' ? lm.sb : lm.sa}`;
-    clubBody = `<p>Out in Match ${lm.id} (${esc(lm.round)}), ${score} to <b>${esc(D.name(lm[lw]))}</b>. Thank you for the support this tournament.</p>`;
+    clubBody = `<p>Out in ${esc(D.mno(lm.id))} (${esc(lm.round)}), ${score} to <b>${esc(D.name(lm[lw]))}</b>. Thank you for the support this tournament.</p>`;
   } else if (p.length && p[p.length - 1].kind === 'won') {
     clubBody = `<p><b>Champions.</b> ${esc(club)} won the final.</p>`;
   }
@@ -324,7 +331,7 @@ export function render(t: Tournament, o: Opts) {
     `<div class="tn-panel tn-today"><div><h2>Today</h2><p class="tn-psub">${wdl(o.today)} ${fmt(o.today)}</p></div>${todayBody}` +
     (tm.length ? `<div class="tn-pact"><button type="button" class="tn-btn ghost" data-jump="${o.today}">See today’s matches</button></div>` : '') + '</div>' +
     `<div class="tn-panel tn-latest"><div><h2>Latest results</h2><p class="tn-psub">${lastD ? `${wdl(lastD)} ${fmt(lastD)}` : '&nbsp;'}</p></div>${resBody}</div>` +
-    `<div class="tn-panel tn-club"><div><p class="tn-ceyebrow">${nextC ? (wonN ? 'The club’s next match' : 'The club’s first match') : 'The club'}</p><h2>${esc(club)}</h2><p class="tn-psub">${entry ? `Enters in ${esc(entry.round)}, Match ${entry.id}` : ''}</p></div>${clubBody}` +
+    `<div class="tn-panel tn-club"><div><p class="tn-ceyebrow">${nextC ? (wonN ? 'The club’s next match' : 'The club’s first match') : 'The club'}</p><h2>${esc(club)}</h2><p class="tn-psub">${entry ? `Enters in ${esc(entry.round)}, ${esc(D.mno(entry.id))}` : ''}</p></div>${clubBody}` +
     `<div class="tn-pact"><button type="button" class="tn-btn white" data-follow="${esc(club)}">Follow the club’s path</button></div></div>` +
     `</div></div></section>`;
 
@@ -338,7 +345,7 @@ export function render(t: Tournament, o: Opts) {
     if (d === o.today) cls.push('today');
     if (!n) cls.push('rest');
     if (isFinal) cls.push('final');
-    const c = !n ? (t.off?.[d] ? 'Postponed' : 'Rest') : isFinal ? 'Final' : ms.every((m) => m.round === 'Semi-final') ? 'Semis' : `${n} ${n === 1 ? 'match' : 'matches'}`;
+    const c = !n ? (t.off?.[d] ? 'Postponed' : 'Rest') : isFinal ? 'Final' : ms.every((m) => /semi-final/i.test(m.round)) ? 'Semis' : `${n} ${n === 1 ? 'match' : 'matches'}`;
     const dis = !n || (pathDates && !pathDates.has(d)) ? ' disabled' : '';
     return `<button type="button" class="${cls.join(' ')}" data-jump="${d}"${dis} aria-label="${wdl(d)} ${fmt(d)}, ${c}"><span class="w">${wd(d)}</span><span class="d">${dayNum(d)}</span><span class="c">${c}</span></button>`;
   }).join('');
@@ -353,7 +360,7 @@ export function render(t: Tournament, o: Opts) {
   let days = '';
   if (o.team) {
     const pth = D.path(o.team), last = pth[pth.length - 1];
-    const st = !pth.length ? '' : last.kind === 'lost' ? `Out in Match ${last.m.id}.` : last.kind === 'won' ? 'Champions.' : 'Still in the tournament.';
+    const st = !pth.length ? '' : last.kind === 'lost' ? `Out in ${esc(D.mno(last.m.id))}.` : last.kind === 'won' ? 'Champions.' : 'Still in the tournament.';
     days += `<div class="tn-filter"><p>Showing <b>${esc(o.team)}</b>: ${pth.length} ${pth.length === 1 ? 'match' : 'matches'} on their path. ${st} Dashed cards are matches they play only if they keep winning.</p><button type="button" class="tn-btn line" data-follow="">Show all teams</button></div>`;
     const byDate: Record<string, typeof pth> = {};
     pth.forEach((x) => { (byDate[x.m.date] ||= []).push(x); });

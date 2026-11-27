@@ -19,14 +19,15 @@
  "times": {
   "1st": "2:00 PM"
  },
- "updated": "2026-11-25T14:30:00+05:30",
+ "updated": "2026-11-27T15:45:00+05:30",
  "notes": [
   "Fixture as published under the name of the Manipur Horse Riding & Polo Association, shared with the club on 25-11-2026. The MHRPA’s invitation to the eight teams is dated 23-11-2026 and signed by Dr. Th. Chaa Mangilal, Hony. Secretary General. Dates can change for reasons beyond the organisers’ control.",
   "A knockout of eight teams. Match numbers 1 to 4 are the quarter-final numbers on the official fixture; Match 5 is the 1st Semi-final, Match 6 the 2nd Semi-final and Match 7 the final. Quarter-final 2 is the opening match, so Match 2 is played first.",
   "Times as printed: teams report at 1:30 PM; play on the 1st Ground starts at 2:00 PM. The fixture gives no time for the 2nd Ground, and no ground for the opening match or the final.",
   "Chingkhei Hunba PC are the defending champions: the club won the 32nd edition on 28-02-2026, beating X-Polo Club 7–6 in the final (The Sangai Express, 01-03-2026).",
-  "The 22nd Governor’s Cup Women’s Polo Tournament is played at the same time, from 25-11-2026. Its fixture is not on this page.",
-  "Team names are shortened: PC is Polo Club, MPSC is Manipur Police Sports Club. Assam Rifles is the AR Polo Team."
+  "The 22nd Governor’s Cup Women’s Polo Tournament is played alongside, and its matches are on this page too, numbered W1 to W4 (W1 is the first round, W2 and W3 the semi-finals, W4 the final). Five teams: Assam Rifles, Ibudhou Pakhangba PC, Imphal Riding Club, MPSC and Thangmeiband Youth PC. Fixture from the MHRPA women’s fixture dated 24-11-2026 (signed N. Bedajeet Singh, Chairman, Technical Committee); the W numbers are this page’s own. Chingkhei Hunba PC is not fielding a women’s team this season.",
+  "Changes on 27-11-2026, from the MHRPA’s match-day notice: the women’s semi-final between Thangmeiband Youth PC and Imphal Riding Club (W2) was brought forward from 28-11 to 27-11, 2nd Ground, 2:00 PM; W1 started at 1:00 PM on the 1st Ground; and Quarter-final 4 (MPSC – B v Chingkhei Hunba PC) was played on the 3rd Ground.",
+  "Team names are shortened: PC is Polo Club, MPSC is Manipur Police Sports Club. Assam Rifles is the AR Polo Team. Women’s teams carry “Women” after the club’s name, so they are not mixed up with the men’s teams of the same clubs."
  ],
  "matches": [
   {
@@ -86,7 +87,7 @@
   {
    "id": 4,
    "date": "2026-11-27",
-   "ground": "2nd",
+   "ground": "3rd",
    "place": null,
    "round": "Quarter-final",
    "a": {
@@ -99,7 +100,12 @@
    "sa": null,
    "sb": null,
    "w": null,
-   "note": ""
+   "note": "",
+   "stale": {
+    "ground": [
+     "2nd"
+    ]
+   }
   },
   {
    "id": 5,
@@ -154,6 +160,90 @@
    "sb": null,
    "w": null,
    "note": ""
+  },
+  {
+   "id": 8,
+   "label": "W1",
+   "div": "women",
+   "date": "2026-11-27",
+   "ground": "1st",
+   "place": null,
+   "time": "1:00 PM",
+   "round": "Women’s first round",
+   "a": {
+    "team": "Ibudhou Pakhangba PC Women"
+   },
+   "b": {
+    "team": "MPSC Women"
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  },
+  {
+   "id": 9,
+   "label": "W2",
+   "div": "women",
+   "date": "2026-11-27",
+   "was": "2026-11-28",
+   "ground": "2nd",
+   "place": null,
+   "time": "2:00 PM",
+   "round": "Women’s semi-final",
+   "a": {
+    "team": "Thangmeiband Youth PC Women"
+   },
+   "b": {
+    "team": "Imphal Riding Club Women"
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  },
+  {
+   "id": 10,
+   "label": "W3",
+   "div": "women",
+   "date": "2026-11-30",
+   "ground": "1st",
+   "place": null,
+   "round": "Women’s semi-final",
+   "a": {
+    "team": "Assam Rifles Women"
+   },
+   "b": {
+    "from": 8
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
+  },
+  {
+   "id": 11,
+   "label": "W4",
+   "div": "women",
+   "date": "2026-12-02",
+   "ground": null,
+   "place": "Women’s final",
+   "round": "Women’s final",
+   "a": {
+    "from": 9
+   },
+   "b": {
+    "from": 10
+   },
+   "status": "scheduled",
+   "sa": null,
+   "sb": null,
+   "w": null,
+   "note": ""
   }
- ]
+ ],
+ "also": "With the 22nd Governor’s Cup Women’s Polo Tournament"
 }

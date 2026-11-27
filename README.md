@@ -57,7 +57,7 @@ The GitHub repo, Netlify site and domain belong to the club, registered under th
 
 ## Tournament results (no rebuild needed)
 
-**Now on: 33rd Governor’s Cup Invitation 2026 (25-11 to 02-12-2026).** Public page `/governorscup26/` (`/tournament/` and `/governorscup/` lead there); score form `/governorscup26/update/`; fixture in `src/data/tournaments/governors-cup-2026.json` (MHRPA fixture shared 25-11-2026). Same update key and same form as before. Match numbers 1 to 4 are the official quarter-final numbers, so Match 2 (the opening match) is played first. When it ends, set `tournament.active` to `false`.
+**Now on: 33rd Governor’s Cup Invitation 2026 (25-11 to 02-12-2026).** Public page `/governorscup26/` (`/tournament/` and `/governorscup/` lead there); score form `/governorscup26/update/`; fixture in `src/data/tournaments/governors-cup-2026.json` (MHRPA fixture shared 25-11-2026). Same update key and same form as before. Match numbers 1 to 4 are the official quarter-final numbers, so Match 2 (the opening match) is played first. The 22nd Governor’s Cup Women’s is on the same page and form as matches 8 to 11, shown as W1 to W4 (`label`, `div: "women"` on each match; per-match start times in `time`). When it ends, set `tournament.active` to `false`.
 
 **Inter District 2026 is over (final 17-11-2026).** `/interdistrict26/` is now a static tournament report (champions X-Polo Club, 5–3 over Thangmeiband Youth PC; the story, teams by district, bracket and all 11 results), built from `src/data/tournaments/interdistrict-2026.json` (final scores copied in from the live store on 25-11-2026). Listed on News and Home through `src/content/news/2026-11-25-interdistrict-2026-champions.md`.
 

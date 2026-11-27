@@ -72,6 +72,9 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
 
   try { keyIn.value = localStorage.getItem(KEY) || ''; } catch {}
 
+  /** "Match 4", or "Match W1" for the women's matches. */
+  const mn = (id: number) => new Draw(state).mno(id);
+
   function say(text: string, kind: '' | 'err' | 'ok' = '') { msg.textContent = text; msg.className = kind; }
 
   const STATUS_LABEL: Record<string, string> = { scheduled: 'Upcoming', live: 'Ongoing', played: 'Full time (final score)', walkover: 'Walkover', postponed: 'Postponed' };
@@ -82,17 +85,17 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
       `<select id="${id}-${f}" data-id="${m.id}" data-f="${f}">${opts.map(([v, l]) => `<option value="${v}"${v === val ? ' selected' : ''}>${esc(l)}</option>`).join('')}</select>`;
     const team = (side: 'a' | 'b') => {
       const s = m[side], n = D.name(s);
-      return `<span class="nm" data-name="${m.id}-${side}">${n ? esc(n) : `Winner of Match ${s.from}<small>${esc(D.contText(s))}</small>`}</span>`;
+      return `<span class="nm" data-name="${m.id}-${side}">${n ? esc(n) : `Winner of ${esc(D.mno(s.from))}<small>${esc(D.contText(s))}</small>`}</span>`;
     };
     const v = (x: number | null) => (x === null || x === undefined ? '' : String(x));
     return `<div class="up-m${dirty.has(m.id) ? ' dirty' : ''}${m.status === 'live' ? ' live' : ''}" id="row-${m.id}">
-      <div class="up-mh"><span><b>Match ${m.id}</b> · ${esc(m.round)}</span><span>${esc(D.ground(m))}${D.time(m) ? ', ' + esc(D.time(m)) : ''}${m.was && m.was !== m.date ? ` · moved from ${fmt(m.was)}` : ''}</span></div>
+      <div class="up-mh"><span><b>${esc(D.mno(m.id))}</b> · ${esc(m.round)}</span><span>${esc(D.ground(m))}${D.time(m) ? ', ' + esc(D.time(m)) : ''}${m.was && m.was !== m.date ? ` · moved from ${fmt(m.was)}` : ''}</span></div>
       <div class="up-sc">
-        ${team('a')}<input id="${id}-sa" type="number" inputmode="numeric" min="0" max="99" data-id="${m.id}" data-f="sa" value="${v(m.sa)}" aria-label="Score, first team, Match ${m.id}" /><button type="button" class="up-plus" data-plus="${m.id}" data-side="sa" aria-label="Add a goal, first team, Match ${m.id}">+1</button>
-        ${team('b')}<input id="${id}-sb" type="number" inputmode="numeric" min="0" max="99" data-id="${m.id}" data-f="sb" value="${v(m.sb)}" aria-label="Score, second team, Match ${m.id}" /><button type="button" class="up-plus" data-plus="${m.id}" data-side="sb" aria-label="Add a goal, second team, Match ${m.id}">+1</button>
+        ${team('a')}<input id="${id}-sa" type="number" inputmode="numeric" min="0" max="99" data-id="${m.id}" data-f="sa" value="${v(m.sa)}" aria-label="Score, first team, ${esc(D.mno(m.id))}" /><button type="button" class="up-plus" data-plus="${m.id}" data-side="sa" aria-label="Add a goal, first team, ${esc(D.mno(m.id))}">+1</button>
+        ${team('b')}<input id="${id}-sb" type="number" inputmode="numeric" min="0" max="99" data-id="${m.id}" data-f="sb" value="${v(m.sb)}" aria-label="Score, second team, ${esc(D.mno(m.id))}" /><button type="button" class="up-plus" data-plus="${m.id}" data-side="sb" aria-label="Add a goal, second team, ${esc(D.mno(m.id))}">+1</button>
       </div>
       <div class="up-f">
-        <div class="up-seg" role="group" aria-label="Match ${m.id}: ongoing or final">
+        <div class="up-seg" role="group" aria-label="${esc(D.mno(m.id))}: ongoing or final">
           <button type="button" data-state="live" data-id="${m.id}" aria-pressed="${m.status === 'live'}">Ongoing</button>
           <button type="button" data-state="played" data-id="${m.id}" aria-pressed="${m.status === 'played'}">Final score</button>
         </div>
@@ -141,7 +144,7 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
       const el = list.querySelector(`[data-name="${m.id}-${side}"]`);
       if (!el) return;
       const s = m[side], n = D.name(s);
-      el.innerHTML = n ? esc(n) : `Winner of Match ${s.from}<small>${esc(D.contText(s))}</small>`;
+      el.innerHTML = n ? esc(n) : `Winner of ${esc(D.mno(s.from))}<small>${esc(D.contText(s))}</small>`;
     }));
   }
 
@@ -195,8 +198,8 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
       setStatus(m, st);
       markDirty(m.id);
       refreshNames();
-      if (st === 'played' && m.sa === m.sb) say(`Match ${m.id} is level at ${m.sa}–${m.sb}. A final score needs a winner: correct the score, or keep it Ongoing.`, 'err');
-      else say(st === 'live' ? `Match ${m.id} marked Ongoing. Save to show the score so far.` : `Match ${m.id} marked Final score. Save to publish the result.`);
+      if (st === 'played' && m.sa === m.sb) say(`${mn(m.id)} is level at ${m.sa}–${m.sb}. A final score needs a winner: correct the score, or keep it Ongoing.`, 'err');
+      else say(st === 'live' ? `${mn(m.id)} marked Ongoing. Save to show the score so far.` : `${mn(m.id)} marked Final score. Save to publish the result.`);
       return;
     }
     // +1 goal
@@ -213,7 +216,7 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
       if (m.status === 'scheduled') setStatus(m, m.date >= todayIST() ? 'live' : 'played');
       markDirty(id);
       refreshNames();
-      say(`Match ${id}: ${m.sa}–${m.sb}${m.status === 'live' ? ', Ongoing' : ''}. Not saved yet.`);
+      say(`${mn(id)}: ${m.sa}–${m.sb}${m.status === 'live' ? ', Ongoing' : ''}. Not saved yet.`);
       return;
     }
     const b = (e.target as HTMLElement).closest('[data-clear]') as HTMLElement | null;
@@ -228,7 +231,7 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
     dirty.add(id);
     document.getElementById(`row-${id}`)?.classList.add('dirty');
     refreshNames();
-    say(`Match ${id} cleared. Save to publish the change.`);
+    say(`${mn(id)} cleared. Save to publish the change.`);
   });
 
   // Undo last save: the function restores the save before the current one.
@@ -262,7 +265,7 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
     const key = keyIn.value.trim();
     if (!key) { say('Enter the update key first.', 'err'); keyIn.focus(); return; }
     for (const m of state.matches) {
-      const err = checkEdit(m.id, pickEdit(m));
+      const err = checkEdit(m.id, pickEdit(m)).replace(/^Match \d+/, mn(m.id));
       if (err) { say(err, 'err'); document.getElementById(`row-${m.id}`)?.scrollIntoView({ block: 'center' }); return; }
     }
     const matches: Record<string, unknown> = {};
@@ -283,7 +286,7 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
         list.querySelectorAll('.up-m.dirty').forEach((el) => el.classList.remove('dirty'));
         const going = state.matches.filter((m) => m.status === 'live').map((m) => m.id);
         say(`Saved ${stamp(res.updated)} IST. The tournament page shows it within a few seconds.` +
-          (going.length ? ` Ongoing: Match ${going.join(', ')}. Tap Final score when ${going.length === 1 ? 'it ends' : 'each ends'}.` : ''), 'ok');
+          (going.length ? ` Ongoing: ${going.map(mn).join(', ')}. Tap Final score when ${going.length === 1 ? 'it ends' : 'each ends'}.` : ''), 'ok');
       } else {
         say(res.error || 'The save did not go through. Try again.', 'err');
       }

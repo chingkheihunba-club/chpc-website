@@ -9,10 +9,12 @@ import { site } from '../../config';
 const t = fixture as Tournament;
 const html = render(t, { today: todayIST(), team: '' });
 const json = JSON.stringify(t).replace(/</g, '\\u003c');
+// Teams per competition: '' = the main (men's) draw, 'women' = the women's tournament played alongside.
+const teams = (div: string) => new Set(t.matches.filter((m) => (m.div || '') === div).flatMap((m) => [m.a.team, m.b.team]).filter(Boolean)).size;
 ---
 <Base
   title={`${t.short} fixtures and results`}
-  description={`Day-by-day fixtures and results of the ${t.name}, ${fmt(t.start)} to ${fmt(t.end)}, ${t.venue}.`}
+  description={`Day-by-day fixtures and results of the ${t.name}${t.also ? `, ${t.also.charAt(0).toLowerCase()}${t.also.slice(1)}` : ''}, ${fmt(t.start)} to ${fmt(t.end)}, ${t.venue}.`}
 >
   <section class="page-head tn-head">
     <div class="wrap">
@@ -21,7 +23,8 @@ const json = JSON.stringify(t).replace(/</g, '\\u003c');
       <ul class="tn-facts">
         <li><b>{fmt(t.start)}</b> to <b>{fmt(t.end)}</b></li>
         <li>{t.venue}</li>
-        <li>{new Set(t.matches.flatMap((m) => [m.a.team, m.b.team]).filter(Boolean)).size} teams · {t.matches.length} matches</li>
+        {t.also && <li>{t.also}</li>}
+        <li>{teams('women') ? `${teams('')} men’s teams, ${teams('women')} women’s teams` : `${teams('')} teams`} · {t.matches.length} matches</li>
         <li>{t.report}</li>
       </ul>
       <div class="tn-info">
